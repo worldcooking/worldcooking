@@ -60,11 +60,11 @@
 						<thead>
 							<tr>
 								<th>Participant (4/38)</th>
-								<th>Chef (4/38)</th>
-								<th>Cooking (4/38)</th>
-								<th>Setting the table (4/38)</th>
-								<th>Doing the dishes (4/38)</th>
-								<th>Cleaning the room (4/38)</th>
+								<th>Chef (1/1)</th>
+								<th>Cooking (1/7)</th>
+								<th>Setting the table (1/10)</th>
+								<th>Doing the dishes (0/10)</th>
+								<th>Cleaning the room (0/10)</th>
 							</tr>
 						</thead>
 						<tbody>
