@@ -35,7 +35,9 @@
 			</div>
 			<div class="information">
 				<h3>Date and Time :</h3>
-				Friday November 25th 2011, 8pm (4pm if you're cooking)
+				Friday November 25th 2011, 8pm (4pm if you're cooking)<br/>
+				<a href="http://www.google.com/calendar/event?action=TEMPLATE&text=Worldcooking%20Peru&dates=20111125T190000Z/20111125T230000Z&details=&location=La%20soupe%20au%20Caillou&trp=false&sprop=&sprop=name:" target="_blank">
+				Add to google Agenda</a>
 			</div>
 			<div class="information">
 				<h3>Place :</h3>
