@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" title="bbxcss" />
 	<style type="text/css">
 	</style>
-	<script type="text/javascript" src="main.js">
+	<script type="text/javascript" src="js/main.js">
 	</script>
 </head>
 <body onload="javascript:cleanInputs(['name1_field','name2_field']);">

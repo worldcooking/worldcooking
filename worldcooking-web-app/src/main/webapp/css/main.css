@@ -51,7 +51,7 @@ h3{
 	width: 840px;
 	height : 150px;
 	margin: 0 auto 0 auto; 
-	background:url(peruflag.png) no-repeat;
+	background:url(/img/peruflag.png) no-repeat;
 	padding-top : 15;
 	background-size:50;
 }
