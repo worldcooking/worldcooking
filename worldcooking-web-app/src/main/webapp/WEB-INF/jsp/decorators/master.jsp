@@ -1,7 +1,7 @@
 <!-- Maket for worldcooking subscription. -->
 <head>
 	<title>Worldcooking Peru</title>
-	<link rel="stylesheet" type="text/css" href="main.css" media="screen" title="bbxcss" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" media="screen" title="bbxcss" />
 	<style type="text/css">
 	</style>
 	<script type="text/javascript" src="main.js">
