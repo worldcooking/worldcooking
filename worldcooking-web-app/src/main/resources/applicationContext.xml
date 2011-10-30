@@ -8,6 +8,8 @@
 
 	<context:annotation-config />
 
+<import resource="classpath:spring-dao-context.xml"/>
+
 	<context:property-placeholder
 		properties-ref="properties" />
 
