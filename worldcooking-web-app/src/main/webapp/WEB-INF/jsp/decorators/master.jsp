@@ -21,7 +21,7 @@
 				Our chef will be Nidia Torres.</br>
 				</br>
 				To participate in this event you must book and pay in advance.</br>
-				The price of Sorie is 15 € per person. This amount is used entirely to cover the cost of the evening.</br>
+				The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.</br>
 				</br>
 				This year we ask each person to help. When registering you can choose a task from the following:</br>
 				- Cooking with Nidia from 4pm</br>
