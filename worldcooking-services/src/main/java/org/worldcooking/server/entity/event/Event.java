@@ -1,5 +1,6 @@
 package org.worldcooking.server.entity.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,12 +24,13 @@ public class Event {
 	private String description;
 
 	@OneToMany(mappedBy = "event")
-	private List<Subscription> subscriptions;
+	private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
 	@OneToMany(mappedBy = "event")
-	private List<Task> availableTasks;
+	private List<Task> availableTasks = new ArrayList<Task>();
 
-	private int maxParticipants;
+	@Column
+	private Integer maxParticipants;
 
 	public Long getId() {
 		return id;
@@ -66,15 +68,25 @@ public class Event {
 		return availableTasks;
 	}
 
-	public void setAvailableTasks(List<Task> availableTasks) {
+	/**
+	 * Use addAvailableTask instead
+	 * 
+	 * @param availableTasks
+	 */
+	protected void setAvailableTasks(List<Task> availableTasks) {
 		this.availableTasks = availableTasks;
 	}
 
-	public int getMaxParticipants() {
+	public void addAvailableTask(Task task) {
+		this.availableTasks.add(task);
+		task.setEvent(this);
+	}
+
+	public Integer getMaxParticipants() {
 		return maxParticipants;
 	}
 
-	public void setMaxParticipants(int maxParticipants) {
+	public void setMaxParticipants(Integer maxParticipants) {
 		this.maxParticipants = maxParticipants;
 	}
 
