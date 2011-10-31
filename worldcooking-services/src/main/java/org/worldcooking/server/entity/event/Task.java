@@ -35,6 +35,20 @@ public class Task {
 	@ManyToOne
 	private Event event;
 
+	@Column
+	private int nbMax;
+
+	public Task() {
+		// nothing to do
+	}
+
+	public Task(String name, String description, int nbMax) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.nbMax = nbMax;
+	}
+
 	/**
 	 * @return the name
 	 */
@@ -86,6 +100,14 @@ public class Task {
 
 	public void setEvent(Event event) {
 		this.event = event;
+	}
+
+	public int getNbMax() {
+		return nbMax;
+	}
+
+	public void setNbMax(int nbMax) {
+		this.nbMax = nbMax;
 	}
 
 }

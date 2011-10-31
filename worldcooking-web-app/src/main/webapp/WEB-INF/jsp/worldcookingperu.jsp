@@ -1,26 +1,43 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
-<%@ page import="org.worldcooking.server.entity.people.Participant" %>
-<%@ page import="org.worldcooking.server.entity.event.Task" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.lang.Integer" %>
+<%@ page import="org.worldcooking.server.entity.people.Participant"%>
+<%@ page import="org.worldcooking.server.entity.event.Task"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Set"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.lang.Integer"%>
 
 <%
 	//todo retrieve form persistence
 	Event wcPeru = new Event();
+
+	List<Task> availableTasks = new ArrayList<Task>();
+	availableTasks
+			.add(new Task("Chief", "Choose the menu and cook", 1));
+	availableTasks.add(new Task("Cooking",
+			"Cooking the meal with the chief", 7));
+	availableTasks.add(new Task("Setting the table",
+			"Setting the table", 10));
+	availableTasks.add(new Task("Doing the dishes", "Doing the dishes",
+			9));
+	availableTasks.add(new Task("Cleaning the room",
+			"Cleaning the room", 9));
+
+	wcPeru.setAvailableTasks(availableTasks);
 
 	wcPeru.setName("Worldcooking Peru");
 	wcPeru.setDescription("Up to 39 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br /> Our chef will be Nidia Torres.<br />"
 			+ "<br /> To participate in this event you must book and pay in advance.<br /> The price for the meal is 15 € per person. This amount is used entirely"
 			+ " to cover the cost of the evening.<br /> <br /> This year we ask each person to help. When registering you have to choose a task from the"
 			+ " following ones:<br /> - Cooking with Nidia from 4pm<br /> - Set the table<br /> - Doing the dishes<br /> - Cleaning the room<br />");
-		
+
 	Map<Participant, Task> participantsToTasksMap = new HashMap<Participant, Task>();
 	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
+	List<Task> tasks = wcPeru.getAvailableTasks();
 	Map<Task, Integer> tasksNumber = new HashMap<Task, Integer>();
+	Set<Participant> participantsSet = participantsToTasksMap.keySet();
 %>
 <html>
 <head>
@@ -60,19 +77,39 @@
 				<table class="participants">
 					<thead>
 						<tr>
-							<th>Participant (4/38)</th>
-							<th>Chef (1/1)</th>
-							<th>Cooking (1/7)</th>
-							<th>Setting the table (1/10)</th>
-							<th>Doing the dishes (0/10)</th>
-							<th>Cleaning the room (0/10)</th>
+							<th>Participant (<%=participantsToTasksMap.keySet().size()%>/<%=wcPeru.getMaxParticipants()%>)
+							</th>
+							<%
+								for (Task t : tasks) {
+									List<Participant> participants = tasksToParticipantsMap.get(t);
+									int partNumber;
+									if (participants == null) {
+										partNumber = 0;
+									} else {
+										partNumber = participants.size();
+									}
+							%><th><%=t.getName()%> (<%=partNumber%>/<%=t.getNbMax()%>)</th>
+							<%
+								}
+							%>
 						</tr>
 					</thead>
 					<tbody>
+						<%
+							for (Participant p : participantsSet) {
+						%>
 						<tr>
-							<th>Matthieu Gaudet</th>
-							<td><input type="radio" name="task0" value="chief"
+							<th><%=p.getName()%></th>
+							<%
+								for (Task t : tasks) {
+										if (t.getId().equals(t.getId())) {
+							%>
+							<td><input type="radio" name="task0" value="<%=t.getId()%>"
 								checked="checked" /></td>
+							<%
+								}
+									}
+							%>
 							<td><input type="radio" name="task0" disabled="disabled"
 								value="cooking" /></td>
 							<td><input type="radio" name="task0" disabled="disabled"
@@ -82,32 +119,9 @@
 							<td><input type="radio" name="task0" disabled="disabled"
 								value="cleaning" /></td>
 						</tr>
-						<tr>
-							<th>Maya Rouvneska</th>
-							<td><input type="radio" name="task1" disabled="disabled"
-								value="chief" /></td>
-							<td><input type="radio" name="task1" value="cooking"
-								checked="checked" /></td>
-							<td><input type="radio" name="task1" disabled="disabled"
-								value="setting" /></td>
-							<td><input type="radio" name="task1" disabled="disabled"
-								value="dishes" /></td>
-							<td><input type="radio" name="task1" disabled="disabled"
-								value="cleaning" /></td>
-						</tr>
-						<tr>
-							<th>Nicolas Toublanc</th>
-							<td><input type="radio" name="task2" disabled="disabled"
-								value="chief" /></td>
-							<td><input type="radio" name="task2" disabled="disabled"
-								value="cooking" /></td>
-							<td><input type="radio" name="task2" value="setting"
-								checked="checked" /></td>
-							<td><input type="radio" name="task2" disabled="disabled"
-								value="dishes" /></td>
-							<td><input type="radio" name="task2" disabled="disabled"
-								value="cleaning" /></td>
-						</tr>
+						<%
+							}
+						%>
 					</tbody>
 				</table>
 			</div>
@@ -202,4 +216,3 @@
 	</div>
 </body>
 </html>
-
