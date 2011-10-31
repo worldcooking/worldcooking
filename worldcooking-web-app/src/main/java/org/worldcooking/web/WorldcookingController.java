@@ -12,7 +12,7 @@ import org.worldcooking.server.services.EventService;
  * Simple index page controller serving hello.jsp file 
  */
 @Controller
-public class HelloWorldController {
+public class WorldcookingController {
 
 	@Autowired
 	private EventService eventService;
@@ -27,7 +27,7 @@ public class HelloWorldController {
     public String handleRequest() {
 
     	logger.info("Nombre d'évents:"+  eventService.getAllEvents().size());
-        return "hello";
+        return "worldcookingperu";
     }
 
 }
