@@ -22,6 +22,16 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jboss-repo</id>
+			<url>http://repository.jboss.org/maven2</url>
+		</repository>
+		<repository>
+			<id>spring-repo</id>
+			<url>http://maven.springframework.org</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!-- SPRING DEPENDENCIES -->
 		<dependency>
@@ -57,4 +67,32 @@
 			<version>1.2.14</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<optimize>true</optimize>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
