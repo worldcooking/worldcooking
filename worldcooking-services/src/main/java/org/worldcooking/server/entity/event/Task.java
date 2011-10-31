@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.server.entity;
+package org.worldcooking.server.entity.event;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
-import org.worldcooking.server.entity.Event;
+import org.worldcooking.server.entity.event.Event;
 
 
 @Repository

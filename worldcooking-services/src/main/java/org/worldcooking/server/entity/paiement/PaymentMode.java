@@ -1,15 +1,15 @@
-package org.worldcooking.server.entity;
+package org.worldcooking.server.entity.paiement;
 
 /**
  * 
  * @author MatthieuG
  *
  */
-public abstract class PaiementMode {
+public abstract class PaymentMode {
 	
 	private boolean online;
 
-	public PaiementMode(boolean online) {
+	public PaymentMode(boolean online) {
 		this.online = online;
 	}
 

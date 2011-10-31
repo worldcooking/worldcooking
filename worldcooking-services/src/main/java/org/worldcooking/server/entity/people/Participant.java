@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.worldcooking.server.entity;
+package org.worldcooking.server.entity.people;
+
+import org.worldcooking.server.entity.event.Task;
 
 /**
  * @author MatthieuG
