@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.worldcooking.server.services.EventService;
 
 /**
- * Simple index page controller serving hello.jsp file 
+ * Simple index page controller serving hello.jsp file
  */
 @Controller
 public class WorldcookingController {
 
 	@Autowired
 	private EventService eventService;
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	
-    /**
-     * Simply serves hello.jsp
-     * @return view with name 'hello'
-     */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String handleRequest() {
 
-    	logger.info("Nombre d'évents:"+  eventService.getAllEvents().size());
-        return "worldcookingperu";
-    }
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
+	/**
+	 * Simply serves hello.jsp
+	 * 
+	 * @return view with name 'hello'
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String handleRequest() {
+
+		return "worldcookingperu";
+	}
 
 }
