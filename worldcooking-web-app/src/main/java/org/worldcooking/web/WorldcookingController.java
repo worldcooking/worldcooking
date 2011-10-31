@@ -20,9 +20,8 @@ public class WorldcookingController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
-	 * Simply serves hello.jsp
 	 * 
-	 * @return view with name 'hello'
+	 * @return view with name
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String handleRequest() {

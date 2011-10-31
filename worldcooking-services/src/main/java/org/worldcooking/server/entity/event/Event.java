@@ -14,6 +14,8 @@ public class Event {
 
 	private List<Task> availableTasks;
 
+	private int maxParticipants;
+
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +54,14 @@ public class Event {
 
 	public void setAvailableTasks(List<Task> availableTasks) {
 		this.availableTasks = availableTasks;
+	}
+
+	public int getMaxParticipants() {
+		return maxParticipants;
+	}
+
+	public void setMaxParticipants(int maxParticipants) {
+		this.maxParticipants = maxParticipants;
 	}
 
 }
