@@ -4,8 +4,11 @@ import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Base class fo unit tests with spring context.
@@ -18,20 +21,19 @@ import org.springframework.test.context.ContextConfiguration;
  * @see org.springframework.transaction.annotation.Transactional
  * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)
  */
-@ContextConfiguration(locations = { "classpath:test-spring-dao-context.xml" })
-public abstract class ApplicationContextAwareTest extends
-		AbstractApplicationContextAware {
+@RunWith(SpringJUnit4ClassRunner.class)
+@TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
+@Transactional
+public abstract class AbstractApplicationContextAware {
 
 	@Autowired
 	public SessionFactory sessionFactory;
 
-	@Override
 	@Before
 	public void beforeMethod() {
 		sessionFactory.getCurrentSession().setFlushMode(FlushMode.ALWAYS);
 	}
 
-	@Override
 	@After
 	public void afterMethod() {
 		// nothing

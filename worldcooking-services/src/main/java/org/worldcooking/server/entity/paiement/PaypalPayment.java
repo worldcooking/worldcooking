@@ -3,9 +3,10 @@
  */
 package org.worldcooking.server.entity.paiement;
 
+
 /**
  * @author MatthieuG
- *
+ * 
  */
 public class PaypalPayment extends PaymentMode {
 
@@ -13,5 +14,4 @@ public class PaypalPayment extends PaymentMode {
 		super(true);
 	}
 
-	
 }

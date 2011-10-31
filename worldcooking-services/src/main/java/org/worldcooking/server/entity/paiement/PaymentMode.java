@@ -1,12 +1,15 @@
 package org.worldcooking.server.entity.paiement;
 
+
 /**
  * 
  * @author MatthieuG
- *
+ * 
  */
 public abstract class PaymentMode {
-	
+
+	private Long id;
+
 	private boolean online;
 
 	public PaymentMode(boolean online) {
@@ -21,12 +24,19 @@ public abstract class PaymentMode {
 	}
 
 	/**
-	 * @param online the online to set
+	 * @param online
+	 *            the online to set
 	 */
 	public void setOnline(boolean online) {
 		this.online = online;
 	}
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }
