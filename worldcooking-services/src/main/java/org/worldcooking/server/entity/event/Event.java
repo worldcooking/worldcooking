@@ -2,16 +2,30 @@ package org.worldcooking.server.entity.event;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Event {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
+	@Column
 	private String name;
 
+	@Column
 	private String description;
 
+	@OneToMany(mappedBy = "event")
 	private List<Subscription> subscriptions;
 
+	@OneToMany(mappedBy = "event")
 	private List<Task> availableTasks;
 
 	private int maxParticipants;

@@ -3,6 +3,12 @@ package org.worldcooking.server.entity.event;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.worldcooking.server.entity.paiement.Payment;
 import org.worldcooking.server.entity.people.Participant;
@@ -13,19 +19,27 @@ import org.worldcooking.server.entity.people.Participant;
  * @author MatthieuG
  * 
  */
+@Entity
 public class Subscription {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 
 	/** Email use for the registration. */
 	@Column
 	private String email;
 
 	/** How this subscription is paid. */
+	@ManyToOne
 	private Payment paiement;
 
 	/** Event associated to this subscription. */
+	@ManyToOne
 	private Event event;
 
 	/** People registered with this subscription. */
+	@OneToMany(mappedBy = "subscription")
 	private List<Participant> participants;
 
 	/**
@@ -79,6 +93,14 @@ public class Subscription {
 
 	public void setParticipants(List<Participant> participants) {
 		this.participants = participants;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

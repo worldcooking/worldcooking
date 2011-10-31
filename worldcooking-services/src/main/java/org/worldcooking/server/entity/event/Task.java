@@ -4,9 +4,11 @@
 package org.worldcooking.server.entity.event;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * A task is use to describe a role on an event.
@@ -14,6 +16,7 @@ import javax.persistence.Id;
  * @author MatthieuG
  * 
  */
+@Entity
 public class Task {
 
 	@Id
@@ -27,6 +30,10 @@ public class Task {
 	/** Description for this task. */
 	@Column
 	private String description;
+
+	/** Event associated to this task. */
+	@ManyToOne
+	private Event event;
 
 	/**
 	 * @return the name
@@ -71,6 +78,14 @@ public class Task {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 }
