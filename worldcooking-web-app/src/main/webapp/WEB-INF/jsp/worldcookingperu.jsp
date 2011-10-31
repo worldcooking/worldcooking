@@ -1,5 +1,13 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
+<%@ page import="org.worldcooking.server.entity.people.Participant" %>
+<%@ page import="org.worldcooking.server.entity.event.Task" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.lang.Integer" %>
+
 <%
 	//todo retrieve form persistence
 	Event wcPeru = new Event();
@@ -10,8 +18,9 @@
 			+ " to cover the cost of the evening.<br /> <br /> This year we ask each person to help. When registering you have to choose a task from the"
 			+ " following ones:<br /> - Cooking with Nidia from 4pm<br /> - Set the table<br /> - Doing the dishes<br /> - Cleaning the room<br />");
 		
-	
-	wcPeru.getSubscriptions();
+	Map<Participant, Task> participantsToTasksMap = new HashMap<Participant, Task>();
+	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
+	Map<Task, Integer> tasksNumber = new HashMap<Task, Integer>();
 %>
 <html>
 <head>
