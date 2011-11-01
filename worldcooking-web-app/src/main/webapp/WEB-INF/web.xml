@@ -6,7 +6,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/applicationContext.xml</param-value>
+		<param-value>classpath:/spring-web-context.xml</param-value>
 	</context-param>
 
 	<jsp-config>
@@ -67,7 +67,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-                classpath:app-servlet.xml
+                classpath:spring-servlet-context.xml
             </param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
