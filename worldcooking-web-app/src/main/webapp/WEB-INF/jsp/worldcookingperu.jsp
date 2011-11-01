@@ -12,7 +12,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.lang.Integer"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	//todo retrieve form persistence
 	Event wcPeru = new Event();
@@ -102,7 +102,7 @@
 </head>
 <body onload="javascript:cleanInputs(['name1_field','name2_field']);">
 	<div class="main_chapter">
-		<h2>Informations</h2>
+		<h2>Informations <c:out value="${event.name}" /> <c:out value="${event.availableTasks}" /></h2>
 		<p><%=wcPeru.getDescription()%></p>
 		<div class="information">
 			<h3>Menu :</h3>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.services.EventService;
@@ -28,7 +29,7 @@ public class WorldcookingController {
 	 * @return view with name
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String handleRequest() {
+	public ModelAndView handleRequest() {
 
 		Event e = eventService.getFullEventById(10L);
 
@@ -40,7 +41,8 @@ public class WorldcookingController {
 			System.out.println("No Tasks");
 			logger.error("Tasks");
 		}
-
-		return "worldcookingperu";
+		ModelAndView modelAndView = new ModelAndView("worldcookingperu");
+		modelAndView.addObject("event", e);
+		return modelAndView;
 	}
 }
