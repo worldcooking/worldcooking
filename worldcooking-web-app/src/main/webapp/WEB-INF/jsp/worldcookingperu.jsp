@@ -1,4 +1,5 @@
 <%@page import="org.worldcooking.server.entity.payment.*"%>
+<%@ page language="java"%>
 <%@page import="org.worldcooking.server.entity.event.Subscription"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
@@ -17,46 +18,57 @@
 	Event wcPeru = new Event();
 	wcPeru.setMaxParticipants(36);
 
-	Task chefTask = new Task("Chef",
-			"Choose the menu and cook", 1);
+	Task chefTask = new Task("Chef", "Choose the menu and cook", 1);
 	wcPeru.addAvailableTask(chefTask);
-	
+	chefTask.setId(0L);
+
 	Task cookingTask = new Task("Cooking",
 			"Cooking the meal with the chief", 7);
+	cookingTask.setId(1L);
 	wcPeru.addAvailableTask(cookingTask);
-	
+
 	Task settingTask = new Task("Setting the table",
 			"Setting the table", 10);
+	settingTask.setId(2L);
 	wcPeru.addAvailableTask(settingTask);
+
+	Task dishes = new Task("Doing the dishes",
+			"Doing the dishes", 9);
+	dishes.setId(3L);
 	
-	wcPeru.addAvailableTask(new Task("Doing the dishes",
-			"Doing the dishes", 9));
-	wcPeru.addAvailableTask(new Task("Cleaning the room",
-			"Cleaning the room", 9));
+	wcPeru.addAvailableTask(dishes);
+	
+	Task cleaning = new Task("Cleaning the room",
+			"Cleaning the room", 9); 
+	cleaning.setId(4L);
+	wcPeru.addAvailableTask(cleaning);
 
 	Payment payment0 = new Payment();
 	payment0.setAmount(15D);
 	payment0.setPerceptionTime(new Date());
-	
+
 	payment0.setMode(PaymentMode.PAYPAL);
 	Subscription subscription0 = new Subscription("toto@tata.com",
 			payment0, wcPeru);
 
-	Participant participant00 = new Participant("Matthieu Gaudet", cookingTask);
-	Participant participant01 = new Participant("Maya Rouvneska", settingTask);
+	Participant participant00 = new Participant("Matthieu Gaudet",
+			cookingTask);
+	Participant participant01 = new Participant("Maya Rouvneska",
+			settingTask);
 	subscription0.addParticipant(participant00);
-	
+
 	Payment payment1 = new Payment();
 	payment1.setAmount(0D);
 	payment1.setPerceptionTime(new Date());
-	
+
 	payment1.setMode(PaymentMode.FREE);
 	Subscription subscription1 = new Subscription("toto@tata.com",
 			payment1, wcPeru);
 
-	Participant participant10 = new Participant("Nidia Torres", cookingTask);
+	Participant participant10 = new Participant("Nidia Torres",
+			chefTask);
 	subscription1.addParticipant(participant00);
-	
+
 	List<Subscription> validatedSubscription = new ArrayList<Subscription>();
 	validatedSubscription.add(subscription0);
 	validatedSubscription.add(subscription1);
@@ -70,9 +82,19 @@
 	// only with validated payment!!!
 	Map<Participant, Task> participantsToTasksMap = new HashMap<Participant, Task>();
 	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
+	
+	
 	List<Task> tasks = wcPeru.getAvailableTasks();
-	Map<Task, Integer> tasksNumber = new HashMap<Task, Integer>();
-	Set<Participant> participantsSet = participantsToTasksMap.keySet();
+
+	List<Participant> participantsConfirmed = new ArrayList<Participant>();
+	participantsConfirmed.add(participant00);
+	participantsConfirmed.add(participant01);
+	participantsConfirmed.add(participant10);
+	
+	// participant with waiting status
+	List<Participant> participantsWaiting = new ArrayList<Participant>();
+	participantsWaiting.add(new Participant("Marie Enattente", cookingTask));
+	participantsWaiting.add(new Participant("Matthieu Enattente", cookingTask));
 %>
 <html>
 <head>
@@ -107,12 +129,12 @@
 
 		</div>
 		<div class="main_chapter">
-			<h2>Participants</h2>
+			<h2>Participants confirmed</h2>
 			<div id="div_participants" class="participants">
 				<table class="participants">
 					<thead>
 						<tr>
-							<th>Participant (<%=participantsToTasksMap.keySet().size()%>/<%=wcPeru.getMaxParticipants()%>)
+							<th>Participant (<%=participantsConfirmed.size()%>/<%=wcPeru.getMaxParticipants()%>)
 							</th>
 							<%
 								for (Task t : tasks) {
@@ -131,13 +153,57 @@
 					</thead>
 					<tbody>
 						<%
-							for (Participant p : participantsSet) {
+							int numParticipant = 0;
+							for (Participant p : participantsConfirmed) {
 						%>
 								<tr>
 									<th><%=p.getName()%></th>
 									<%
 										for (Task t : tasks) {
-													if (t.getId().equals(t.getId())) {
+												System.out.println(t.getId());
+												System.out.println(p.getTask().getId());
+												if (t.getId().equals(p.getTask().getId())) {
+									%>
+												<td><input type="radio" name="task<%=numParticipant %>" value="<%=t.getId()%>"
+													checked="checked" /></td>
+											<%
+												} else {
+											%>
+												<td><input type="radio" name="task<%=numParticipant %>" disabled="disabled"
+														value="<%=t.getId()%>" /></td>
+											<%
+												}
+												numParticipant++;
+										}
+											%>
+									
+								</tr>
+								<%
+									}
+								%>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="main_chapter">
+			<h2>Participants waiting for payment confirmation</h2>
+			<div id="div_participants" class="participants">
+				<table class="participants">
+					<thead>
+						<tr>
+							<th>Participant waiting for confirmation (<%=participantsWaiting.size()%>)
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Participant p : participantsWaiting) {
+						%>
+								<tr>
+									<th><%=p.getName()%></th>
+									<%-- <%
+										for (Task t : tasks) {
+												if (t.getId().equals(t.getId())) {
 									%>
 												<td><input type="radio" name="task0" value="<%=t.getId()%>"
 													checked="checked" /></td>
@@ -148,8 +214,8 @@
 														value="<%=t.getId()%>" /></td>
 											<%
 												}
-														}
-											%>
+													}
+											%> --%>
 									
 								</tr>
 								<%
@@ -251,6 +317,24 @@
 					</div>
 					<br /> <br /> <input type="submit" value="Join" />
 				</div>
+			</form>
+			<!--  <form action="https://www.paypal.com/cgi-bin/webscr" method="post"> -->
+			<form name="paypalForm"
+				action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+				<input type="hidden" name="cmd" value="_xclick"> <input
+					type="hidden" name="business"
+					value="potcom_1320018938_biz@gmail.com"> <input
+					type="hidden" name="item_name" value="<%=wcPeru.getName()%>">
+				<input type="hidden" name="item_number" value="1"> <input
+					type="hidden" name="amount" value="15.00"> <input
+					type="hidden" name="no_shipping" value="0"> <input
+					type="hidden" name="no_note" value="1"> <input
+					type="hidden" name="currency_code" value="CAD"> <input
+					type="hidden" name="return"
+					value="http://localhost:8080/worldcooking-web-app/"> <input
+					type="hidden" name="lc" value="AU"> <input type="hidden"
+					name="bn" value="PP-BuyNowBF"> <input type="submit"
+					value="PAYPAL" />
 			</form>
 		</div>
 	</div>
