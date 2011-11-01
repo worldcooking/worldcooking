@@ -33,6 +33,16 @@ public class Participant {
 	@ManyToOne
 	private Subscription subscription;
 
+	public Participant() {
+		// nothing to do
+	}
+
+	public Participant(String name, Task task) {
+		super();
+		this.name = name;
+		this.task = task;
+	}
+
 	/**
 	 * @return the name
 	 */

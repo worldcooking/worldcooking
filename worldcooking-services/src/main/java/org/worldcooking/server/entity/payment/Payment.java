@@ -26,6 +26,7 @@ public class Payment {
 	@Column
 	private Double amount;
 
+	@Column
 	private PaymentMode mode;
 
 	public PaymentMode getMode() {

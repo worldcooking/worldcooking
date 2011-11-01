@@ -1,5 +1,4 @@
-<%@page import="org.worldcooking.server.entity.payment.PaypalPaymentMode"%>
-<%@page import="org.worldcooking.server.entity.payment.Payment"%>
+<%@page import="org.worldcooking.server.entity.payment.*"%>
 <%@page import="org.worldcooking.server.entity.event.Subscription"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java"%>
@@ -19,26 +18,49 @@
 	Event wcPeru = new Event();
 	wcPeru.setMaxParticipants(36);
 
-	wcPeru.addAvailableTask(new Task("Chief",
-			"Choose the menu and cook", 1));
-	wcPeru.addAvailableTask(new Task("Cooking",
-			"Cooking the meal with the chief", 7));
-	wcPeru.addAvailableTask(new Task("Setting the table",
-			"Setting the table", 10));
+	Task chefTask = new Task("Chef",
+			"Choose the menu and cook", 1);
+	wcPeru.addAvailableTask(chefTask);
+	
+	Task cookingTask = new Task("Cooking",
+			"Cooking the meal with the chief", 7);
+	wcPeru.addAvailableTask(cookingTask);
+	
+	Task settingTask = new Task("Setting the table",
+			"Setting the table", 10);
+	wcPeru.addAvailableTask(settingTask);
+	
 	wcPeru.addAvailableTask(new Task("Doing the dishes",
 			"Doing the dishes", 9));
 	wcPeru.addAvailableTask(new Task("Cleaning the room",
 			"Cleaning the room", 9));
 
-	Payment payment = new Payment();
-	payment.setAmount(15D);
-	payment.setPerceptionTime(new Date());
-	PaypalPaymentMode mode = new PaypalPaymentMode();
-	mode.setUser("userToto");
-	payment.setMode(mode);
+	Payment payment0 = new Payment();
+	payment0.setAmount(15D);
+	payment0.setPerceptionTime(new Date());
+	
+	payment0.setMode(PaymentMode.PAYPAL);
 	Subscription subscription0 = new Subscription("toto@tata.com",
-			payment, wcPeru);
-	wcPeru.addSubscription(subscription0);
+			payment0, wcPeru);
+
+	Participant participant00 = new Participant("Matthieu Gaudet", cookingTask);
+	Participant participant01 = new Participant("Maya Rouvneska", settingTask);
+	subscription0.addParticipant(participant00);
+	
+	Payment payment1 = new Payment();
+	payment1.setAmount(0D);
+	payment1.setPerceptionTime(new Date());
+	
+	payment1.setMode(PaymentMode.FREE);
+	Subscription subscription1 = new Subscription("toto@tata.com",
+			payment1, wcPeru);
+
+	Participant participant10 = new Participant("Nidia Torres", cookingTask);
+	subscription1.addParticipant(participant00);
+	
+	List<Subscription> validatedSubscription = new ArrayList<Subscription>();
+	validatedSubscription.add(subscription0);
+	validatedSubscription.add(subscription1);
 
 	wcPeru.setName("Worldcooking Peru");
 	wcPeru.setDescription("Up to 39 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br /> Our chef will be Nidia Torres.<br />"
@@ -46,6 +68,7 @@
 			+ " to cover the cost of the evening.<br /> <br /> This year we ask each person to help. When registering you have to choose a task from the"
 			+ " following ones:<br /> - Cooking with Nidia from 4pm<br /> - Set the table<br /> - Doing the dishes<br /> - Cleaning the room<br />");
 
+	// only with validated payment!!!
 	Map<Participant, Task> participantsToTasksMap = new HashMap<Participant, Task>();
 	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
 	List<Task> tasks = wcPeru.getAvailableTasks();
@@ -110,10 +133,6 @@
 					<tbody>
 						<%
 							for (Participant p : participantsSet) {
-								if (p.getSubscription() != null
-										&& p.getSubscription().getPayment() != null
-										&& p.getSubscription().getPayment().getMode()
-												.isOnline()) {
 						%>
 								<tr>
 									<th><%=p.getName()%></th>
@@ -135,7 +154,6 @@
 									
 								</tr>
 								<%
-									}
 									}
 								%>
 					</tbody>

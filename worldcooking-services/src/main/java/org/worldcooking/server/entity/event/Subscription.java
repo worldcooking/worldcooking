@@ -1,5 +1,6 @@
 package org.worldcooking.server.entity.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -40,7 +41,7 @@ public class Subscription {
 
 	/** People registered with this subscription. */
 	@OneToMany(mappedBy = "subscription")
-	private List<Participant> participants;
+	private List<Participant> participants = new ArrayList<Participant>();
 
 	public Subscription() {
 		// nothing to do
@@ -101,8 +102,13 @@ public class Subscription {
 		return participants;
 	}
 
-	public void setParticipants(List<Participant> participants) {
+	protected void setParticipants(List<Participant> participants) {
 		this.participants = participants;
+	}
+
+	public void addParticipant(Participant participant) {
+		participant.setSubscription(this);
+		participants.add(participant);
 	}
 
 	public Long getId() {
