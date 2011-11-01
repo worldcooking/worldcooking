@@ -1,31 +1,44 @@
+<%@page import="org.worldcooking.server.entity.payment.PaypalPaymentMode"%>
+<%@page import="org.worldcooking.server.entity.payment.Payment"%>
+<%@page import="org.worldcooking.server.entity.event.Subscription"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
 <%@ page import="org.worldcooking.server.entity.people.Participant"%>
 <%@ page import="org.worldcooking.server.entity.event.Task"%>
+<%@ page import="org.worldcooking.server.entity.payment.*"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Set"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Date"%>
 <%@ page import="java.lang.Integer"%>
 
 <%
 	//todo retrieve form persistence
 	Event wcPeru = new Event();
+	wcPeru.setMaxParticipants(36);
 
-	List<Task> availableTasks = new ArrayList<Task>();
-	availableTasks
-			.add(new Task("Chief", "Choose the menu and cook", 1));
-	availableTasks.add(new Task("Cooking",
+	wcPeru.addAvailableTask(new Task("Chief",
+			"Choose the menu and cook", 1));
+	wcPeru.addAvailableTask(new Task("Cooking",
 			"Cooking the meal with the chief", 7));
-	availableTasks.add(new Task("Setting the table",
+	wcPeru.addAvailableTask(new Task("Setting the table",
 			"Setting the table", 10));
-	availableTasks.add(new Task("Doing the dishes", "Doing the dishes",
-			9));
-	availableTasks.add(new Task("Cleaning the room",
+	wcPeru.addAvailableTask(new Task("Doing the dishes",
+			"Doing the dishes", 9));
+	wcPeru.addAvailableTask(new Task("Cleaning the room",
 			"Cleaning the room", 9));
 
-	wcPeru.setAvailableTasks(availableTasks);
+	Payment payment = new Payment();
+	payment.setAmount(15D);
+	payment.setPerceptionTime(new Date());
+	PaypalPaymentMode mode = new PaypalPaymentMode();
+	mode.setUser("userToto");
+	payment.setMode(mode);
+	Subscription subscription0 = new Subscription("toto@tata.com",
+			payment, wcPeru);
+	wcPeru.addSubscription(subscription0);
 
 	wcPeru.setName("Worldcooking Peru");
 	wcPeru.setDescription("Up to 39 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br /> Our chef will be Nidia Torres.<br />"
@@ -97,31 +110,34 @@
 					<tbody>
 						<%
 							for (Participant p : participantsSet) {
+								if (p.getSubscription() != null
+										&& p.getSubscription().getPaiement() != null
+										&& p.getSubscription().getPaiement().getMode()
+												.isOnline()) {
 						%>
-						<tr>
-							<th><%=p.getName()%></th>
-							<%
-								for (Task t : tasks) {
-										if (t.getId().equals(t.getId())) {
-							%>
-							<td><input type="radio" name="task0" value="<%=t.getId()%>"
-								checked="checked" /></td>
-							<%
-								}
+								<tr>
+									<th><%=p.getName()%></th>
+									<%
+										for (Task t : tasks) {
+													if (t.getId().equals(t.getId())) {
+									%>
+												<td><input type="radio" name="task0" value="<%=t.getId()%>"
+													checked="checked" /></td>
+											<%
+												} else {
+											%>
+												<td><input type="radio" name="task0" disabled="disabled"
+														value="<%=t.getId()%>" /></td>
+											<%
+												}
+														}
+											%>
+									
+								</tr>
+								<%
 									}
-							%>
-							<td><input type="radio" name="task0" disabled="disabled"
-								value="cooking" /></td>
-							<td><input type="radio" name="task0" disabled="disabled"
-								value="setting" /></td>
-							<td><input type="radio" name="task0" disabled="disabled"
-								value="dishes" /></td>
-							<td><input type="radio" name="task0" disabled="disabled"
-								value="cleaning" /></td>
-						</tr>
-						<%
-							}
-						%>
+									}
+								%>
 					</tbody>
 				</table>
 			</div>
@@ -144,13 +160,16 @@
 						</label>
 					</div>
 					<div class="join_element">
-						<label for="task0_select">* Your task :</label> <select
+						<label for="task0_select">* Your task :</label> 
+						<select
 							id="task0_select" name="task0">
-							<option value="chief" disabled="disabled">Chief</option>
-							<option value="cooking" selected>Cooking</option>
-							<option value="setting">Setting the table</option>
-							<option value="dishes">Dishes</option>
-							<option value="cleaning">Cleaning</option>
+							<%
+								for (Task t : tasks) {
+							%>
+							<option value="<%=t.getId()%>"><%=t.getName()%></option>
+							<%
+								}
+							%>
 						</select>
 					</div>
 					<input type="button" value="Add a guest"
@@ -164,11 +183,13 @@
 					<div class="join_element">
 						<label for="task1_select">* Guest #1 task :</label> <select
 							id="task1_select" name="task1">
-							<option value="chief" disabled="disabled">Chief</option>
-							<option value="cooking" selected>Cooking</option>
-							<option value="setting">Setting the table</option>
-							<option value="dishes">Dishes</option>
-							<option value="cleaning">Cleaning</option>
+							<%
+								for (Task t : tasks) {
+							%>
+									<option value="<%=t.getId()%>"><%=t.getName()%></option>
+								<%
+									}
+								%>
 						</select>
 					</div>
 					<input type="button" value="Remove guest"
@@ -183,11 +204,13 @@
 					<div class="join_element">
 						<label for="task1_select">* Guest #2 task :</label> <select
 							id="task2_select" name="task2">
-							<option value="chief" disabled="disabled">Chief</option>
-							<option value="cooking" selected>Cooking</option>
-							<option value="setting">Setting the table</option>
-							<option value="dishes">Dishes</option>
-							<option value="cleaning">Cleaning</option>
+							<%
+								for (Task t : tasks) {
+							%>
+							<option value="<%=t.getId()%>"><%=t.getName()%></option>
+							<%
+								}
+							%>
 						</select>
 					</div>
 					<input type="button" value="Remove guest"

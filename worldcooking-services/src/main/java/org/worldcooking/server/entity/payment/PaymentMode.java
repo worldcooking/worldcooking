@@ -1,4 +1,4 @@
-package org.worldcooking.server.entity.paiement;
+package org.worldcooking.server.entity.payment;
 
 
 /**

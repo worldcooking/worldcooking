@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.worldcooking.server.entity.paiement.Payment;
+import org.worldcooking.server.entity.payment.Payment;
 import org.worldcooking.server.entity.people.Participant;
 
 /**
@@ -32,7 +32,7 @@ public class Subscription {
 
 	/** How this subscription is paid. */
 	@ManyToOne
-	private Payment paiement;
+	private Payment payment;
 
 	/** Event associated to this subscription. */
 	@ManyToOne
@@ -41,6 +41,16 @@ public class Subscription {
 	/** People registered with this subscription. */
 	@OneToMany(mappedBy = "subscription")
 	private List<Participant> participants;
+
+	public Subscription() {
+		// nothing to do
+	}
+
+	public Subscription(String email, Payment payment, Event event) {
+		this.email = email;
+		this.payment = payment;
+		this.event = event;
+	}
 
 	/**
 	 * @return the email
@@ -61,7 +71,7 @@ public class Subscription {
 	 * @return the paiement
 	 */
 	public Payment getPaiement() {
-		return paiement;
+		return payment;
 	}
 
 	/**
@@ -69,7 +79,7 @@ public class Subscription {
 	 *            the paiement to set
 	 */
 	public void setPaiement(Payment paiement) {
-		this.paiement = paiement;
+		this.payment = paiement;
 	}
 
 	/**

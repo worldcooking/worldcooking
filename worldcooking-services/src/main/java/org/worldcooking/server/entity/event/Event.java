@@ -60,8 +60,13 @@ public class Event {
 		return subscriptions;
 	}
 
-	public void setSubscriptions(List<Subscription> subscriptions) {
+	protected void setSubscriptions(List<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
+	}
+
+	public void addSubscription(Subscription subscription) {
+		this.subscriptions.add(subscription);
+		subscription.setEvent(this);
 	}
 
 	public List<Task> getAvailableTasks() {

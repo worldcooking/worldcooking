@@ -1,4 +1,4 @@
-package org.worldcooking.server.entity.paiement;
+package org.worldcooking.server.entity.payment;
 
 import java.util.Date;
 
@@ -25,6 +25,16 @@ public class Payment {
 
 	@Column
 	private Double amount;
+
+	private PaymentMode mode;
+
+	public PaymentMode getMode() {
+		return mode;
+	}
+
+	public void setMode(PaymentMode mode) {
+		this.mode = mode;
+	}
 
 	public Date getPerceptionTime() {
 		return perceptionTime;
