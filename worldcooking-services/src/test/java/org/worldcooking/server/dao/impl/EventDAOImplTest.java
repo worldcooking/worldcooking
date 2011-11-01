@@ -1,15 +1,12 @@
 package org.worldcooking.server.dao.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
-
 import org.worldcooking.ApplicationContextAwareTest;
-import org.worldcooking.server.dao.DummyDAO;
-import org.worldcooking.server.entity.DummyEntity;
 import org.worldcooking.server.entity.event.Event;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * 

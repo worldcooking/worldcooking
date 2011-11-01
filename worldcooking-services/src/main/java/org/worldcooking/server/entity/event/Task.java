@@ -3,12 +3,18 @@
  */
 package org.worldcooking.server.entity.event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.worldcooking.server.entity.people.Participant;
 
 /**
  * A task is use to describe a role on an event.
@@ -36,13 +42,16 @@ public class Task {
 	private Event event;
 
 	@Column
-	private int nbMax;
+	private Integer nbMax;
+
+	@OneToMany(mappedBy = "task")
+	private List<Participant> participants = new ArrayList<Participant>();
 
 	public Task() {
 		// nothing to do
 	}
 
-	public Task(String name, String description, int nbMax) {
+	public Task(String name, String description, Integer nbMax) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -102,12 +111,28 @@ public class Task {
 		this.event = event;
 	}
 
-	public int getNbMax() {
+	public Integer getNbMax() {
 		return nbMax;
 	}
 
-	public void setNbMax(int nbMax) {
+	public void setNbMax(Integer nbMax) {
 		this.nbMax = nbMax;
 	}
 
+	public List<Participant> getParticipants() {
+		return participants;
+	}
+
+	/**
+	 * @use addParticipant instead
+	 * @param participants
+	 */
+	protected void setParticipants(List<Participant> participants) {
+		this.participants = participants;
+	}
+
+	public void addParticipant(Participant participant) {
+		this.participants.add(participant);
+		participant.setTask(this);
+	}
 }
