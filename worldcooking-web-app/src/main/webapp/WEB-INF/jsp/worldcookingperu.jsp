@@ -1,7 +1,6 @@
 <%@page import="org.worldcooking.server.entity.payment.*"%>
 <%@page import="org.worldcooking.server.entity.event.Subscription"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
 <%@ page import="org.worldcooking.server.entity.people.Participant"%>
 <%@ page import="org.worldcooking.server.entity.event.Task"%>
