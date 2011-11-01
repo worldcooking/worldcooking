@@ -111,8 +111,8 @@
 						<%
 							for (Participant p : participantsSet) {
 								if (p.getSubscription() != null
-										&& p.getSubscription().getPaiement() != null
-										&& p.getSubscription().getPaiement().getMode()
+										&& p.getSubscription().getPayment() != null
+										&& p.getSubscription().getPayment().getMode()
 												.isOnline()) {
 						%>
 								<tr>
@@ -222,8 +222,8 @@
 							name="email" type="text" />
 					</div>
 					<div class="join_element">
-						<label for="paiement_mode">* Paiement :</label> <select
-							id="paiement_mode">
+						<label for="payment_mode">* Payment :</label> <select
+							id="payment_mode">
 							<option value="paypal">Paypal</option>
 							<option value="ntorres">Pay to Benjamin Levine</option>
 							<option value="mgaudet">Pay to Matthieu Gaudet</option>

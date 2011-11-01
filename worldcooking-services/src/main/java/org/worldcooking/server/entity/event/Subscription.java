@@ -68,18 +68,18 @@ public class Subscription {
 	}
 
 	/**
-	 * @return the paiement
+	 * @return the payment
 	 */
-	public Payment getPaiement() {
+	public Payment getPayment() {
 		return payment;
 	}
 
 	/**
-	 * @param paiement
-	 *            the paiement to set
+	 * @param payment
+	 *            the payment to set
 	 */
-	public void setPaiement(Payment paiement) {
-		this.payment = paiement;
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	/**
