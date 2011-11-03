@@ -1,7 +1,7 @@
 package org.worldcooking.server.entity.event;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +27,10 @@ public class Event {
 	private String description;
 
 	@OneToMany(mappedBy = "event")
-	private Set<Subscription> subscriptions = new HashSet<Subscription>();
+	private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
 	@OneToMany(mappedBy = "event")
-	private Set<Task> availableTasks = new HashSet<Task>();
+	private List<Task> availableTasks = new ArrayList<Task>();
 
 	@Column
 	private Integer maxParticipants;
@@ -59,11 +59,11 @@ public class Event {
 		this.description = description;
 	}
 
-	public Set<Subscription> getSubscriptions() {
+	public List<Subscription> getSubscriptions() {
 		return subscriptions;
 	}
 
-	protected void setSubscriptions(Set<Subscription> subscriptions) {
+	protected void setSubscriptions(List<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
 
@@ -72,7 +72,7 @@ public class Event {
 		subscription.setEvent(this);
 	}
 
-	public Set<Task> getAvailableTasks() {
+	public List<Task> getAvailableTasks() {
 		return availableTasks;
 	}
 
@@ -81,7 +81,7 @@ public class Event {
 	 * 
 	 * @param availableTasks
 	 */
-	protected void setAvailableTasks(Set<Task> availableTasks) {
+	protected void setAvailableTasks(List<Task> availableTasks) {
 		this.availableTasks = availableTasks;
 	}
 

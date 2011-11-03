@@ -12,7 +12,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.lang.Integer"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	//todo retrieve form persistence
 	Event wcPeru = new Event();
@@ -84,7 +84,7 @@
 	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
 	
 	
-	Set<Task> tasks = wcPeru.getAvailableTasks();
+	List<Task> tasks = wcPeru.getAvailableTasks();
 
 	List<Participant> participantsConfirmed = new ArrayList<Participant>();
 	participantsConfirmed.add(participant00);
@@ -102,11 +102,7 @@
 </head>
 <body onload="javascript:cleanInputs(['name1_field','name2_field']);">
 	<div class="main_chapter">
-		<h2>
-			Informations
-			<c:out value="${event.name}" />
-			<c:out value="${event.availableTasks}" />
-		</h2>
+		<h2>Informations <c:out value="${event.name}" /> <c:out value="${event.availableTasks}" /></h2>
 		<p><%=wcPeru.getDescription()%></p>
 		<div class="information">
 			<h3>Menu :</h3>
@@ -160,27 +156,29 @@
 							int numParticipant = 0;
 							for (Participant p : participantsConfirmed) {
 						%>
-						<tr>
-							<th><%=p.getName()%></th>
-							<%
+								<tr>
+									<th><%=p.getName()%></th>
+									<%
 										for (Task t : tasks) {
+												System.out.println(t.getId());
+												System.out.println(p.getTask().getId());
 												if (t.getId().equals(p.getTask().getId())) {
 									%>
-							<td><input type="radio" name="task<%=numParticipant %>"
-								value="<%=t.getId()%>" checked="checked" /></td>
-							<%
+												<td><input type="radio" name="task<%=numParticipant %>" value="<%=t.getId()%>"
+													checked="checked" /></td>
+											<%
 												} else {
 											%>
-							<td><input type="radio" name="task<%=numParticipant %>"
-								disabled="disabled" value="<%=t.getId()%>" /></td>
-							<%
+												<td><input type="radio" name="task<%=numParticipant %>" disabled="disabled"
+														value="<%=t.getId()%>" /></td>
+											<%
 												}
 												numParticipant++;
 										}
 											%>
-
-						</tr>
-						<%
+									
+								</tr>
+								<%
 									}
 								%>
 					</tbody>
@@ -201,9 +199,9 @@
 						<%
 							for (Participant p : participantsWaiting) {
 						%>
-						<tr>
-							<th><%=p.getName()%></th>
-							<%-- <%
+								<tr>
+									<th><%=p.getName()%></th>
+									<%-- <%
 										for (Task t : tasks) {
 												if (t.getId().equals(t.getId())) {
 									%>
@@ -218,9 +216,9 @@
 												}
 													}
 											%> --%>
-
-						</tr>
-						<%
+									
+								</tr>
+								<%
 									}
 								%>
 					</tbody>
@@ -245,7 +243,8 @@
 						</label>
 					</div>
 					<div class="join_element">
-						<label for="task0_select">* Your task :</label> <select
+						<label for="task0_select">* Your task :</label> 
+						<select
 							id="task0_select" name="task0">
 							<%
 								for (Task t : tasks) {
@@ -270,8 +269,8 @@
 							<%
 								for (Task t : tasks) {
 							%>
-							<option value="<%=t.getId()%>"><%=t.getName()%></option>
-							<%
+									<option value="<%=t.getId()%>"><%=t.getName()%></option>
+								<%
 									}
 								%>
 						</select>
