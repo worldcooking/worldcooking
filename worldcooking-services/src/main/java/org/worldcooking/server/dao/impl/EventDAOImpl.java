@@ -16,8 +16,8 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 	public Event findFullEventById(Long id) {
 		List<Event> eList = getHibernateTemplate().findByNamedParam(
 				"from Event e join fetch e.availableTasks as t "
-						+ "join fetch e.subscriptions as s "
-						+ "join fetch s.participants as p"
+						+ "left join fetch e.subscriptions as s "
+						+ "left join fetch s.participants as p"
 						+ " where e.id=:eventId", "eventId", id);
 		if (eList != null && !eList.isEmpty()) {
 			return eList.get(0);

@@ -1,6 +1,6 @@
 package org.worldcooking.web;
 
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class WorldcookingController {
 	public ModelAndView handleRequest() {
 		Event e = eventService.getFullEventById(10L);
 
-		List<Task> availableTasks = e.getAvailableTasks();
+		Set<Task> availableTasks = e.getAvailableTasks();
 		if (availableTasks != null) {
 			System.out.println("Tasks nb:" + availableTasks.size());
 			logger.error("Tasks nb:" + availableTasks.size());
