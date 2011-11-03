@@ -2,6 +2,7 @@ package org.worldcooking.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,20 +37,20 @@ public class EventService {
 	 * 
 	 */
 	public List<Participant> getWaitingParticipants(Long id) {
-		List<Participant> waitingParticipants = new ArrayList<Participant>();
-
 		Event event = eventDao.findFullEventById(id);
-		return getWaitingParticipants(waitingParticipants, event);
+		return getWaitingParticipants(event);
 	}
 
 	/**
-	 * @param waitingParticipants
+	 * Get the participants waiting for confirmation.
+	 * 
 	 * @param event
-	 * @return
+	 *            The event.
+	 * @return The participants waiting for validation.
 	 */
-	private List<Participant> getWaitingParticipants(
-			List<Participant> waitingParticipants, Event event) {
-		List<Subscription> subscriptions = event.getSubscriptions();
+	private List<Participant> getWaitingParticipants(Event event) {
+		List<Participant> waitingParticipants = new ArrayList<Participant>();
+		Set<Subscription> subscriptions = event.getSubscriptions();
 		for (Subscription subscription : subscriptions) {
 			if (!subscription.getValidate()) {
 				waitingParticipants.addAll(subscription.getParticipants());
@@ -60,13 +61,35 @@ public class EventService {
 	}
 
 	/**
+	 * Participants validated
 	 * 
 	 * @param id
-	 * @return
+	 *            Id of the event.
+	 * @return List of participants validated for the event.
 	 */
 	public List<Participant> getValidatedParticipants(Long id) {
+		Event event = eventDao.findFullEventById(id);
+
+		return getValidatedParticipants(event);
+	}
+
+	/**
+	 * Get the participants validated for this event.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @return List of the validated participants.
+	 */
+	private List<Participant> getValidatedParticipants(Event event) {
 		List<Participant> validatedParticipants = new ArrayList<Participant>();
+		Set<Subscription> subscriptions = event.getSubscriptions();
+		for (Subscription subscription : subscriptions) {
+			if (!subscription.getValidate()) {
+				validatedParticipants.addAll(subscription.getParticipants());
+			}
+		}
 
 		return validatedParticipants;
 	}
+
 }
