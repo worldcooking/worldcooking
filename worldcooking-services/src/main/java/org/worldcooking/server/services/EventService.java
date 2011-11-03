@@ -42,6 +42,11 @@ public class EventService {
 		return getWaitingParticipants(waitingParticipants, event);
 	}
 
+	/**
+	 * @param waitingParticipants
+	 * @param event
+	 * @return
+	 */
 	private List<Participant> getWaitingParticipants(
 			List<Participant> waitingParticipants, Event event) {
 		List<Subscription> subscriptions = event.getSubscriptions();
