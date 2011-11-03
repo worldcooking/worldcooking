@@ -44,7 +44,8 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 		}
 	}
 
-	public T findById(Long id, boolean lock) {
+	@Override
+	public T findById(ID id, boolean lock) {
 		T entity;
 		if (lock) {
 			entity = getHibernateTemplate().get(persistentClass, id,

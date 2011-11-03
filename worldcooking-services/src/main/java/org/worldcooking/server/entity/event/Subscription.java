@@ -31,6 +31,9 @@ public class Subscription {
 	@Column
 	private String email;
 
+	/** If the subscription is validated. */
+	private Boolean validate = false;
+
 	/** How this subscription is paid. */
 	@ManyToOne
 	private Payment payment;
@@ -117,6 +120,14 @@ public class Subscription {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Boolean getValidate() {
+		return validate;
+	}
+
+	public void setValidate(Boolean validate) {
+		this.validate = validate;
 	}
 
 }
