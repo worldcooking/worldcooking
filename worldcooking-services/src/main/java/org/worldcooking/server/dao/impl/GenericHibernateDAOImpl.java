@@ -12,6 +12,7 @@ import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.worldcooking.server.dao.GenericDAO;
+import org.worldcooking.server.exception.EntityIdNotFountException;
 
 /**
  * Based on http://community.jboss.org/docs/DOC-13955
@@ -44,14 +45,22 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 		}
 	}
 
+	public T findById(ID id) throws EntityIdNotFountException {
+		return findById(id, false);
+	}
+
 	@Override
-	public T findById(ID id, boolean lock) {
+	public T findById(ID id, boolean lock) throws EntityIdNotFountException {
 		T entity;
 		if (lock) {
 			entity = getHibernateTemplate().get(persistentClass, id,
 					LockMode.PESSIMISTIC_WRITE);
 		} else {
 			entity = getHibernateTemplate().get(persistentClass, id);
+		}
+		if (entity == null) {
+			// no entity with this id
+			throw new EntityIdNotFountException(persistentClass, id);
 		}
 
 		return entity;

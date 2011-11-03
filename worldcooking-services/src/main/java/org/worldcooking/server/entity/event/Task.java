@@ -44,6 +44,9 @@ public class Task {
 	@Column
 	private Integer nbMax;
 
+	@Column
+	private Double pricePerParticipant;
+
 	@OneToMany(mappedBy = "task")
 	private List<Participant> participants = new ArrayList<Participant>();
 
@@ -134,5 +137,13 @@ public class Task {
 	public void addParticipant(Participant participant) {
 		this.participants.add(participant);
 		participant.setTask(this);
+	}
+
+	public Double getPricePerParticipant() {
+		return pricePerParticipant;
+	}
+
+	public void setPricePerParticipant(Double participantPrice) {
+		this.pricePerParticipant = participantPrice;
 	}
 }

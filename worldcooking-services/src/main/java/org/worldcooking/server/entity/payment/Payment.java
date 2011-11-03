@@ -29,6 +29,9 @@ public class Payment {
 	@Column
 	private PaymentMode mode;
 
+	@Column
+	private String reference;
+
 	public PaymentMode getMode() {
 		return mode;
 	}
@@ -59,6 +62,14 @@ public class Payment {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String target) {
+		this.reference = target;
 	}
 
 }

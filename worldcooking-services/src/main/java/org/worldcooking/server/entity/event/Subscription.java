@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.worldcooking.server.entity.payment.Payment;
 import org.worldcooking.server.entity.people.Participant;
@@ -35,7 +36,7 @@ public class Subscription {
 	private Boolean validate = false;
 
 	/** How this subscription is paid. */
-	@ManyToOne
+	@OneToOne
 	private Payment payment;
 
 	/** Event associated to this subscription. */

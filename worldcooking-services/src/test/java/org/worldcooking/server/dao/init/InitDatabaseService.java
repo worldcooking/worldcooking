@@ -31,6 +31,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Task t1 = new Task();
 		t1.setName("Chef");
 		t1.setNbMax(1);
+		t1.setPricePerParticipant(0d);
 		e.addAvailableTask(t1);
 		dao.makePersistent(t1);
 
@@ -42,6 +43,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Task t2 = new Task();
 		t2.setName("Cooking");
 		t2.setNbMax(7);
+		t2.setPricePerParticipant(15d);
 		e.addAvailableTask(t2);
 		dao.makePersistent(t2);
 
@@ -53,6 +55,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Task t3 = new Task();
 		t3.setName("Setting the table");
 		t3.setNbMax(10);
+		t3.setPricePerParticipant(15d);
 		e.addAvailableTask(t3);
 		dao.makePersistent(t3);
 
@@ -64,6 +67,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Task t4 = new Task();
 		t4.setName("Doing the dishes");
 		t4.setNbMax(9);
+		t4.setPricePerParticipant(15d);
 		e.addAvailableTask(t4);
 		dao.makePersistent(t4);
 
@@ -75,6 +79,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Task t5 = new Task();
 		t5.setName("Cleaning the room");
 		t5.setNbMax(9);
+		t5.setPricePerParticipant(15d);
 		e.addAvailableTask(t5);
 		dao.makePersistent(t5);
 
