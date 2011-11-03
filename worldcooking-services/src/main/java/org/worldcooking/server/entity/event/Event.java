@@ -20,6 +20,9 @@ public class Event {
 	@Column
 	private String name;
 
+	/**
+	 *
+	 */
 	@Column
 	private String description;
 
