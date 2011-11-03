@@ -84,7 +84,7 @@
 	Map<Task, List<Participant>> tasksToParticipantsMap = new HashMap<Task, List<Participant>>();
 	
 	
-	List<Task> tasks = wcPeru.getAvailableTasks();
+	Set<Task> tasks = wcPeru.getAvailableTasks();
 
 	List<Participant> participantsConfirmed = new ArrayList<Participant>();
 	participantsConfirmed.add(participant00);
