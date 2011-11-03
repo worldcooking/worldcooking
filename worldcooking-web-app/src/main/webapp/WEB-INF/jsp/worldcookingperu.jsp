@@ -1,5 +1,5 @@
 <%@page import="org.worldcooking.server.entity.payment.*"%>
-<%@ page language="java"%>
+<%@page language="java"%>
 <%@page import="org.worldcooking.server.entity.event.Subscription"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="org.worldcooking.server.entity.event.Event"%>
@@ -160,8 +160,6 @@
 									<th><%=p.getName()%></th>
 									<%
 										for (Task t : tasks) {
-												System.out.println(t.getId());
-												System.out.println(p.getTask().getId());
 												if (t.getId().equals(p.getTask().getId())) {
 									%>
 												<td><input type="radio" name="task<%=numParticipant %>" value="<%=t.getId()%>"
@@ -201,22 +199,6 @@
 						%>
 								<tr>
 									<th><%=p.getName()%></th>
-									<%-- <%
-										for (Task t : tasks) {
-												if (t.getId().equals(t.getId())) {
-									%>
-												<td><input type="radio" name="task0" value="<%=t.getId()%>"
-													checked="checked" /></td>
-											<%
-												} else {
-											%>
-												<td><input type="radio" name="task0" disabled="disabled"
-														value="<%=t.getId()%>" /></td>
-											<%
-												}
-													}
-											%> --%>
-									
 								</tr>
 								<%
 									}
