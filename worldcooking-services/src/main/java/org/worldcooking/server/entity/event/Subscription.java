@@ -1,7 +1,7 @@
 package org.worldcooking.server.entity.event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import org.worldcooking.server.entity.payment.Payment;
 import org.worldcooking.server.entity.people.Participant;
 
 /**
- * Association
+ * A subscription is an association between participants and event.
  * 
  * @author MatthieuG
  * 
@@ -24,6 +24,9 @@ import org.worldcooking.server.entity.people.Participant;
 @Entity
 public class Subscription {
 
+	/**
+	 * Identify a subscription in DB.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -45,7 +48,7 @@ public class Subscription {
 
 	/** People registered with this subscription. */
 	@OneToMany(mappedBy = "subscription")
-	private List<Participant> participants = new ArrayList<Participant>();
+	private Set<Participant> participants = new HashSet<Participant>();
 
 	public Subscription() {
 		// nothing to do
@@ -102,11 +105,11 @@ public class Subscription {
 		this.event = event;
 	}
 
-	public List<Participant> getParticipants() {
+	public Set<Participant> getParticipants() {
 		return participants;
 	}
 
-	protected void setParticipants(List<Participant> participants) {
+	protected void setParticipants(Set<Participant> participants) {
 		this.participants = participants;
 	}
 

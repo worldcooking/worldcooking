@@ -1,6 +1,7 @@
 package org.worldcooking.server.services.subscription;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import javax.annotation.Resource;
 
@@ -41,14 +42,14 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 
 		// T1 (10)
 		Assert.assertEquals(10d, subscriptionService
-				.calculateSubscriptionPrice(Arrays.asList(p1)));
+				.calculateSubscriptionPrice(new HashSet(Arrays.asList(p1))));
 
 		Participant p2 = new Participant();
 		p2.setTask(t2);
 
 		// T1 (10) + T2 (12) = 22
 		Assert.assertEquals(22d, subscriptionService
-				.calculateSubscriptionPrice(Arrays.asList(p1, p2)));
+				.calculateSubscriptionPrice(new HashSet(Arrays.asList(p1, p2))));
 
 		Participant p3 = new Participant();
 		p3.setTask(t2);
@@ -58,11 +59,12 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 
 		// T1 (10) + T2 (12) + T2 (12) + T3 (0) = 34
 		Assert.assertEquals(34d, subscriptionService
-				.calculateSubscriptionPrice(Arrays.asList(p1, p2, p3, p4)));
+				.calculateSubscriptionPrice(new HashSet(Arrays.asList(p1, p2,
+						p3, p4))));
 
 		// T3 (0)
 		Assert.assertEquals(0d, subscriptionService
-				.calculateSubscriptionPrice(Arrays.asList(p4)));
+				.calculateSubscriptionPrice(new HashSet(Arrays.asList(p4))));
 
 	}
 

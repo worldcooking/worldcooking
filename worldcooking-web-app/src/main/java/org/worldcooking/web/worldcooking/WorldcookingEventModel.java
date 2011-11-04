@@ -4,10 +4,8 @@
 package org.worldcooking.web.worldcooking;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,7 +27,17 @@ public class WorldcookingEventModel {
 	private Set<ParticipantTask> validatedParticipantsTask = new HashSet<ParticipantTask>();
 
 	/** List of task with their ids. */
-	private Map<Long, String> tasks = new HashMap<Long, String>();
+	private List<TaskModel> tasks = new ArrayList<TaskModel>();
+
+	private int nbParticipantsMax = 0;
+
+	public int getNbParticipants() {
+		return validatedParticipantsTask.size();
+	}
+
+	public int getNbParticipantsWaiting() {
+		return waitingParticipants.size();
+	}
 
 	public String getName() {
 		return name;
@@ -55,7 +63,7 @@ public class WorldcookingEventModel {
 		waitingParticipants.add(participant);
 	}
 
-	public void addWaitingParticipant(List<String> participants) {
+	public void addWaitingParticipants(List<String> participants) {
 		waitingParticipants.addAll(participants);
 	}
 
@@ -63,28 +71,33 @@ public class WorldcookingEventModel {
 		return validatedParticipantsTask;
 	}
 
-	public void addValidatedParticipantsTask(String name, Long taskId) {
-		validatedParticipantsTask.add(new ParticipantTask(taskId, name));
+	public void addValidatedParticipantTask(String name, Long taskId, Long id) {
+		validatedParticipantsTask.add(new ParticipantTask(taskId, name, id));
 	}
 
-	public Map<Long, String> getTasks() {
+	public List<TaskModel> getTasks() {
 		return tasks;
 	}
-	
-	public void addTask(Long taskId, String name) {
-		tasks.put(taskId, name);
+
+	public void addTask(TaskModel task) {
+		tasks.add(task);
 	}
 
-	private class ParticipantTask {
+	public void addTask(Long id, String name, int totalRegister, int totalMax) {
+		tasks.add(new TaskModel(id, name, totalRegister, totalMax));
+	}
 
-		private Long taskId;
+	public int getNbParticipantsMax() {
+		return nbParticipantsMax;
+	}
 
-		private String name;
+	public void setNbParticipantsMax(int nbParticipantsMax) {
+		this.nbParticipantsMax = nbParticipantsMax;
+	}
 
-		public ParticipantTask(Long taskId, String name) {
-			this.taskId = taskId;
-			this.name = name;
-		}
+	public void addTasks(List<TaskModel> tasks) {
+		this.tasks.addAll(tasks);
+
 	}
 
 }

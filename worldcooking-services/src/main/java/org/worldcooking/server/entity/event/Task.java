@@ -25,6 +25,9 @@ import org.worldcooking.server.entity.people.Participant;
 @Entity
 public class Task {
 
+	/**
+	 * Unique id in DB.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
