@@ -138,7 +138,7 @@ select:active, select:focus {
     border: 1px solid #093C75;
     box-shadow: 0 0 3px #0459B7;
 }
-input[type="submit"], input[type="button"], a.submit, input[type="button"].join {
+input[type="submit"], input[type="button"], a.submit, input[type="button"].form {
     background: -moz-linear-gradient(90deg, #98CBC4, #ABCAC6) repeat scroll 0 0 transparent;
     border: 1px solid #67AFA5;
     border-radius: 5px 5px 5px 5px;
@@ -158,7 +158,7 @@ input[type="button"]{
    	text-transform:uppercase
 }
 
-input[type="button"].join:hover {
+input[type="button"].form:hover {
 	background: -webkit-gradient(linear, left top, left bottom, from(#0C49B2), to(#3F71C8));
     background: -moz-linear-gradient(90deg, #0C49B2, #3F71C8) repeat scroll 0 0 transparent;
     border-color: #67AFA5;
@@ -166,7 +166,7 @@ input[type="button"].join:hover {
 	color: #FFF;
 }
 
-input[type="submit"]:hover, a.submit:hover, input[type="button"].join:hover {
+input[type="submit"]:hover, a.submit:hover, input[type="button"].form:hover {
 	background: -webkit-gradient(linear, left top, left bottom, from(#0C49B2), to(#3F71C8));
     background: -moz-linear-gradient(90deg, #0C49B2, #3F71C8) repeat scroll 0 0 transparent;
     border-color: #67AFA5;
@@ -178,25 +178,25 @@ div.adress {
 	display: inline-block;
 	width: 60%;
 }
-div.join {
+div.form {
 	display: block;	
 	padding : 5px
 }
-div.join.supp {
+div.form.supp {
 	display: none;
 }
 
-.join_element {
+.form_element {
 	width:200px;
 	height:50px;
     display: inline-block;
     margin-left: 2%;
     margin-right: 2%;
 }
-.join_input {
+.form_input {
 	vertical-align:top; 
 }
-.join_buttonaction {
+.form_buttonaction {
 	margin-top: 50px;
 }
 iframe.map {
