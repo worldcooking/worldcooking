@@ -4,11 +4,11 @@
 <html>
 <head>
 <title><decorator:title default="Worldcooking" /></title>
-<link rel="stylesheet" type="text/css" href="css/main.css"
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"
 	media="screen" title="bbxcss" />
 <style type="text/css">
 </style>
-<script type="text/javascript" src="js/main.js">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js">
 		</script> 
 </head>
 <body onload="<decorator:getProperty property="body.onload"/>">
