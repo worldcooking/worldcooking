@@ -1,4 +1,4 @@
-package org.worldcooking.web;
+package org.worldcooking.web.worldcooking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,6 @@ import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.web.util.ModelViewMapper;
-import org.worldcooking.web.worldcooking.TaskModel;
-import org.worldcooking.web.worldcooking.WorldcookingEventModel;
 
 /**
  * Simple index page controller serving hello.jsp file

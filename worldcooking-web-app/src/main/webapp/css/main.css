@@ -188,9 +188,16 @@ div.join.supp {
 
 .join_element {
 	width:200px;
+	height:50px;
     display: inline-block;
     margin-left: 2%;
     margin-right: 2%;
+}
+.join_input {
+	vertical-align:top; 
+}
+.join_buttonaction {
+	margin-top: 50px;
 }
 iframe.map {
 	margin-top: 10;
@@ -209,7 +216,13 @@ iframe.map {
 	margin-top:-100;
 }
 
-
+div.info_bottom {
+	position:relative;
+	margin:0px auto 0;
+	padding:20px;
+	width:800px;
+	text-align: center;
+}
 
 
 
