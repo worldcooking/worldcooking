@@ -67,7 +67,13 @@ public class PaypalRegistrationConfirmationController {
 		Assert.notNull(subscriptionId);
 
 		Subscription subscription = subscriptionService
-				.findSubscriptionById(subscriptionId);
+				.findFullSubscriptionById(subscriptionId);
+
+		if (subscription.getValidate() != null
+				&& subscription.getValidate().booleanValue()) {
+			// registration already validated: redirect to welcome page
+			return "redirect:/";
+		}
 
 		model.addAttribute("event", subscription.getEvent());
 

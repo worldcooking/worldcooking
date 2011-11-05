@@ -155,8 +155,8 @@ public class SubscriptionService {
 		}
 	}
 
-	public Subscription findSubscriptionById(Long id)
+	public Subscription findFullSubscriptionById(Long id)
 			throws EntityIdNotFountException {
-		return subscriptionDAOImpl.findById(id);
+		return subscriptionDAOImpl.findFullSubscriptionById(id);
 	}
 }

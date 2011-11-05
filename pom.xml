@@ -54,13 +54,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- PAYPAL -->
-
-		<dependency>
-			<groupId>paypal</groupId>
-			<artifactId>base</artifactId>
-		</dependency>
-
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -73,13 +66,7 @@
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
-			<!-- PAYPAL -->
-			<dependency>
-				<groupId>paypal</groupId>
-				<artifactId>base</artifactId>
-				<version>5.2.4</version>
-			</dependency>
-
+		
 			<!-- LOGGING DEPENDENCIES - LOG4J -->
 			<dependency>
 				<groupId>org.slf4j</groupId>

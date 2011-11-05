@@ -1,7 +1,6 @@
 package org.worldcooking.web.registration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -32,7 +31,7 @@ public class Registration {
 	 * List of selected tasks (ordered by participant).
 	 */
 	@NotEmpty
-	private List<Long> participantTasks = Arrays.asList(2L, 1L, 3L);
+	private List<Long> participantTasks = new ArrayList<Long>();
 
 	/**
 	 * List of participants names.

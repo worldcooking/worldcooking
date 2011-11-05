@@ -1,5 +1,6 @@
 package org.worldcooking.web.registration;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,6 +45,8 @@ public class RegistrationController {
 
 		Registration registration = new Registration();
 		registration.setEventId(10L);
+
+		registration.setParticipantTasks(Arrays.asList(0l, 0l, 0l));
 
 		model.addAttribute("registration", registration);
 		return "registration";
@@ -100,13 +103,17 @@ public class RegistrationController {
 		Subscription subscription = subscriptionService
 				.subscribe(newRegistration);
 
+		String returnView;
 		if (newRegistration.getPaymentMode() == NewSubscriptionPaymentMode.PAYPAL) {
 			// redirect to paypal
-			return "redirect:/registration/confirmation/paypal?subscriptionId="
+			returnView = "redirect:/registration/confirmation/paypal?subscriptionId="
+					+ subscription.getId();
+		} else {
+			returnView = "redirect:/registration/confirmation?subscriptionId="
 					+ subscription.getId();
 		}
 		// redirect to main page
-		return "redirect:/";
+		return returnView;
 	}
 
 	/**

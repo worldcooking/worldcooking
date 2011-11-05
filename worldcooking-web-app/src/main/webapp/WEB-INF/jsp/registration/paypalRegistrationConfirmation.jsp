@@ -5,8 +5,13 @@
 <title>${event.name} - Paypal payment</title>
 </head>
 <body>
-	<div class="main_chapter">
-		<form name="paypalForm" action="${paypalFormAction}"  >
+		<div class="main_chapter">
+			<h2>Congratulations!</h2>
+			<p>
+				You successfully process to your pre-registration!<br/>
+				We will send an email to confirm your registration once we receive your payment.<br/>
+				<br/>
+				<form name="paypalForm" action="${paypalFormAction}"  >
 			<input type="hidden" name="cmd" value="_xclick"/> 
 			<input type="hidden"  name="business" value="${paypalBusinessEmailAddress}"/>
 			<input type="hidden" name="business" value="${paypalBusinessEmailAddress}"/> 
@@ -20,8 +25,9 @@
 			<input type="hidden" name="return" value="${paypalReturnUrl}"> 
 			<input type="hidden" name="lc" value="AU" /> 
 			<input type="hidden" name="bn" value="PP-BuyNowBF"/> 
-			<input type="submit" value="PAYPAL" />
+			<input type="submit" value="Go to paypal Web site to finalize my registration." />
 		</form>
-	</div>
+			</p>
+		</div> 
 </body>
 </html>
