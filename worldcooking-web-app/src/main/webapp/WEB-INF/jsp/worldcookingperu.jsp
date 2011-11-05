@@ -12,15 +12,26 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.lang.Integer"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <title>${event.name}</title>
 </head>
 <body onload="javascript:cleanInputs(['name1_field','name2_field']);">
 
-	<!-- temp link -->
-	<a href="http://localhost:8080/worldcooking-web-app/registration">REGISTRATION</a>
+	<div class="main_chapter">
+		<h2>Join us!</h2>
+		<p>
+			The price for this meal is <b>15€ per person.</b><br/> 
+			This amount can pay the rent of the room, the
+			ingredients for the meal and drinks.<br /> To pay you can use
+			paypal. In this way the registration is immediate.<br /> You can
+			also pay directly to Matthieu, Nidia, Ben, Nicolas or Toub if you
+			have the opportunity to see one of them very soon. Your registration
+			will be validated only when you give them the money.<br/><br/>
+			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center><br/> 
+		</p>
+	</div>
 	<div class="main_chapter">
 		<h2>Informations</h2>
 		<p>${event.information}</p>
@@ -54,27 +65,27 @@
 				<table class="participants">
 					<thead>
 						<tr>
-							<th>Participant (${event.nbParticipants}/${event.nbParticipantsMax})
-							</th>
+							<th>Participant
+								(${event.nbParticipants}/${event.nbParticipantsMax})</th>
 							<c:forEach var="task" items="${event.tasks}">
 								<th>${task.name} (${task.totalRegister}/${task.totalMax})</th>
 							</c:forEach>
-							
+
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="participant" items="${event.validatedParticipantsTask}">
+						<c:forEach var="participant"
+							items="${event.validatedParticipantsTask}">
 							<tr>
 								<th>${participant.name}</th>
 								<c:forEach var="task" items="${event.tasks}">
-									<td>
-										<c:if test="${task.id == participant.taskId}">
-											<input type="radio" name="task${participant.id}" value="${participant.taskId}" checked="checked" />
-										</c:if>
-										<c:if test="${task.id != participant.taskId}">
-											<input type="radio" name="task${participant.id}" value="${task.id}" disabled="disabled" />
-										</c:if>
-									</td>
+									<td><c:if test="${task.id == participant.taskId}">
+											<input type="radio" name="task${participant.id}"
+												value="${participant.taskId}" checked="checked" />
+										</c:if> <c:if test="${task.id != participant.taskId}">
+											<input type="radio" name="task${participant.id}"
+												value="${task.id}" disabled="disabled" />
+										</c:if></td>
 								</c:forEach>
 							</tr>
 						</c:forEach>
@@ -88,30 +99,19 @@
 				<table class="participants">
 					<thead>
 						<tr>
-							<th>Participant waiting for confirmation (${event.nbParticipantsWaiting})
-							</th>
+							<th>Participant waiting for confirmation
+								(${event.nbParticipantsWaiting})</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="pwaiting" items="${event.waitingParticipants}">
-						<tr>
-									<th>${pwaiting}</th>
-									</tr>
-					</c:forEach>
+						<c:forEach var="pwaiting" items="${event.waitingParticipants}">
+							<tr>
+								<th>${pwaiting}</th>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
-		</div>
-		<div class="main_chapter">
-			<h2>Join us!</h2>
-			<p>
-				The price for this meal is <b>15 € per person.</b><br /> This
-				amount can pay the rent of the room, the ingredients for the meal
-				and drinks.<br /> To pay you can use paypal. In this way the
-				registration is immediate.<br /> You can also pay directly to
-				Matthieu, Nidia, Ben, Nicolas or Toub, but your registration will be
-				validated only when you give them the money.<br />
-			</p>
 		</div>
 	</div>
 </body>

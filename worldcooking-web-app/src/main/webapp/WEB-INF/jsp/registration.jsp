@@ -9,15 +9,6 @@
 	<form:hidden path="eventId"/>
 	
 		<div class="main_chapter">
-			<h2>Join us!</h2>
-			<p>
-				The price for this meal is <b>15 € per person.</b><br /> This
-				amount can pay the rent of the room, the ingredients for the meal
-				and drinks.<br /> To pay you can use paypal. In this way the
-				registration is immediate.<br /> You can also pay directly to
-				Matthieu, Nidia, Ben, Nicolas or Toub, but your registration will be
-				validated only when you give them the money.<br />
-			</p>
 			<form>
 				<div id="join0" class="join">
 					<div class="join_element">
@@ -83,7 +74,10 @@
 						</select>
 					</div>
 					 -->
-					<br /> <br /> <input type="submit" value="Join" />
+					<br /> <br /> 
+					<div class="join_element">
+						<input type="submit" value="Join" />
+					</div>
 				</div>
 				
 			</form>
