@@ -154,4 +154,9 @@ public class SubscriptionService {
 			throw e;
 		}
 	}
+
+	public Subscription findSubscriptionById(Long id)
+			throws EntityIdNotFountException {
+		return subscriptionDAOImpl.findById(id);
+	}
 }

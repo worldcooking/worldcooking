@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
@@ -73,7 +74,6 @@ public class RegistrationController {
 		availablePaymentModes.put("manual-ntoublanc", "Nicolas Toublanc");
 		availablePaymentModes.put("manual-ntorres", "Nidia Torres");
 		availablePaymentModes.put("manual-fbouvet", "Fred Bouvet");
-
 		return availablePaymentModes;
 	}
 
@@ -96,9 +96,14 @@ public class RegistrationController {
 		// create new registration
 		NewSubscription newRegistration = createNewRegistration(registration);
 
+		// persiste new registration
+		Subscription subscription = subscriptionService
+				.subscribe(newRegistration);
+
 		if (newRegistration.getPaymentMode() == NewSubscriptionPaymentMode.PAYPAL) {
 			// redirect to paypal
-			return "paypal";
+			return "redirect:/registration/confirmation/paypal?subscriptionId="
+					+ subscription.getId();
 		}
 		// redirect to main page
 		return "redirect:/";
@@ -144,8 +149,6 @@ public class RegistrationController {
 			newSubscription.configureWithManualPayment(eventId,
 					subscriberEmailAddress, paymentTarget);
 		}
-
-		subscriptionService.subscribe(newSubscription);
 
 		return newSubscription;
 	}
