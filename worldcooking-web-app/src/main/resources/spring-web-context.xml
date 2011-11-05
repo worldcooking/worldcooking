@@ -21,12 +21,12 @@
 		</property>
 	</bean>
 
-<context:component-scan base-package="org.worldcooking.web" />
+	<context:component-scan base-package="org.worldcooking.web" />
 
 	<context:annotation-config />
 
 	<!-- JSR-303 support will be detected on classpath and enabled automatically -->
-	<mvc:annotation-driven  />
+	<mvc:annotation-driven />
 
 	<import resource="classpath:spring-dao-base-context.xml" />
 
@@ -37,6 +37,7 @@
 			<list>
 				<value>classpath:application.properties</value>
 				<value>classpath:dao.properties</value>
+				<value>classpath:maven-filter.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -45,7 +46,7 @@
 		<property name="basename" value="classpath:messages" />
 		<property name="defaultEncoding" value="${source.encoding}" />
 	</bean>
-	
+
 	<context:component-scan base-package="org.worldcooking.web" />
 
 </beans>

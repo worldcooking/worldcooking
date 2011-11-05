@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.annotations.NotFound;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,7 +14,7 @@ public class Registration {
 	/**
 	 * Event id.
 	 */
-	@NotFound
+	@NotNull
 	private Long eventId;
 
 	/**
