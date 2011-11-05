@@ -73,7 +73,9 @@
 						<label for="payment_mode">* Payment :</label> 
 						<form:select id="payment_mode" path="paymentMode" items="${availablePaymentModes}" multiple="false" />   
 					</div>
-					<br /> <br /> <input type="submit" value="Join" />
+					<div class="join_element">
+						<br /> <br /> <input type="submit" value="Join" />
+					</div>
 				</div>
 				
 			</form>
