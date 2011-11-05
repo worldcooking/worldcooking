@@ -15,7 +15,7 @@
 				amount can pay the rent of the room, the ingredients for the meal
 				and drinks.<br /> To pay you can use paypal. In this way the
 				registration is immediate.<br /> You can also pay directly to
-				Matthieu, Nidia, Ben, Nicolas or Toub, but your registration will be
+				Matthieu, Nidia, Ben, Nicolas, Fred or Toub, but your registration will be
 				validated only when you give them the money.<br />
 			</p>
 			<form>

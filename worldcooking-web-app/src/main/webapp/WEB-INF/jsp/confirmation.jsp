@@ -10,8 +10,9 @@
 			<h2>Congratulations!</h2>
 			<p>
 				You successfully process to your pre-registration!<br/>
-				We will send an email to confirm your registration once we receive your payment.
-				
+				We will send an email to confirm your registration once we receive your payment.<br/>
+				<br/>
+				<a href="${pageContext.request.contextPath}">Go back to Worldcooking Peru main page</a>
 			</p>
 		</div> 
 </body>
