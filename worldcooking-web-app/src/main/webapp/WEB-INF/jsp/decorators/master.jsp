@@ -21,5 +21,8 @@
 	<div id="main" class="main">
 		<decorator:body />
 	</div>
+	<div class="info_bottom">
+		If you have problems with this page, please contact <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>
+	</div>
 </body>
 </html>

@@ -57,6 +57,7 @@ public class TaskModel {
 		this.totalRegister = totalRegister;
 	}
 
+	@Mapping("nbMax")
 	public int getTotalMax() {
 		return totalMax;
 	}
