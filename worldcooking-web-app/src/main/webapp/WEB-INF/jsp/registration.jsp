@@ -63,27 +63,19 @@
 						onclick="javascript:hideElement('join2'); document.getElementById('name2_field').value='';" />
 				</div>
 				
-				
 				<div id="pay" class="join">
 					<div class="join_element">
 						<label for="email">* E-mail :</label> 
 						<form:input id="email" path="emailAddress" />
 						<form:errors path="emailAddress" cssClass="error" lang="en"  />
 					</div>
-					<!-- 
 					<div class="join_element">
-						<label for="payment_mode">* Payment :</label> <select
-							id="payment_mode">
-							<option value="paypal">Paypal</option>
-							<option value="ntorres">Pay to Benjamin Levine</option>
-							<option value="mgaudet">Pay to Matthieu Gaudet</option>
-							<option value="ngruyer">Pay to Nicolas Gruyer</option>
-							<option value="ntoublanc">Pay to Nicolas Toublanc</option>
-							<option value="ntorres">Pay to Nidia Torres</option>
-						</select>
+						<label for="payment_mode">* Payment :</label> 
+						<form:select id="payment_mode" path="paymentMode" items="${availablePaymentModes}" multiple="false" />   
 					</div>
-					 -->
-					<br /> <br /> <input type="submit" value="Join" />
+					<div class="join_element">
+						<br /> <br /> <input type="submit" value="Join" />
+					</div>
 				</div>
 				
 			</form>
