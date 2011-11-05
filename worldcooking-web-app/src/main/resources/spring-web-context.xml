@@ -45,5 +45,7 @@
 		<property name="basename" value="classpath:messages" />
 		<property name="defaultEncoding" value="${source.encoding}" />
 	</bean>
+	
+	<context:component-scan base-package="org.worldcooking.web" />
 
 </beans>

@@ -10,28 +10,55 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.worldcooking.server.entity.people.Participant;
+
+/**
+ * Describes an event.
+ * 
+ * @author MatthieuG
+ * 
+ */
 @Entity
 public class Event {
 
+	/**
+	 * Unique id use to identify the Event in db.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
+	/**
+	 * Event name use to identify the event for the users.
+	 */
 	@Column
 	private String name;
 
 	/**
-	 *
+	 * Text description of the event. Can contain html tags.
 	 */
-	@Column
+	@Column(length = 10000)
 	private String description;
 
+	/**
+	 * List of all the action of subscription done by users. Can contain
+	 * validated et non-validated subscriptions.
+	 */
 	@OneToMany(mappedBy = "event")
 	private Set<Subscription> subscriptions = new HashSet<Subscription>();
 
+	/**
+	 * Tasks available for this event. Only those tasks can be affected to the
+	 * participants of the event.
+	 * 
+	 * @see Participant
+	 */
 	@OneToMany(mappedBy = "event")
 	private Set<Task> availableTasks = new HashSet<Task>();
 
+	/**
+	 * Maximum of participants validated fot this event.
+	 */
 	@Column
 	private Integer maxParticipants;
 
@@ -76,11 +103,6 @@ public class Event {
 		return availableTasks;
 	}
 
-	/**
-	 * Use addAvailableTask instead
-	 * 
-	 * @param availableTasks
-	 */
 	protected void setAvailableTasks(Set<Task> availableTasks) {
 		this.availableTasks = availableTasks;
 	}
