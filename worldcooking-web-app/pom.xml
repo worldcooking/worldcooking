@@ -50,6 +50,14 @@
 			<version>5.3.2</version>
 		</dependency>
 		
+		<!-- dependecy to fix JSPServletException -->
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>jsp-api</artifactId>
+        <version>6.0.32</version>
+    </dependency>
+		
+		
 	</dependencies>
 
 	<build>
