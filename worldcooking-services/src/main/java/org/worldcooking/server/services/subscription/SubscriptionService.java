@@ -1,6 +1,6 @@
 package org.worldcooking.server.services.subscription;
 
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,11 +38,11 @@ public class SubscriptionService {
 	@Autowired
 	private MultiEntitiesHibernateDAOImpl dao;
 
-	public double calculateSubscriptionPrice(List<Participant> participants)
+	public double calculateSubscriptionPrice(Set<Participant> set)
 			throws EntityIdNotFountException {
 		// initial amount is zero
 		double amount = 0;
-		for (Participant participant : participants) {
+		for (Participant participant : set) {
 
 			// add the price of participant to subscription amount
 			amount += participant.getTask().getPricePerParticipant();

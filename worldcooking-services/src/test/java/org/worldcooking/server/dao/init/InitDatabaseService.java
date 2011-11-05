@@ -27,6 +27,17 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		// create worldcooking Peru
 		Event e = new Event();
 		e.setName("Worldcooking Peru");
+		e.setDescription("Up to 38 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br>"
+				+ "Our chef will be Nidia Torres.<br>"
+				+ "<br>"
+				+ "To participate in this event you must book and pay in advance.<br>"
+				+ "The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.<br>"
+				+ "<br>"
+				+ "This year we ask each person to help. When registering you have to choose a task from the following ones:<br>"
+				+ "- Cooking with Nidia from 4pm"
+				+ "<br>- Set the table"
+				+ "<br>- Doing the dishes" + "<br>- Cleaning the room<br>");
+		e.setMaxParticipants(36);
 		dao.makePersistent(e);
 
 		Task t1 = new Task();
@@ -97,7 +108,18 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		Subscription s0 = new Subscription();
 		s0.setValidate(true);
 		s0.addParticipant(p1);
+		s0.addParticipant(p2);
+		s0.addParticipant(p3);
+		s0.addParticipant(p4);
+		s0.addParticipant(p5);
 		e.addSubscription(s0);
 		dao.makePersistent(s0);
+
+		Subscription s1 = new Subscription();
+		s1.setValidate(false);
+		s1.addParticipant(p6);
+		e.addSubscription(s1);
+		dao.makePersistent(s1);
+
 	}
 }
