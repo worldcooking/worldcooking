@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.annotations.NotFound;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -12,6 +13,7 @@ public class Registration {
 	/**
 	 * Event id.
 	 */
+	@NotFound
 	private Long eventId;
 
 	/**
@@ -22,14 +24,19 @@ public class Registration {
 	// make sure emailAddress is not empty
 	private String emailAddress;
 
+	@NotEmpty
+	private String paymentMode;
+
 	/**
 	 * List of selected tasks (ordered by participant).
 	 */
+	@NotEmpty
 	private List<Long> participantTasks = Arrays.asList(2L, 1L, 3L);
 
 	/**
 	 * List of participants names.
 	 */
+	@NotEmpty
 	private List<String> participantsNames = new ArrayList<String>();
 
 	public Registration() {
@@ -65,6 +72,14 @@ public class Registration {
 
 	public void setEventId(Long eventId) {
 		this.eventId = eventId;
+	}
+
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 
 }

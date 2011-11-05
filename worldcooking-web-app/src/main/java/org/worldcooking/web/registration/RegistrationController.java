@@ -2,6 +2,7 @@ package org.worldcooking.web.registration;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,15 +17,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
+import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.subscription.SubscriptionService;
 import org.worldcooking.server.services.subscription.model.NewSubscription;
+import org.worldcooking.server.services.subscription.model.NewSubscriptionPaymentMode;
 
 @Controller
 @RequestMapping(value = "/registration")
 public class RegistrationController {
+	private static final String PAYPAL_MODE_KEY = "paypal";
+
 	@Autowired
 	private SubscriptionService subscriptionService;
+
+	@Autowired
+	private EventService eventService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -42,14 +51,30 @@ public class RegistrationController {
 	@ModelAttribute("availableTasks")
 	public Map<Long, String> populateAvailableTasks() {
 
-		Map<Long, String> availableTasks = new LinkedHashMap<Long, String>();
-		availableTasks.put(20L, "Chief");
-		availableTasks.put(21L, "Cooking");
-		availableTasks.put(22L, "Setting the table");
-		availableTasks.put(23L, "Dishes");
-		availableTasks.put(24L, "Cleaning");
+		List<Task> availableTasks = eventService.getAvailableTasks(10L);
 
-		return availableTasks;
+		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
+
+		for (Task t : availableTasks) {
+			availableTasksIdName.put(t.getId(), t.getName());
+		}
+
+		return availableTasksIdName;
+	}
+
+	@ModelAttribute("availablePaymentModes")
+	public Map<String, String> populateAvailablePaymentModes() {
+		Map<String, String> availablePaymentModes = new LinkedHashMap<String, String>();
+
+		availablePaymentModes.put(PAYPAL_MODE_KEY, "paypal");
+		availablePaymentModes.put("manual-blevine", "Benjamin Levine");
+		availablePaymentModes.put("manual-mgaudet", "Matthieu Gaudet");
+		availablePaymentModes.put("manual-ngruyer", "Nicolas Gruyer");
+		availablePaymentModes.put("manual-ntoublanc", "Nicolas Toublanc");
+		availablePaymentModes.put("manual-ntorres", "Nidia Torres");
+		availablePaymentModes.put("manual-fbouvet", "Fred Bouvet");
+
+		return availablePaymentModes;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -58,20 +83,24 @@ public class RegistrationController {
 			BindingResult result) throws Exception {
 
 		// check parameters (TODO manage errors)
-		Assert.notNull(registration.getEventId(),
-				"Event id should not be null!");
 		Assert.isTrue(
 				registration.getParticipantsNames().size() <= registration
 						.getParticipantTasks().size(),
 				"Participants tasks should be as large as participants names.");
 
-		// create new registration
-		createNewRegistration(registration);
-
 		if (result.hasErrors()) {
 
 			return "registration";
 		}
+
+		// create new registration
+		NewSubscription newRegistration = createNewRegistration(registration);
+
+		if (newRegistration.getPaymentMode() == NewSubscriptionPaymentMode.PAYPAL) {
+			// redirect to paypal
+			return "paypal";
+		}
+		// redirect to main page
 		return "redirect:/";
 	}
 
@@ -81,7 +110,7 @@ public class RegistrationController {
 	 * @param registration
 	 * @throws EntityIdNotFountException
 	 */
-	private void createNewRegistration(Registration registration)
+	private NewSubscription createNewRegistration(Registration registration)
 			throws EntityIdNotFountException {
 		// create subscription
 		NewSubscription newSubscription = new NewSubscription();
@@ -93,21 +122,32 @@ public class RegistrationController {
 		// add participants
 		for (String participantName : registration.getParticipantsNames()) {
 			if (participantName != null) {
-				newSubscription.addParticipant(participantName,
-						participantsTasksIt.next());
+				participantName = participantName.trim();
+				if (!participantName.isEmpty()) {
+					newSubscription.addParticipant(participantName,
+							participantsTasksIt.next());
+				}
 			}
 		}
 
-		String paymentTarget = null;
-		if (1 + 1 == 2) {
-			newSubscription.configureWithManualPayment(eventId,
-					subscriberEmailAddress, paymentTarget);
-		} else {
+		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
+			// paypal
 			newSubscription.configureWithPaypalPayment(eventId,
 					subscriberEmailAddress);
+		} else {
+			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
+
+			String paymentTarget = availablePaymentModes.get(registration
+					.getPaymentMode());
+			// TODO meilleure gestion des erreurs
+			Assert.notNull(paymentTarget);
+			newSubscription.configureWithManualPayment(eventId,
+					subscriberEmailAddress, paymentTarget);
 		}
 
 		subscriptionService.subscribe(newSubscription);
+
+		return newSubscription;
 	}
 
 	// http://java.dzone.com/articles/converting-spring

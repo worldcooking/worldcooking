@@ -7,14 +7,19 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
+import org.worldcooking.server.dao.impl.TaskDAOImpl;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 
 @Repository
 public class EventService {
 	@Autowired
 	private EventDAOImpl eventDao;
+
+	@Autowired
+	private TaskDAOImpl taskDao;
 
 	public EventDAOImpl getEventDao() {
 		return eventDao;
@@ -39,6 +44,10 @@ public class EventService {
 	public List<Participant> getWaitingParticipants(Long id) {
 		Event event = eventDao.findFullEventById(id);
 		return getWaitingParticipants(event);
+	}
+
+	public List<Task> getAvailableTasks(Long eventId) {
+		return taskDao.getAvailableTasks(eventId);
 	}
 
 	/**
