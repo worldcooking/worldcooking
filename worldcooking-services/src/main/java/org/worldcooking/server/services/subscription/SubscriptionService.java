@@ -73,8 +73,10 @@ public class SubscriptionService {
 				// initialize payment
 				createPayment(newSubscription, subscription);
 			}
-			logger.info("Successfully created subscription of '{0}'.",
-					newSubscription.getSubscriber().getEmailAddress());
+			logger.info(
+					"Successfully created subscription of '{}' with {} participants.",
+					newSubscription.getSubscriber().getEmailAddress(),
+					newSubscription.getParticipants().size());
 		} catch (EntityIdNotFountException e) {
 			logger.error(
 					"Unable to register subscription because "

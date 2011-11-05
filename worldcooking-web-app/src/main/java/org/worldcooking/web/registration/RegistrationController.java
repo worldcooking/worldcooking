@@ -2,6 +2,7 @@ package org.worldcooking.web.registration;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,7 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
+import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.subscription.SubscriptionService;
 import org.worldcooking.server.services.subscription.model.NewSubscription;
 
@@ -25,6 +28,9 @@ import org.worldcooking.server.services.subscription.model.NewSubscription;
 public class RegistrationController {
 	@Autowired
 	private SubscriptionService subscriptionService;
+
+	@Autowired
+	private EventService eventService;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -42,14 +48,15 @@ public class RegistrationController {
 	@ModelAttribute("availableTasks")
 	public Map<Long, String> populateAvailableTasks() {
 
-		Map<Long, String> availableTasks = new LinkedHashMap<Long, String>();
-		availableTasks.put(20L, "Chief");
-		availableTasks.put(21L, "Cooking");
-		availableTasks.put(22L, "Setting the table");
-		availableTasks.put(23L, "Dishes");
-		availableTasks.put(24L, "Cleaning");
+		List<Task> availableTasks = eventService.getAvailableTasks(10L);
 
-		return availableTasks;
+		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
+
+		for (Task t : availableTasks) {
+			availableTasksIdName.put(t.getId(), t.getName());
+		}
+
+		return availableTasksIdName;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -93,8 +100,11 @@ public class RegistrationController {
 		// add participants
 		for (String participantName : registration.getParticipantsNames()) {
 			if (participantName != null) {
-				newSubscription.addParticipant(participantName,
-						participantsTasksIt.next());
+				participantName = participantName.trim();
+				if (!participantName.isEmpty()) {
+					newSubscription.addParticipant(participantName,
+							participantsTasksIt.next());
+				}
 			}
 		}
 
