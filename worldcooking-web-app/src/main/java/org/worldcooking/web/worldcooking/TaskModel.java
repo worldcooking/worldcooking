@@ -3,6 +3,8 @@
  */
 package org.worldcooking.web.worldcooking;
 
+import org.dozer.Mapping;
+
 /**
  * @author MatthieuG
  * 
@@ -29,6 +31,7 @@ public class TaskModel {
 		this.totalMax = totalMax;
 	}
 
+	@Mapping("id")
 	public Long getId() {
 		return id;
 	}
@@ -37,6 +40,7 @@ public class TaskModel {
 		this.id = id;
 	}
 
+	@Mapping("name")
 	public String getName() {
 		return name;
 	}

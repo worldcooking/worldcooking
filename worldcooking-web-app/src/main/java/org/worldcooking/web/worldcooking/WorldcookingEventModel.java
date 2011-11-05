@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.dozer.Mapping;
+
 /**
  * @author MatthieuG
  * 
@@ -15,6 +17,7 @@ import java.util.Set;
 public class WorldcookingEventModel {
 
 	/** Name of the event. */
+
 	private String name;
 
 	/** General information / description. */
@@ -39,6 +42,7 @@ public class WorldcookingEventModel {
 		return waitingParticipants.size();
 	}
 
+	@Mapping("name")
 	public String getName() {
 		return name;
 	}
@@ -47,6 +51,7 @@ public class WorldcookingEventModel {
 		this.name = name;
 	}
 
+	@Mapping("description")
 	public String getInformation() {
 		return information;
 	}
@@ -75,6 +80,7 @@ public class WorldcookingEventModel {
 		validatedParticipantsTask.add(new ParticipantTask(taskId, name, id));
 	}
 
+	@Mapping("availableTasks")
 	public List<TaskModel> getTasks() {
 		return tasks;
 	}
@@ -87,6 +93,20 @@ public class WorldcookingEventModel {
 		tasks.add(new TaskModel(id, name, totalRegister, totalMax));
 	}
 
+	public void setWaitingParticipants(List<String> waitingParticipants) {
+		this.waitingParticipants = waitingParticipants;
+	}
+
+	public void setValidatedParticipantsTask(
+			Set<ParticipantTask> validatedParticipantsTask) {
+		this.validatedParticipantsTask = validatedParticipantsTask;
+	}
+
+	public void setTasks(List<TaskModel> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Mapping("maxParticipants")
 	public int getNbParticipantsMax() {
 		return nbParticipantsMax;
 	}

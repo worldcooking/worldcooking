@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
-import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.EventService;
+import org.worldcooking.web.util.ModelViewMapper;
 import org.worldcooking.web.worldcooking.TaskModel;
 import org.worldcooking.web.worldcooking.WorldcookingEventModel;
 
@@ -28,33 +28,16 @@ public class WorldcookingController {
 	@Autowired
 	private EventService eventService;
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(WorldcookingController.class);
 
-	/**
-	 * 
-	 * @return view with name
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
 		// Acces to the event in DB.
 		Event e = eventService.getFullEventById(10L);
 
-		// Initilizing a model for the main page of the event.
-		WorldcookingEventModel wcEvent = new WorldcookingEventModel();
-		wcEvent.setName(e.getName());
-		wcEvent.setInformation(e.getDescription());
-		wcEvent.setNbParticipantsMax(e.getMaxParticipants());
-
-		List<TaskModel> tasks = new ArrayList<TaskModel>();
-		Set<Task> avTasks = e.getAvailableTasks();
-		for (Task task : avTasks) {
-			TaskModel t = new TaskModel();
-			t.setId(task.getId());
-			t.setName(task.getName());
-			t.setTotalMax(task.getNbMax());
-			tasks.add(t);
-		}
-		wcEvent.addTasks(tasks);
+		WorldcookingEventModel wcEvent = ModelViewMapper.getInstance().map(e,
+				WorldcookingEventModel.class);
 
 		List<String> waitingParticipants = new ArrayList<String>();
 		Set<Subscription> subscriptions = e.getSubscriptions();
@@ -68,7 +51,7 @@ public class WorldcookingController {
 				for (Participant participant : partList) {
 					wcEvent.addValidatedParticipantTask(participant.getName(),
 							participant.getTask().getId(), participant.getId());
-					parcoursTasks: for (TaskModel t : tasks) {
+					parcoursTasks: for (TaskModel t : wcEvent.getTasks()) {
 						if (t.getId().equals(participant.getTask().getId())) {
 							t.setTotalRegister(t.getTotalRegister() + 1);
 							break parcoursTasks;
