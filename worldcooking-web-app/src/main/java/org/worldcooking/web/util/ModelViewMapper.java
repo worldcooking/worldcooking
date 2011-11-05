@@ -7,7 +7,7 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
 /**
- * Mapper used fot model <-> view conversion.
+ * Mapper used for model <-> view conversion.
  * 
  * @author MatthieuG
  * 
