@@ -101,6 +101,7 @@
 <title><%=wcPeru.getName()%></title>
 </head>
 <body onload="javascript:cleanInputs(['name1_field','name2_field']);">
+	<a href="http://localhost:8080/worldcooking-web-app/registration">REGISTRATION</a>
 	<div class="main_chapter">
 		<h2>Informations <c:out value="${event.name}" /> <c:out value="${event.availableTasks}" /></h2>
 		<p><%=wcPeru.getDescription()%></p>
@@ -160,8 +161,6 @@
 									<th><%=p.getName()%></th>
 									<%
 										for (Task t : tasks) {
-												System.out.println(t.getId());
-												System.out.println(p.getTask().getId());
 												if (t.getId().equals(p.getTask().getId())) {
 									%>
 												<td><input type="radio" name="task<%=numParticipant %>" value="<%=t.getId()%>"

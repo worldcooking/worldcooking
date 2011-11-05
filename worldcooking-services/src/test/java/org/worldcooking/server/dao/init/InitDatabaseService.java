@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.worldcooking.AbstractApplicationContextAware;
 import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
 import org.worldcooking.server.entity.event.Event;
+import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 
@@ -93,5 +94,10 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 		t5.addParticipant(p6);
 		dao.makePersistent(p6);
 
+		Subscription s0 = new Subscription();
+		s0.setValidate(true);
+		s0.addParticipant(p1);
+		e.addSubscription(s0);
+		dao.makePersistent(s0);
 	}
 }

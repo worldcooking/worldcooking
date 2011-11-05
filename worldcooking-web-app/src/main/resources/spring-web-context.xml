@@ -11,10 +11,22 @@
        http://www.springframework.org/schema/mvc     
        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+	<bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>classpath:log4j.xml</value>
+			</list>
+		</property>
+	</bean>
+
+<context:component-scan base-package="org.worldcooking.web" />
+
 	<context:annotation-config />
 
 	<!-- JSR-303 support will be detected on classpath and enabled automatically -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven  />
 
 	<import resource="classpath:spring-dao-base-context.xml" />
 
