@@ -9,6 +9,15 @@
 	<form:hidden path="eventId"/>
 	
 		<div class="main_chapter">
+			<h2>Join us!</h2>
+			<p>
+				The price for this meal is <b>15 € per person.</b><br /> This
+				amount can pay the rent of the room, the ingredients for the meal
+				and drinks.<br /> To pay you can use paypal. In this way the
+				registration is immediate.<br /> You can also pay directly to
+				Matthieu, Nidia, Ben, Nicolas or Toub, but your registration will be
+				validated only when you give them the money.<br />
+			</p>
 			<form>
 				<div id="join0" class="join">
 					<div class="join_element">
@@ -54,29 +63,18 @@
 						onclick="javascript:hideElement('join2'); document.getElementById('name2_field').value='';" />
 				</div>
 				
-				
 				<div id="pay" class="join">
 					<div class="join_element">
 						<label for="email">* E-mail :</label> 
 						<form:input id="email" path="emailAddress" />
 						<form:errors path="emailAddress" cssClass="error" lang="en"  />
 					</div>
-					<!-- 
 					<div class="join_element">
-						<label for="payment_mode">* Payment :</label> <select
-							id="payment_mode">
-							<option value="paypal">Paypal</option>
-							<option value="ntorres">Pay to Benjamin Levine</option>
-							<option value="mgaudet">Pay to Matthieu Gaudet</option>
-							<option value="ngruyer">Pay to Nicolas Gruyer</option>
-							<option value="ntoublanc">Pay to Nicolas Toublanc</option>
-							<option value="ntorres">Pay to Nidia Torres</option>
-						</select>
+						<label for="payment_mode">* Payment :</label> 
+						<form:select id="payment_mode" path="paymentMode" items="${availablePaymentModes}" multiple="false" />   
 					</div>
-					 -->
-					<br /> <br /> 
 					<div class="join_element">
-						<input type="submit" value="Join" />
+						<br /> <br /> <input type="submit" value="Join" />
 					</div>
 				</div>
 				
