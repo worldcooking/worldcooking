@@ -26,7 +26,7 @@
 	<repositories>
 		<repository>
 			<id>jboss-repo</id>
-			<url>http://repository.jboss.org/maven2</url>
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
 		</repository>
 		<repository>
 			<id>spring-repo</id>
