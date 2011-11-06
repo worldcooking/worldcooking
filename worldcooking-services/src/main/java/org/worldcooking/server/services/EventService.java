@@ -71,6 +71,7 @@ public class EventService {
 			e1.printStackTrace();
 		}
 
+		// create worldcooking Peru
 		Event e = new Event();
 		e.setName("Worldcooking Peru");
 		e.setDescription("Up to 38 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br>"
@@ -157,6 +158,7 @@ public class EventService {
 		s0.addParticipant(p3);
 		s0.addParticipant(p4);
 		s0.addParticipant(p5);
+		s0.setEmail("s0");
 		e.addSubscription(s0);
 		dao.makePersistent(s0);
 

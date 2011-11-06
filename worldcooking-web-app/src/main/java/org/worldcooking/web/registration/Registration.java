@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.worldcooking.validator.NonEmptyListConstraint;
 
 public class Registration {
 
@@ -19,8 +20,8 @@ public class Registration {
 	/**
 	 * Register email address.
 	 */
-	@NotEmpty
-	@Email
+	@NotEmpty(message = "Please specify your email")
+	@Email(message = "Please specify a valid email")
 	// make sure emailAddress is not empty
 	private String emailAddress;
 
@@ -37,6 +38,7 @@ public class Registration {
 	 * List of participants names.
 	 */
 	@NotEmpty
+	@NonEmptyListConstraint(message = "Please specify your name")
 	private List<String> participantsNames = new ArrayList<String>();
 
 	public Registration() {
