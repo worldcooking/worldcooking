@@ -17,7 +17,7 @@
 <head>
 <title>${event.name}</title>
 </head>
-<body onload="javascript:cleanInputs(['name1_field','name2_field']);">
+<body>
 
 	<div class="main_chapter">
 		<h2>Join us!</h2>
@@ -75,7 +75,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="participant"
-							items="${event.validatedParticipantsTask}">
+							items="${event.validatedParticipantsTaskOrdered}">
 							<tr>
 								<th>${participant.name}</th>
 								<c:forEach var="task" items="${event.tasks}">
