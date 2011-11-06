@@ -4,6 +4,8 @@
 package org.worldcooking.web.worldcooking;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +63,7 @@ public class WorldcookingEventModel {
 	}
 
 	public List<String> getWaitingParticipants() {
+		Collections.sort(waitingParticipants);
 		return waitingParticipants;
 	}
 
@@ -76,12 +79,22 @@ public class WorldcookingEventModel {
 		return validatedParticipantsTask;
 	}
 
+	public List<ParticipantTask> getValidatedParticipantsTaskOrdered() {
+		List<ParticipantTask> participants = new ArrayList<ParticipantTask>(
+				validatedParticipantsTask);
+
+		Collections.sort(participants, ParticipantTaskComparator.getInstance());
+
+		return participants;
+	}
+
 	public void addValidatedParticipantTask(String name, Long taskId, Long id) {
 		validatedParticipantsTask.add(new ParticipantTask(taskId, name, id));
 	}
 
 	@Mapping("availableTasks")
 	public List<TaskModel> getTasks() {
+		Collections.sort(tasks, TaskComparator.getInstance());
 		return tasks;
 	}
 
@@ -117,6 +130,52 @@ public class WorldcookingEventModel {
 
 	public void addTasks(List<TaskModel> tasks) {
 		this.tasks.addAll(tasks);
+	}
+
+	private static class TaskComparator implements Comparator<TaskModel> {
+
+		private static TaskComparator instance;
+
+		private TaskComparator() {
+
+		}
+
+		public static TaskComparator getInstance() {
+			if (instance == null) {
+				instance = new TaskComparator();
+			}
+			return instance;
+		}
+
+		@Override
+		public int compare(TaskModel o1, TaskModel o2) {
+
+			return o1.getName().compareTo(o2.getName());
+		}
+
+	}
+
+	private static class ParticipantTaskComparator implements
+			Comparator<ParticipantTask> {
+
+		private static ParticipantTaskComparator instance;
+
+		private ParticipantTaskComparator() {
+
+		}
+
+		public static ParticipantTaskComparator getInstance() {
+			if (instance == null) {
+				instance = new ParticipantTaskComparator();
+			}
+			return instance;
+		}
+
+		@Override
+		public int compare(ParticipantTask o1, ParticipantTask o2) {
+
+			return o1.getName().compareTo(o2.getName());
+		}
 
 	}
 
