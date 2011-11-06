@@ -2,13 +2,8 @@ package org.worldcooking.server.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.FlushMode;
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.ContextConfiguration;
 import org.worldcooking.server.entity.event.Event;
 
 /**
@@ -16,11 +11,7 @@ import org.worldcooking.server.entity.event.Event;
  * {@link org.worldcooking.server.dao.impl.GenericHibernateDAOImpl} methods
  */
 @Repository
-@ContextConfiguration(locations = { "classpath:spring-dao-context.xml" })
 public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
-
-	@Autowired
-	public SessionFactory sessionFactory;
 
 	/**
 	 * Method returning the event corresponding to the id parameter. <br/>
@@ -72,16 +63,7 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 	}
 
 	public void resetDb() {
-		Session openSession = sessionFactory.openSession();
-		openSession.setFlushMode(FlushMode.AUTO);
-		List<Event> events = findAllFullEvent();
-		if (events != null) {
-			for (Event event : events) {
-				openSession.delete(event);
-			}
-		}
-		openSession.flush();
-		openSession.close();
+		getHibernateTemplate().deleteAll(findAllFullEvent());
 	}
 
 }
