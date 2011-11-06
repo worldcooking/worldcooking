@@ -4,14 +4,13 @@
 <head>
 <title>${event.name} - Paypal payment</title>
 </head>
-<body>
+<body onload="javascript:document.getElementById('paypalFormId').submit()">
 		<div class="main_chapter">
-			<h2>Congratulations!</h2>
+			<h2>Paypal payement</h2>
 			<p>
-				You successfully process to your pre-registration!<br/>
-				We will send an email to confirm your registration once we receive your payment.<br/>
+				If you're not automatically redirected to the Paypal payment page, please click on the button below.<br/>
 				<br/>
-				<form name="paypalForm" action="${paypalFormAction}"  >
+				<form name="paypalForm" action="${paypalFormAction}" id="paypalFormId" >
 			<input type="hidden" name="cmd" value="_xclick"/> 
 			<input type="hidden"  name="business" value="${paypalBusinessEmailAddress}"/>
 			<input type="hidden" name="business" value="${paypalBusinessEmailAddress}"/> 
@@ -25,7 +24,7 @@
 			<input type="hidden" name="return" value="${paypalReturnUrl}"> 
 			<input type="hidden" name="lc" value="AU" /> 
 			<input type="hidden" name="bn" value="PP-BuyNowBF"/> 
-			<input type="submit" value="Go to paypal Web site to finalize my registration." />
+			<input type="submit" value="Go to paypal Web site to finalize my registration." title="WTF?! you're not redirected?!"/>
 		</form>
 			</p>
 		</div> 
