@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
@@ -16,6 +18,9 @@ import org.worldcooking.server.entity.people.Participant;
 
 @Repository
 public class EventService {
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private EventDAOImpl eventDao;
 
@@ -49,13 +54,13 @@ public class EventService {
 	/**
 	 * Retrieving the list of participants waiting for a validation.
 	 * 
-	 * @param id
+	 * @param eventId
 	 *            Event id.
 	 * @return List of participant waiting for validation of their subscription.
 	 * 
 	 */
-	public List<Participant> getWaitingParticipants(Long id) {
-		Event event = eventDao.findFullEventById(id);
+	public List<Participant> getWaitingParticipants(Long eventId) {
+		Event event = eventDao.findFullEventById(eventId);
 		return getWaitingParticipants(event);
 	}
 
@@ -64,12 +69,8 @@ public class EventService {
 	}
 
 	public void resetDb() {
-		try {
-			eventDao.resetDb();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		logger.info("The database will be reset now.");
+		eventDao.resetDb();
 
 		// create worldcooking Peru
 		Event e = new Event();
@@ -94,22 +95,12 @@ public class EventService {
 		e.addAvailableTask(t1);
 		dao.makePersistent(t1);
 
-		Participant p1 = new Participant();
-		p1.setName("Nidia Torres");
-		t1.addParticipant(p1);
-		dao.makePersistent(p1);
-
 		Task t2 = new Task();
 		t2.setName("Cooking");
 		t2.setNbMax(7);
 		t2.setPricePerParticipant(15d);
 		e.addAvailableTask(t2);
 		dao.makePersistent(t2);
-
-		Participant p2 = new Participant();
-		p2.setName("Matthieu Gaudet");
-		t2.addParticipant(p2);
-		dao.makePersistent(p2);
 
 		Task t3 = new Task();
 		t3.setName("Setting the table");
@@ -118,11 +109,6 @@ public class EventService {
 		e.addAvailableTask(t3);
 		dao.makePersistent(t3);
 
-		Participant p3 = new Participant();
-		p3.setName("Maya Rouvneska");
-		t3.addParticipant(p3);
-		dao.makePersistent(p3);
-
 		Task t4 = new Task();
 		t4.setName("Doing the dishes");
 		t4.setNbMax(9);
@@ -130,50 +116,12 @@ public class EventService {
 		e.addAvailableTask(t4);
 		dao.makePersistent(t4);
 
-		Participant p4 = new Participant();
-		p4.setName("Nicolas Toublanc");
-		t4.addParticipant(p4);
-		dao.makePersistent(p4);
-
 		Task t5 = new Task();
 		t5.setName("Cleaning the room");
 		t5.setNbMax(9);
 		t5.setPricePerParticipant(15d);
 		e.addAvailableTask(t5);
 		dao.makePersistent(t5);
-
-		Participant p5 = new Participant();
-		p5.setName("Nicolas Gruyer");
-		t5.addParticipant(p5);
-		dao.makePersistent(p5);
-
-		Participant p6 = new Participant();
-		p6.setName("Peter Tosh");
-		t5.addParticipant(p6);
-
-		Subscription s0 = new Subscription();
-		s0.setValidate(true);
-		s0.addParticipant(p1);
-		s0.addParticipant(p2);
-		s0.addParticipant(p3);
-		s0.addParticipant(p4);
-		s0.addParticipant(p5);
-		s0.setEmail("s0");
-		e.addSubscription(s0);
-		dao.makePersistent(s0);
-
-		Subscription s1 = new Subscription();
-		s1.setValidate(false);
-		s1.addParticipant(p6);
-		e.addSubscription(s1);
-		dao.makePersistent(s1);
-
-		dao.makePersistent(p1);
-		dao.makePersistent(p2);
-		dao.makePersistent(p3);
-		dao.makePersistent(p4);
-		dao.makePersistent(p5);
-		dao.makePersistent(p6);
 
 		dao.makePersistent(e);
 	}

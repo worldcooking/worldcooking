@@ -1,5 +1,6 @@
 package org.worldcooking.server.services.subscription;
 
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -144,7 +145,7 @@ public class SubscriptionService {
 			Subscription subscription = subscriptionDAOImpl
 					.findById(subscriptionId);
 
-			// TODO subscription.setValid();
+			subscription.setValidate(true);
 			dao.makePersistent(subscription);
 		} catch (EntityIdNotFountException e) {
 			logger.error(
@@ -158,5 +159,9 @@ public class SubscriptionService {
 	public Subscription findFullSubscriptionById(Long id)
 			throws EntityIdNotFountException {
 		return subscriptionDAOImpl.findFullSubscriptionById(id);
+	}
+
+	public List<Subscription> findNonValidatedSubscriptions(Long eventId) {
+		return subscriptionDAOImpl.findNonValidatedSubscriptions(eventId);
 	}
 }

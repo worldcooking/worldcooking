@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.administration;
+package org.worldcooking.web.admin.db;
 
 import javax.validation.Valid;
 
@@ -19,14 +19,15 @@ import org.worldcooking.server.services.EventService;
  * 
  */
 @Controller
-public class AdministrationController {
+public class AdminDbController {
 
+	private static final String JSP = "admin/admin-db";
 	@Autowired
 	private EventService eventService;
 
-	@RequestMapping(value = "/administration", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/db", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
-		ModelAndView modelAndView = new ModelAndView("administration");
+		ModelAndView modelAndView = new ModelAndView(JSP);
 		AdministrationResetDb resetDb = new AdministrationResetDb();
 
 		modelAndView.addObject("administrationResetDb", resetDb);
@@ -36,18 +37,21 @@ public class AdministrationController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(
-			@Valid @ModelAttribute("administrationResetDb") AdministrationValidate validate,
+			@Valid @ModelAttribute("administrationResetDb") AdministrationResetDb validate,
 			BindingResult result) throws Exception {
 
 		if (result.hasErrors()) {
 
-			return "administration";
+			return JSP;
 		}
 
 		if ("supercoincoin".equals(validate.getPassword())) {
 			eventService.resetDb();
+			// redirect to main page
+			return "redirect:/";
 		}
-		// redirect to main page
-		return "administration";
+
+		return JSP;
+
 	}
 }

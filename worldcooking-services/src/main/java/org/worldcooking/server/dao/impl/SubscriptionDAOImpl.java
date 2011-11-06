@@ -34,4 +34,14 @@ public class SubscriptionDAOImpl extends
 		}
 		return null;
 	}
+
+	public List<Subscription> findNonValidatedSubscriptions(Long eventId) {
+		@SuppressWarnings("unchecked")
+		List<Subscription> subscriptions = getHibernateTemplate()
+				.findByNamedParam(
+						"from Subscription s left join fetch s.participants as p "
+								+ " where s.event.id=:eventId and s.validate=false",
+						"eventId", eventId);
+		return subscriptions;
+	}
 }

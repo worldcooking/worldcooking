@@ -1,4 +1,4 @@
-package org.worldcooking.web.administration;
+package org.worldcooking.web.admin.db;
 
 public class AdministrationResetDb {
 

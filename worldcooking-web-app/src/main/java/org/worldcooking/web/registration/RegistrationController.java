@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
@@ -44,8 +45,12 @@ public class RegistrationController {
 		// Perform and Model / Form initialization
 
 		Registration registration = new Registration();
-		registration.setEventId(eventService.getLastEvent().getId());
 
+		Event lastEvent = eventService.getLastEvent();
+
+		if (lastEvent != null) {
+			registration.setEventId(lastEvent.getId());
+		}
 		registration.setParticipantTasks(Arrays.asList(0l, 0l, 0l));
 
 		model.addAttribute("registration", registration);
@@ -55,13 +60,16 @@ public class RegistrationController {
 	@ModelAttribute("availableTasks")
 	public Map<Long, String> populateAvailableTasks() {
 
-		List<Task> availableTasks = eventService.getAvailableTasks(eventService
-				.getLastEvent().getId());
-
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
 
-		for (Task t : availableTasks) {
-			availableTasksIdName.put(t.getId(), t.getName());
+		Event lastEvent = eventService.getLastEvent();
+		if (lastEvent != null) {
+			List<Task> availableTasks = eventService
+					.getAvailableTasks(lastEvent.getId());
+
+			for (Task t : availableTasks) {
+				availableTasksIdName.put(t.getId(), t.getName());
+			}
 		}
 
 		return availableTasksIdName;
