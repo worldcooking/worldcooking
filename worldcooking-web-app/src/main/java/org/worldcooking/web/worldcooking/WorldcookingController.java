@@ -33,44 +33,46 @@ public class WorldcookingController {
 	public ModelAndView handleRequest() {
 		// Acces to the event in DB.
 		Event e = eventService.getFullEventById(10L);
+		ModelAndView modelAndView = new ModelAndView("worldcookingperu");
 
-		WorldcookingEventModel wcEvent = ModelViewMapper.getInstance().map(e,
-				WorldcookingEventModel.class);
+		if (e != null) {
+			WorldcookingEventModel wcEvent = ModelViewMapper.getInstance().map(
+					e, WorldcookingEventModel.class);
 
-		List<String> waitingParticipants = new ArrayList<String>();
-		Set<Subscription> subscriptions = e.getSubscriptions();
+			List<String> waitingParticipants = new ArrayList<String>();
+			Set<Subscription> subscriptions = e.getSubscriptions();
 
-		// Iteration on subscription to get all the participants,
-		for (Subscription subscription : subscriptions) {
-			if (subscription.getValidate()) {
-				// if a subscription is validated, all its partcipants are
-				// confirmed
-				Set<Participant> partList = subscription.getParticipants();
-				for (Participant participant : partList) {
-					wcEvent.addValidatedParticipantTask(participant.getName(),
-							participant.getTask().getId(), participant.getId());
-					parcoursTasks: for (TaskModel t : wcEvent.getTasks()) {
-						if (t.getId().equals(participant.getTask().getId())) {
-							t.setTotalRegister(t.getTotalRegister() + 1);
-							break parcoursTasks;
+			// Iteration on subscription to get all the participants,
+			for (Subscription subscription : subscriptions) {
+				if (subscription.getValidate()) {
+					// if a subscription is validated, all its partcipants are
+					// confirmed
+					Set<Participant> partList = subscription.getParticipants();
+					for (Participant participant : partList) {
+						wcEvent.addValidatedParticipantTask(participant
+								.getName(), participant.getTask().getId(),
+								participant.getId());
+						parcoursTasks: for (TaskModel t : wcEvent.getTasks()) {
+							if (t.getId().equals(participant.getTask().getId())) {
+								t.setTotalRegister(t.getTotalRegister() + 1);
+								break parcoursTasks;
+							}
 						}
 					}
-				}
-			} else {
-				// if a subscription is not validated, all its partcipants are
-				// waiting for confirmation
-				Set<Participant> partList = subscription.getParticipants();
-				for (Participant participant : partList) {
-					waitingParticipants.add(participant.getName());
+				} else {
+					// if a subscription is not validated, all its partcipants
+					// are
+					// waiting for confirmation
+					Set<Participant> partList = subscription.getParticipants();
+					for (Participant participant : partList) {
+						waitingParticipants.add(participant.getName());
 
+					}
 				}
 			}
+			modelAndView.addObject("event", wcEvent);
+			wcEvent.addWaitingParticipants(waitingParticipants);
 		}
-
-		wcEvent.addWaitingParticipants(waitingParticipants);
-
-		ModelAndView modelAndView = new ModelAndView("worldcookingperu");
-		modelAndView.addObject("event", wcEvent);
 		return modelAndView;
 	}
 }

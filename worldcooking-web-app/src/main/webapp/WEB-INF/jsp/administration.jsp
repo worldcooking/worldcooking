@@ -25,23 +25,6 @@
 			</div>
 		</form:form>
 	</div>
-	<div class="main_chapter">
-		<h2>Registrations validations</h2>
-		<form:form commandName="administrationValidate">
-			<div class="admin">
-				<div class="admin_element">
-					<label for="pwd">* Password :</label>
-					<form:input id="pwd" path="password" />
-					<form:errors path="password" cssClass="error" lang="en" />
-				</div>
-				<br />
-				<br />
-				<div class="join_element">
-					<input type="submit" value="Reset Data Base" />
-				</div>
-			</div>
-		</form:form>
-	</div>
 
 </body>
 </html>
