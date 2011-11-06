@@ -44,7 +44,7 @@ public class RegistrationController {
 		// Perform and Model / Form initialization
 
 		Registration registration = new Registration();
-		registration.setEventId(10L);
+		registration.setEventId(eventService.getLastEvent().getId());
 
 		registration.setParticipantTasks(Arrays.asList(0l, 0l, 0l));
 
@@ -55,7 +55,8 @@ public class RegistrationController {
 	@ModelAttribute("availableTasks")
 	public Map<Long, String> populateAvailableTasks() {
 
-		List<Task> availableTasks = eventService.getAvailableTasks(10L);
+		List<Task> availableTasks = eventService.getAvailableTasks(eventService
+				.getLastEvent().getId());
 
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
 

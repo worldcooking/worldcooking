@@ -2,6 +2,7 @@ package org.worldcooking.server.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 			List<Event> eList = getHibernateTemplate().findByNamedParam(
 					"from Event e join fetch e.availableTasks as t "
 							+ "left join fetch e.subscriptions as s "
-							+ "left join fetch s.participants as p"
+							+ "inner join fetch s.participants as p"
 							+ " where e.id=:eventId", "eventId", id);
 			if (eList != null && !eList.isEmpty()) {
 				return eList.get(0);
@@ -47,12 +48,39 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 		return null;
 	}
 
+	/**
+	 * Method returning the event corresponding to the id parameter. <br/>
+	 * The event is completed with all his objects.
+	 * 
+	 * @param id
+	 *            Unique id use to retrieve the Event.
+	 * @return The event. Return null if the event is not found.
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Event> findAllFullEvent() {
+		try {
+			List<Event> eList = getHibernateTemplate().find(
+					"from Event e join fetch e.availableTasks as t "
+							+ "left join fetch e.subscriptions as s "
+							+ "inner join fetch s.participants as p");
+			return eList;
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void resetDb() {
 		Session openSession = sessionFactory.openSession();
-		Event event = findFullEventById(10L);
-		if (event != null) {
-			openSession.delete(event);
+		openSession.setFlushMode(FlushMode.AUTO);
+		List<Event> events = findAllFullEvent();
+		if (events != null) {
+			for (Event event : events) {
+				openSession.delete(event);
+			}
 		}
+		openSession.flush();
 		openSession.close();
 	}
 

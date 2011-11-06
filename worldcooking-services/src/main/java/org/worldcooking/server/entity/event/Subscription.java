@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.worldcooking.server.entity.payment.Payment;
 import org.worldcooking.server.entity.people.Participant;
 
@@ -48,6 +50,7 @@ public class Subscription {
 
 	/** People registered with this subscription. */
 	@OneToMany(mappedBy = "subscription")
+	@Cascade({ CascadeType.DELETE })
 	private Set<Participant> participants = new HashSet<Participant>();
 
 	public Subscription() {
