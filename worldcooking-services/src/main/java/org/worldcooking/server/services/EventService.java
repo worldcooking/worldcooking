@@ -62,10 +62,11 @@ public class EventService {
 			e1.printStackTrace();
 		}
 
+		// create worldcooking Peru
 		Event e = new Event();
 		e.setName("Worldcooking Peru");
 		e.setDescription("Up to 38 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br>"
-				+ "Our chef will be Nidia Torres!<br>"
+				+ "Our chef will be Nidia Torres.<br>"
 				+ "<br>"
 				+ "To participate in this event you must book and pay in advance.<br>"
 				+ "The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.<br>"
@@ -149,6 +150,7 @@ public class EventService {
 		s0.addParticipant(p3);
 		s0.addParticipant(p4);
 		s0.addParticipant(p5);
+		s0.setEmail("s0");
 		e.addSubscription(s0);
 		dao.makePersistent(s0);
 
@@ -157,8 +159,6 @@ public class EventService {
 		s1.addParticipant(p6);
 		e.addSubscription(s1);
 		dao.makePersistent(s1);
-
-		dao.makePersistent(e);
 	}
 
 	/**

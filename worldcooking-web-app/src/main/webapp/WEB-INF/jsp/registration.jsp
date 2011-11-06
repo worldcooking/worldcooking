@@ -22,7 +22,7 @@
 					<div class="form_element form_input">
 						<label for="name0_field">* Your name : 
 						<form:input path="participantsNames[0]"  />
-						<form:errors path="participantsNames[0]" cssClass="error" />
+						<form:errors path="participantsNames"  cssClass="error" />
 						</label>
 					</div>
 					<div class="form_element form_input">

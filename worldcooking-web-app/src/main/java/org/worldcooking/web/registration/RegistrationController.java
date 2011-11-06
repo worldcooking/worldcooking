@@ -86,10 +86,11 @@ public class RegistrationController {
 			BindingResult result) throws Exception {
 
 		// check parameters (TODO manage errors)
-		Assert.isTrue(
-				registration.getParticipantsNames().size() <= registration
-						.getParticipantTasks().size(),
-				"Participants tasks should be as large as participants names.");
+		int participantsNb = registration.getParticipantsNames().size();
+		int tasksNb = registration.getParticipantTasks().size();
+		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks ("
+				+ tasksNb + ") should be as large as participants names ("
+				+ participantsNb + ").");
 
 		if (result.hasErrors()) {
 
