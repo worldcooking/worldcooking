@@ -23,10 +23,10 @@
 		<h2>Join us!</h2>
 		<p>
 			The price for this meal is <b>15€ per person.</b><br/> 
-			This amount can pay the rent of the room, the
+			This amount pays the rent of the room, the
 			ingredients for the meal and drinks.<br /> To pay you can use
 			paypal. In this way the registration is immediate.<br /> You can
-			also pay directly to Matthieu, Nidia, Ben, Nicolas or Toub if you
+			also pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
 			have the opportunity to see one of them very soon. Your registration
 			will be validated only when you give them the money.<br/><br/>
 			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center><br/> 
