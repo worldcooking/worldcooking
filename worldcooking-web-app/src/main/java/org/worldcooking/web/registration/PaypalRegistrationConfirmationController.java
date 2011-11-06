@@ -52,6 +52,12 @@ public class PaypalRegistrationConfirmationController {
 	private String paypalBusinessEmailAddress;
 
 	/**
+	 * Paypal form 'currency_code' field.
+	 */
+	@Value("${registration.paypal.currency}")
+	private String paypalCurrencyCode;
+
+	/**
 	 * @param eventId
 	 *            query parameter
 	 * @param model
@@ -126,6 +132,16 @@ public class PaypalRegistrationConfirmationController {
 	}
 
 	/**
+	 * Paypal form 'currency_code' field.
+	 * 
+	 * @return
+	 */
+	@ModelAttribute("paypalCurrencyCode")
+	public String populatePaypalCurrencyCode() {
+		return paypalCurrencyCode;
+	}
+
+	/**
 	 * Paypal form 'return' field.
 	 * 
 	 * @param request
@@ -148,4 +164,5 @@ public class PaypalRegistrationConfirmationController {
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
 	}
+
 }
