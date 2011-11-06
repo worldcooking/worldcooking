@@ -21,11 +21,13 @@ public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Task> getAvailableTasks(Long eventId) {
-		List<Task> tasks = getHibernateTemplate().findByNamedParam(
-				"from Task t" + " where t.event.id=:eventId"
-						+ " and t.nbMax > (select count(p)"
-						+ " from Participant p where p.task.id = t.id)"
-						+ " order by t.name", "eventId", eventId);
+		List<Task> tasks = getHibernateTemplate()
+				.findByNamedParam(
+						"from Task t"
+								+ " where t.event.id=:eventId"
+								+ " and t.nbMax > (select count(p)"
+								+ " from Participant p where p.task.id = t.id and p.subscription.validate = true)"
+								+ " order by t.name", "eventId", eventId);
 		return tasks;
 	}
 }

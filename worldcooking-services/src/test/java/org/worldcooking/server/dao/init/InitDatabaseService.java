@@ -2,7 +2,6 @@ package org.worldcooking.server.dao.init;
 
 import javax.annotation.Resource;
 
-import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.worldcooking.AbstractApplicationContextAware;
@@ -21,7 +20,7 @@ public class InitDatabaseService extends AbstractApplicationContextAware {
 	/**
 	 * Tries to store {@link org.worldcooking.server.entity.DummyEntity}.
 	 */
-	@Test
+	// @Test
 	@Rollback(value = false)
 	public void initDatabase() {
 		// create worldcooking Peru

@@ -32,7 +32,7 @@ public class WorldcookingController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
 		// Acces to the event in DB.
-		Event e = eventService.getFullEventById(10L);
+		Event e = eventService.getLastEvent();
 		ModelAndView modelAndView = new ModelAndView("worldcookingperu");
 
 		if (e != null) {

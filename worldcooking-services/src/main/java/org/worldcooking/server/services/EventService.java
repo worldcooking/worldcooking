@@ -37,6 +37,15 @@ public class EventService {
 		return eventDao.findFullEventById(id);
 	}
 
+	public Event getLastEvent() {
+		Event lastEvent = null;
+		List<Event> allEvents = eventDao.findAllFullEvent();
+		if (allEvents != null && !allEvents.isEmpty()) {
+			lastEvent = allEvents.get(allEvents.size() - 1);
+		}
+		return lastEvent;
+	}
+
 	/**
 	 * Retrieving the list of participants waiting for a validation.
 	 * 
@@ -141,7 +150,6 @@ public class EventService {
 		Participant p6 = new Participant();
 		p6.setName("Peter Tosh");
 		t5.addParticipant(p6);
-		dao.makePersistent(p6);
 
 		Subscription s0 = new Subscription();
 		s0.setValidate(true);
@@ -159,6 +167,15 @@ public class EventService {
 		s1.addParticipant(p6);
 		e.addSubscription(s1);
 		dao.makePersistent(s1);
+
+		dao.makePersistent(p1);
+		dao.makePersistent(p2);
+		dao.makePersistent(p3);
+		dao.makePersistent(p4);
+		dao.makePersistent(p5);
+		dao.makePersistent(p6);
+
+		dao.makePersistent(e);
 	}
 
 	/**

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.worldcooking.server.entity.people.Participant;
 
 /**
@@ -45,6 +47,7 @@ public class Event {
 	 * validated et non-validated subscriptions.
 	 */
 	@OneToMany(mappedBy = "event")
+	@Cascade({ CascadeType.DELETE })
 	private Set<Subscription> subscriptions = new HashSet<Subscription>();
 
 	/**
@@ -54,10 +57,11 @@ public class Event {
 	 * @see Participant
 	 */
 	@OneToMany(mappedBy = "event")
+	@Cascade({ CascadeType.DELETE })
 	private Set<Task> availableTasks = new HashSet<Task>();
 
 	/**
-	 * Maximum of participants validated fot this event.
+	 * Maximum of participants validated for this event.
 	 */
 	@Column
 	private Integer maxParticipants;
