@@ -39,8 +39,8 @@ public class ModelViewMapper {
 	 * @return a new D object create from source
 	 */
 	@SuppressWarnings("unchecked")
-	public <D extends Object, S> D map(S source, Class<? extends Object> D) {
-		return (D) mapper.map(source, D);
+	public <D, S> D map(S source, Class<D> clazz) {
+		return mapper.map(source, clazz);
 	}
 
 	/**
