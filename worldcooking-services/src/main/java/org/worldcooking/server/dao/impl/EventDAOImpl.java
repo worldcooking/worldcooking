@@ -53,7 +53,7 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 			List<Event> eList = getHibernateTemplate().find(
 					"from Event e join fetch e.availableTasks as t "
 							+ "left join fetch e.subscriptions as s "
-							+ "inner join fetch s.participants as p");
+							+ "left join fetch s.participants as p");
 			return eList;
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
@@ -63,7 +63,8 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 	}
 
 	public void resetDb() {
-		getHibernateTemplate().deleteAll(findAllFullEvent());
+		List<Event> allEvents = findAll();
+		getHibernateTemplate().deleteAll(allEvents);
 	}
 
 }
