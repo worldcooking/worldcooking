@@ -2,11 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<title>${event.name} - Paypal payment</title>
+<title>${event.name} - Paypal & CB payment</title>
 </head>
 <body onload="javascript:document.getElementById('paypalFormId').submit()">
 		<div class="main_chapter">
-			<h2>Paypal payement</h2>
+			<h2>Paypal & CB payment</h2>
 			<p>
 				If you're not automatically redirected to the Paypal payment page, please click on the button below.<br/>
 				<br/>
