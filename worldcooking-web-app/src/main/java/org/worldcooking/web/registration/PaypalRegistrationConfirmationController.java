@@ -41,6 +41,13 @@ public class PaypalRegistrationConfirmationController {
 	private String paypalFormAction;
 
 	/**
+	 * Paypal form 'return' field.
+	 * 
+	 */
+	@Value("${registration.paypal.return.url}")
+	private String paypalReturnUrl;
+
+	/**
 	 * Paypal form 'item-name' field.
 	 */
 	@Value("${registration.paypal.item.name}")
@@ -162,7 +169,7 @@ public class PaypalRegistrationConfirmationController {
 	 */
 	@ModelAttribute("paypalReturnUrl")
 	public String populatePaypalReturnUrl(HttpServletRequest request) {
-		return buildAppUrl(request);
+		return paypalReturnUrl;
 	}
 
 	private String buildAppUrl(HttpServletRequest request) {

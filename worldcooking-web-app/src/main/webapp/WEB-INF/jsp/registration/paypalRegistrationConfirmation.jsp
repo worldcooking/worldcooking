@@ -22,7 +22,7 @@
 			<input type="hidden" name="no_note" value="1"/> 
 			<input type="hidden" name="currency_code" value="${paypalCurrencyCode}"/> 
 			<input type="hidden" name="return" value="${paypalReturnUrl}"> 
-			<input type="hidden" name="lc" value="AU" /> 
+			<input type="hidden" name="lc" value="EN" /> 
 			<input type="hidden" name="bn" value="PP-BuyNowBF"/> 
 			<input type="submit" value="Go to paypal Web site to finalize my registration." title="WTF?! you're not redirected?!"/>
 		</form>
