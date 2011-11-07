@@ -87,7 +87,7 @@ public class RegistrationController {
 	public Map<String, String> populateAvailablePaymentModes() {
 		Map<String, String> availablePaymentModes = new LinkedHashMap<String, String>();
 
-		availablePaymentModes.put(PAYPAL_MODE_KEY, "paypal");
+		availablePaymentModes.put(PAYPAL_MODE_KEY, "Paypal or CB");
 		availablePaymentModes.put("manual-blevine", "Benjamin Levine");
 		availablePaymentModes.put("manual-mgaudet", "Matthieu Gaudet");
 		availablePaymentModes.put("manual-ngruyer", "Nicolas Gruyer");
