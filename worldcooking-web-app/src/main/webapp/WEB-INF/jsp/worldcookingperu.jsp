@@ -18,20 +18,34 @@
 <title>${event.name}</title>
 </head>
 <body>
-
-	<div class="main_chapter">
+<c:if test="${event.registrationClosed == true}" >
+<div class="main_chapter">
+		<h2>Registration closed!</h2>
+		<p>
+			The event is now full, so <b>the registration is closed</b>. 
+			<br/>If you were thinking to come, but do not have payed yet, you are not in the confirmed list, so you will have to be faster next time.
+			<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
+		</p>
+	</div>
+</c:if>
+<c:if test="${event.registrationClosed == false}" >
+<div class="main_chapter">
 		<h2>Join us!</h2>
 		<p>
-			The price for this meal is <b>15€ per person.</b><br/> 
-			This amount pays the rent of the room, the
-			ingredients for the meal and drinks.<br /> To pay you can use
-			paypal. In this way the registration is immediate.<br /> You can
-			also pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
+			The price for this meal is <b>15€ per person. This meal will not generate any profit,</b><br/> 
+			This amount goes to pay for the location, all the drinks and the food.
+			<br/> To pay you can :
+			<ul>
+				<li>use paypal or CB: in this way the registration is immediate.</li>
+				<li>pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
 			have the opportunity to see one of them very soon. Your registration
-			will be validated only when you give them the money.<br/><br/>
+			will be validated only when you give them the money.</li>
+			</ul>
+			<br/><br/>
 			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center><br/> 
 		</p>
 	</div>
+</c:if>
 	<div class="main_chapter">
 		<h2>Informations</h2>
 		<p>${event.information}</p>
@@ -93,6 +107,7 @@
 				</table>
 			</div>
 		</div>
+<c:if test="${event.registrationClosed == false}" >
 		<div class="main_chapter">
 			<h2>Participants waiting for payment confirmation</h2>
 			<div id="div_participants" class="participants">
@@ -113,6 +128,7 @@
 				</table>
 			</div>
 		</div>
+</c:if>
 	</div>
 </body>
 </html>

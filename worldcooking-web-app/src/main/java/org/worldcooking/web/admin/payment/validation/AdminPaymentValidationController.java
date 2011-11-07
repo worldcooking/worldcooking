@@ -40,6 +40,7 @@ public class AdminPaymentValidationController {
 
 	@RequestMapping(value = "/admin/payment/validation", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
+
 		ModelAndView modelAndView = new ModelAndView(JSP);
 		AdminPaymentValidation form = new AdminPaymentValidation();
 
@@ -103,7 +104,7 @@ public class AdminPaymentValidationController {
 		if ("pépérou".equals(adminPaymentValidation.getPassword())) {
 			subscriptionService.validatePayment(adminPaymentValidation
 					.getSubscriptionId());
-			return "redirect:/";
+			return JSP;
 		}
 		// redirect to main page
 		return JSP;

@@ -64,6 +64,7 @@ public class Event {
 	 * Maximum of participants validated for this event.
 	 */
 	@Column
+	// TODO make it Long!
 	private Integer maxParticipants;
 
 	public Long getId() {

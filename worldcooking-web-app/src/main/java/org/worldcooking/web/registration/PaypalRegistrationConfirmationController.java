@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.subscription.SubscriptionService;
@@ -67,6 +68,18 @@ public class PaypalRegistrationConfirmationController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String initializeForm(@RequestParam Long subscriptionId,
 			ModelMap model) throws Exception {
+
+		Event event = eventService.getLastEvent();
+
+		if (event != null) {
+			if (subscriptionService.isRegistrationClosed(event.getId())) {
+				logger.warn(
+						"Attempt to access to closed registration of event '{}'.",
+						event.getName());
+				return "redirect:/";
+			}
+		}
+
 		// TODO do not throw exception: manage errors!
 
 		// TODO manage errors

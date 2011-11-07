@@ -41,8 +41,8 @@ public class RegistrationController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(ModelMap model) {
-		// Perform and Model / Form initialization
+	public String initializeForm(ModelMap model)
+			throws EntityIdNotFountException {
 
 		Registration registration = new Registration();
 
@@ -50,6 +50,14 @@ public class RegistrationController {
 
 		if (lastEvent != null) {
 			registration.setEventId(lastEvent.getId());
+
+			if (subscriptionService.isRegistrationClosed(lastEvent.getId())) {
+				logger.warn(
+						"Attempt to access to closed registration of event '{}'.",
+						lastEvent.getName());
+				return "redirect:/";
+			}
+
 		}
 		registration.setParticipantTasks(Arrays.asList(0l, 0l, 0l));
 
@@ -93,6 +101,17 @@ public class RegistrationController {
 	public String onSubmit(
 			@Valid @ModelAttribute("registration") Registration registration,
 			BindingResult result) throws Exception {
+
+		Event event = eventService.findById(registration.getEventId());
+
+		if (event != null) {
+			if (subscriptionService.isRegistrationClosed(event.getId())) {
+				logger.warn(
+						"Attempt to access to closed registration of event '{}'.",
+						event.getName());
+				return "redirect:/";
+			}
+		}
 
 		// check parameters (TODO manage errors)
 		int participantsNb = registration.getParticipantsNames().size();

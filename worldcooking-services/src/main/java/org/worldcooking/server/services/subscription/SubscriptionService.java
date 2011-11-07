@@ -39,6 +39,27 @@ public class SubscriptionService {
 	@Autowired
 	private MultiEntitiesHibernateDAOImpl dao;
 
+	public boolean isRegistrationClosed(Long eventId)
+			throws EntityIdNotFountException {
+		Event e = eventDao.findById(eventId);
+		Integer maxParticipantsNb = e.getMaxParticipants();
+
+		Long validParticipantsNb = subscriptionDAOImpl
+				.countValidatedParticipants(eventId);
+
+		// TODO maxParticipantsNb should be Long
+		if (validParticipantsNb.intValue() >= maxParticipantsNb) {
+			logger.debug("Registration is closed (" + validParticipantsNb + "/"
+					+ maxParticipantsNb + " participants)");
+			return true;
+		} else {
+			logger.debug("Registration is not closed (" + validParticipantsNb
+					+ "/" + maxParticipantsNb + " participants)");
+			return false;
+		}
+
+	}
+
 	public double calculateSubscriptionPrice(Set<Participant> set)
 			throws EntityIdNotFountException {
 		// initial amount is zero

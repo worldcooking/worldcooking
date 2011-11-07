@@ -9,18 +9,23 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.exception.EntityIdNotFountException;
+import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.subscription.SubscriptionService;
 
 @Controller
 public class ConfirmationController {
 
-	private final static Logger LOGGER = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(ConfirmationController.class);
 
 	@Autowired
 	private SubscriptionService subscriptionService;
+
+	@Autowired
+	private EventService eventService;
 
 	@RequestMapping(value = "/registration/confirmation", method = RequestMethod.GET)
 	public String handleRequest(@RequestParam Long subscriptionId,
@@ -29,6 +34,17 @@ public class ConfirmationController {
 
 		// TODO manage errors
 		Assert.notNull(subscriptionId);
+
+		Event event = eventService.getLastEvent();
+
+		if (event != null) {
+			if (subscriptionService.isRegistrationClosed(event.getId())) {
+				logger.warn(
+						"Attempt to access to closed registration of event '{}'.",
+						event.getName());
+				return "redirect:/";
+			}
+		}
 
 		Subscription subscription = subscriptionService
 				.findFullSubscriptionById(subscriptionId);

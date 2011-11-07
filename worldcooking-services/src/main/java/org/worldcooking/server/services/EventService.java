@@ -15,6 +15,7 @@ import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Subscription;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
+import org.worldcooking.server.exception.EntityIdNotFountException;
 
 @Repository
 public class EventService {
@@ -40,6 +41,10 @@ public class EventService {
 
 	public Event getFullEventById(Long id) {
 		return eventDao.findFullEventById(id);
+	}
+
+	public Event findById(Long id) throws EntityIdNotFountException {
+		return eventDao.findById(id);
 	}
 
 	public Event getLastEvent() {

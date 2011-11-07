@@ -44,4 +44,17 @@ public class SubscriptionDAOImpl extends
 						"eventId", eventId);
 		return subscriptions;
 	}
+
+	public Long countValidatedParticipants(Long eventId) {
+		@SuppressWarnings("unchecked")
+		List<Long> counts = getHibernateTemplate()
+				.findByNamedParam(
+						"select count (p) from Participant p"
+								+ " where p.subscription.event.id=:eventId and p.subscription.validate=true",
+						"eventId", eventId);
+		if (counts != null && counts.size() == 1) {
+			return counts.get(0);
+		}
+		return null;
+	}
 }

@@ -72,6 +72,11 @@ public class WorldcookingController {
 			}
 			modelAndView.addObject("event", wcEvent);
 			wcEvent.addWaitingParticipants(waitingParticipants);
+			if (wcEvent.getNbParticipants() >= wcEvent.getNbParticipantsMax()) {
+				wcEvent.setRegistrationClosed(true);
+			} else {
+				wcEvent.setRegistrationClosed(false);
+			}
 		}
 		return modelAndView;
 	}

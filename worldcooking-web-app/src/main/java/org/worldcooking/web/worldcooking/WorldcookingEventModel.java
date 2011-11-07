@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
 import org.dozer.Mapping;
 
 /**
@@ -35,6 +36,8 @@ public class WorldcookingEventModel {
 	private List<TaskModel> tasks = new ArrayList<TaskModel>();
 
 	private int nbParticipantsMax = 0;
+
+	private Boolean registrationClosed;
 
 	public int getNbParticipants() {
 		return validatedParticipantsTask.size();
@@ -63,7 +66,7 @@ public class WorldcookingEventModel {
 	}
 
 	public List<String> getWaitingParticipants() {
-		Collections.sort(waitingParticipants);
+		Collections.sort(waitingParticipants, new IgnoreCaseStringComparator());
 		return waitingParticipants;
 	}
 
@@ -132,6 +135,15 @@ public class WorldcookingEventModel {
 		this.tasks.addAll(tasks);
 	}
 
+	private final class IgnoreCaseStringComparator implements
+			Comparator<String> {
+		@Override
+		public int compare(String o1, String o2) {
+			return new CompareToBuilder().append(o1.toLowerCase(),
+					o2.toLowerCase()).toComparison();
+		}
+	}
+
 	private static class TaskComparator implements Comparator<TaskModel> {
 
 		private static TaskComparator instance;
@@ -174,9 +186,18 @@ public class WorldcookingEventModel {
 		@Override
 		public int compare(ParticipantTask o1, ParticipantTask o2) {
 
-			return o1.getName().compareTo(o2.getName());
+			return o1.getName().toLowerCase()
+					.compareTo(o2.getName().toLowerCase());
 		}
 
+	}
+
+	public Boolean getRegistrationClosed() {
+		return registrationClosed;
+	}
+
+	public void setRegistrationClosed(Boolean registrationClosed) {
+		this.registrationClosed = registrationClosed;
 	}
 
 }
