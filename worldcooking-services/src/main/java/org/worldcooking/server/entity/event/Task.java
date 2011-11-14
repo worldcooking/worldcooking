@@ -33,7 +33,7 @@ public class Task {
 	private Long id;
 
 	/** Short text use to identify the task. */
-	@Column
+	@Column(nullable = false)
 	private String name;
 
 	/** Description for this task. */

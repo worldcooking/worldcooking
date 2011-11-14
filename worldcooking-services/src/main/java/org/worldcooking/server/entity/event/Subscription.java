@@ -1,5 +1,7 @@
 package org.worldcooking.server.entity.event;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,15 +36,22 @@ public class Subscription {
 	private Long id;
 
 	/** Email use for the registration. */
-	@Column
+	@Column(nullable = false)
 	private String email;
 
+	@Column(nullable = false)
+	private Date subscriptionDate;
+
 	/** If the subscription is validated. */
+	@Column(nullable = false)
 	private Boolean validate = false;
 
 	/** How this subscription is paid. */
-	@OneToOne
+	@OneToOne(mappedBy = "subscription")
 	private Payment payment;
+
+	@OneToOne
+	private Participant subscriberParticipant;
 
 	/** Event associated to this subscription. */
 	@ManyToOne
@@ -61,6 +70,7 @@ public class Subscription {
 		this.email = email;
 		this.payment = payment;
 		this.event = event;
+		this.subscriptionDate = new Date();
 	}
 
 	/**
@@ -91,6 +101,10 @@ public class Subscription {
 	 */
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+		if (payment.getSubscription() == null
+				|| payment.getSubscription() != this) {
+			payment.setSubscription(this);
+		}
 	}
 
 	/**
@@ -121,6 +135,13 @@ public class Subscription {
 		participants.add(participant);
 	}
 
+	public void addParticipants(Collection<Participant> newParticipants) {
+		for (Participant participant : newParticipants) {
+			participant.setSubscription(this);
+		}
+		participants.addAll(newParticipants);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -135,6 +156,22 @@ public class Subscription {
 
 	public void setValidate(Boolean validate) {
 		this.validate = validate;
+	}
+
+	public Participant getSubscriberParticipant() {
+		return subscriberParticipant;
+	}
+
+	public void setSubscriberParticipant(Participant subscriber) {
+		this.subscriberParticipant = subscriber;
+	}
+
+	public Date getSubscriptionDate() {
+		return subscriptionDate;
+	}
+
+	public void setSubscriptionDate(Date subscriptionDate) {
+		this.subscriptionDate = subscriptionDate;
 	}
 
 }

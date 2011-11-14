@@ -24,6 +24,7 @@ import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.subscription.SubscriptionService;
+import org.worldcooking.server.services.subscription.model.NewParticipant;
 import org.worldcooking.server.services.subscription.model.NewSubscription;
 import org.worldcooking.server.services.subscription.model.NewSubscriptionPaymentMode;
 
@@ -59,7 +60,7 @@ public class RegistrationController {
 			}
 
 		}
-		registration.setParticipantTasks(Arrays.asList(0l, 0l, 0l));
+		registration.setAdditionalParticipantsTasks(Arrays.asList(0l, 0l));
 
 		model.addAttribute("registration", registration);
 		return "registration";
@@ -114,8 +115,10 @@ public class RegistrationController {
 		}
 
 		// check parameters (TODO manage errors)
-		int participantsNb = registration.getParticipantsNames().size();
-		int tasksNb = registration.getParticipantTasks().size();
+		// TODO add a custom constraint (using group constraints?)
+		int participantsNb = registration.getAdditionalParticipantsNames()
+				.size();
+		int tasksNb = registration.getAdditionalParticipantsTasks().size();
 		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks ("
 				+ tasksNb + ") should be as large as participants names ("
 				+ participantsNb + ").");
@@ -158,10 +161,11 @@ public class RegistrationController {
 		Long eventId = registration.getEventId();
 		String subscriberEmailAddress = registration.getEmailAddress();
 
-		Iterator<Long> participantsTasksIt = registration.getParticipantTasks()
-				.iterator();
-		// add participants
-		for (String participantName : registration.getParticipantsNames()) {
+		Iterator<Long> participantsTasksIt = registration
+				.getAdditionalParticipantsTasks().iterator();
+		// add additional participants
+		for (String participantName : registration
+				.getAdditionalParticipantsNames()) {
 			if (participantName != null) {
 				participantName = participantName.trim();
 				if (!participantName.isEmpty()) {
@@ -170,11 +174,14 @@ public class RegistrationController {
 				}
 			}
 		}
-
+		NewParticipant subscriberParticipant = new NewParticipant(
+				registration.getSubscriberParticipantName(),
+				registration.getSubscriberParticipantTask());
 		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
 			// paypal
+
 			newSubscription.configureWithPaypalPayment(eventId,
-					subscriberEmailAddress);
+					subscriberEmailAddress, subscriberParticipant);
 		} else {
 			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
 
@@ -183,7 +190,8 @@ public class RegistrationController {
 			// TODO meilleure gestion des erreurs
 			Assert.notNull(paymentTarget);
 			newSubscription.configureWithManualPayment(eventId,
-					subscriberEmailAddress, paymentTarget);
+					subscriberEmailAddress, paymentTarget,
+					subscriberParticipant);
 		}
 
 		return newSubscription;

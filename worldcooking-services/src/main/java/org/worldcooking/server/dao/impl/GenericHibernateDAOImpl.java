@@ -2,7 +2,9 @@ package org.worldcooking.server.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
@@ -108,6 +110,18 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 			crit.add(c);
 		}
 		return getHibernateTemplate().findByCriteria(crit);
+	}
+
+	protected TreeSet<T> toTreeSet(List<T> eList) {
+		return new TreeSet<T>(eList);
+	}
+
+	protected TreeSet<T> toTreeSet(List<T> eList,
+			Comparator<? super T> comparator) {
+		// TODO is it the best way to manage unicity?
+		TreeSet<T> treeSet = new TreeSet<T>(comparator);
+		treeSet.addAll(eList);
+		return treeSet;
 	}
 
 }

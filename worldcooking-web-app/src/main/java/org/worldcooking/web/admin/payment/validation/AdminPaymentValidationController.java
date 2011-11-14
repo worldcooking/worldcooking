@@ -4,8 +4,8 @@
 package org.worldcooking.web.admin.payment.validation;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 
 import javax.validation.Valid;
 
@@ -59,7 +59,7 @@ public class AdminPaymentValidationController {
 		Event lastEvent = eventService.getLastEvent();
 
 		if (lastEvent != null) {
-			List<Subscription> subscriptions = subscriptionService
+			SortedSet<Subscription> subscriptions = subscriptionService
 					.findNonValidatedSubscriptions(lastEvent.getId());
 
 			subscriptionsDesc.put(-1L, "");

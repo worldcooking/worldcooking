@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.worldcooking.validator.NonEmptyListConstraint;
 
 public class Registration {
 
@@ -29,17 +28,25 @@ public class Registration {
 	private String paymentMode;
 
 	/**
-	 * List of selected tasks (ordered by participant).
+	 * Register name
 	 */
-	@NotEmpty
-	private List<Long> participantTasks = new ArrayList<Long>();
+	@NotEmpty(message = "Please specify your name")
+	private String subscriberParticipantName;
 
 	/**
-	 * List of participants names.
+	 * Register task
 	 */
-	@NotEmpty
-	@NonEmptyListConstraint(message = "Please specify your name")
-	private List<String> participantsNames = new ArrayList<String>();
+	@NotNull(message = "Please specify your task")
+	private Long subscriberParticipantTask;
+
+	/**
+	 * List of additional participants names.
+	 */
+	private List<String> additionalParticipantsNames = new ArrayList<String>();
+	/**
+	 * List of selected tasks (ordered by participant).
+	 */
+	private List<Long> additionalParticipantsTasks = new ArrayList<Long>();
 
 	public Registration() {
 	}
@@ -50,22 +57,6 @@ public class Registration {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
-	}
-
-	public List<Long> getParticipantTasks() {
-		return participantTasks;
-	}
-
-	public void setParticipantTasks(List<Long> participantTasks) {
-		this.participantTasks = participantTasks;
-	}
-
-	public List<String> getParticipantsNames() {
-		return participantsNames;
-	}
-
-	public void setParticipantsNames(List<String> participantsNames) {
-		this.participantsNames = participantsNames;
 	}
 
 	public Long getEventId() {
@@ -82,6 +73,40 @@ public class Registration {
 
 	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
+	}
+
+	public String getSubscriberParticipantName() {
+		return subscriberParticipantName;
+	}
+
+	public void setSubscriberParticipantName(String subscriberParticipantName) {
+		this.subscriberParticipantName = subscriberParticipantName;
+	}
+
+	public Long getSubscriberParticipantTask() {
+		return subscriberParticipantTask;
+	}
+
+	public void setSubscriberParticipantTask(Long subscriberParticipantTask) {
+		this.subscriberParticipantTask = subscriberParticipantTask;
+	}
+
+	public List<String> getAdditionalParticipantsNames() {
+		return additionalParticipantsNames;
+	}
+
+	public void setAdditionalParticipantsNames(
+			List<String> additionalParticipantsNames) {
+		this.additionalParticipantsNames = additionalParticipantsNames;
+	}
+
+	public List<Long> getAdditionalParticipantsTasks() {
+		return additionalParticipantsTasks;
+	}
+
+	public void setAdditionalParticipantsTasks(
+			List<Long> additionalParticipantsTasks) {
+		this.additionalParticipantsTasks = additionalParticipantsTasks;
 	}
 
 }

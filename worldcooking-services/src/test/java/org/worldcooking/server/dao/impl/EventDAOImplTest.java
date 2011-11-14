@@ -14,7 +14,7 @@ import org.worldcooking.server.entity.event.Event;
 public class EventDAOImplTest extends ApplicationContextAwareTest {
 
     @Resource
-    private EventDAOImpl dao;
+    private GenericHibernateDAOImpl<Event, Long> dao;
 
     /**
      * Tries to store {@link org.worldcooking.server.entity.DummyEntity}.

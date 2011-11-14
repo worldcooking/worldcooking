@@ -6,7 +6,8 @@ import java.util.List;
 public class NewSubscription {
 	private Long eventId;
 	private NewSubscriber subscriber;
-	private List<NewParticipant> participants;
+
+	private List<NewParticipant> additionalParticipants;
 
 	private NewSubscriptionPaymentMode paymentMode;
 
@@ -17,28 +18,31 @@ public class NewSubscription {
 
 	public NewSubscription() {
 		super();
-		this.participants = new ArrayList<NewParticipant>();
+		this.additionalParticipants = new ArrayList<NewParticipant>();
 	}
 
 	public NewSubscription configureWithPaypalPayment(Long eventId,
-			String subscriberEmailAddress) {
+			String subscriberEmailAddress, NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
-		this.subscriber = new NewSubscriber(subscriberEmailAddress);
+		this.subscriber = new NewSubscriber(subscriberEmailAddress,
+				subscriberParticipant);
 		paymentMode = NewSubscriptionPaymentMode.PAYPAL;
 		return this;
 	}
 
 	public NewSubscription configureWithManualPayment(Long eventId,
-			String subscriberEmailAddress, String paymentTarget) {
+			String subscriberEmailAddress, String paymentTarget,
+			NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
-		this.subscriber = new NewSubscriber(subscriberEmailAddress);
+		this.subscriber = new NewSubscriber(subscriberEmailAddress,
+				subscriberParticipant);
 		paymentMode = NewSubscriptionPaymentMode.MANUAL;
 		this.paymentTarget = paymentTarget;
 		return this;
 	}
 
 	public NewSubscription addParticipant(String name, Long taskId) {
-		this.participants.add(new NewParticipant(name, taskId));
+		this.additionalParticipants.add(new NewParticipant(name, taskId));
 		return this;
 	}
 
@@ -50,8 +54,8 @@ public class NewSubscription {
 		return subscriber;
 	}
 
-	public List<NewParticipant> getParticipants() {
-		return participants;
+	public List<NewParticipant> getAdditionalParticipants() {
+		return additionalParticipants;
 	}
 
 	public NewSubscriptionPaymentMode getPaymentMode() {

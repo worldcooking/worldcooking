@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.worldcooking.server.entity.event.Subscription;
 
 /**
  * 
@@ -31,6 +34,10 @@ public class Payment {
 
 	@Column
 	private String reference;
+
+	/** How this subscription is paid. */
+	@OneToOne
+	private Subscription subscription;
 
 	public PaymentMode getMode() {
 		return mode;
@@ -70,6 +77,18 @@ public class Payment {
 
 	public void setReference(String target) {
 		this.reference = target;
+	}
+
+	public Subscription getSubscription() {
+		return subscription;
+	}
+
+	public void setSubscription(Subscription subscription) {
+		this.subscription = subscription;
+		if (subscription.getPayment() == null
+				|| subscription.getPayment() != this) {
+			subscription.setPayment(this);
+		}
 	}
 
 }

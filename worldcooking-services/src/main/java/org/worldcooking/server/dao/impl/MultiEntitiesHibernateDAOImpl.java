@@ -1,5 +1,7 @@
 package org.worldcooking.server.dao.impl;
 
+import java.util.Collection;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -24,9 +26,23 @@ public class MultiEntitiesHibernateDAOImpl extends HibernateDaoSupport {
 	public MultiEntitiesHibernateDAOImpl() {
 	}
 
+	/**
+	 * Use saveOrUpdate instead
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	@Deprecated
 	public <T> T makePersistent(T entity) {
-		getHibernateTemplate().saveOrUpdate(entity);
+		saveOrUpdate(entity);
 		return entity;
 	}
 
+	public void saveOrUpdate(Object entity) {
+		getHibernateTemplate().saveOrUpdate(entity);
+	}
+
+	public void saveOrUpdateAll(Collection<?> entity) {
+		getHibernateTemplate().saveOrUpdateAll(entity);
+	}
 }

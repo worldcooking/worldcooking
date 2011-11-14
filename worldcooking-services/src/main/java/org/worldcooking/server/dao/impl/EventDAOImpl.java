@@ -1,8 +1,10 @@
 package org.worldcooking.server.dao.impl;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.event.Event;
 
@@ -21,45 +23,42 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 	 *            Unique id use to retrieve the Event.
 	 * @return The event. Return null if the event is not found.
 	 */
-	@SuppressWarnings("unchecked")
 	public Event findFullEventById(Long id) {
-		try {
-			List<Event> eList = getHibernateTemplate().findByNamedParam(
-					"from Event e join fetch e.availableTasks as t "
-							+ "left join fetch e.subscriptions as s "
-							+ "inner join fetch s.participants as p"
-							+ " where e.id=:eventId", "eventId", id);
-			if (eList != null && !eList.isEmpty()) {
-				return eList.get(0);
-			}
-		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Set<Event> eList = findAllFullEvents(id);
+		if (eList != null && !eList.isEmpty()) {
+			return eList.iterator().next();
 		}
 		return null;
 	}
 
-	/**
-	 * Method returning the event corresponding to the id parameter. <br/>
-	 * The event is completed with all his objects.
-	 * 
-	 * @param id
-	 *            Unique id use to retrieve the Event.
-	 * @return The event. Return null if the event is not found.
-	 */
+	public SortedSet<Event> findAllFullEvents() {
+		return findAllFullEvents(null);
+	}
+
 	@SuppressWarnings("unchecked")
-	public List<Event> findAllFullEvent() {
-		try {
-			List<Event> eList = getHibernateTemplate().find(
-					"from Event e join fetch e.availableTasks as t "
-							+ "left join fetch e.subscriptions as s "
-							+ "left join fetch s.participants as p");
-			return eList;
-		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private SortedSet<Event> findAllFullEvents(Long id) {
+		String queryString = "from Event e"
+				+ " left join fetch e.availableTasks as t"
+				+ " left join fetch e.subscriptions as s"
+				+ " left join fetch s.participants as p";
+		List<Event> eList;
+		if (id != null) {
+			queryString += " where e.id=:eventId";
+			eList = getHibernateTemplate().findByNamedParam(queryString,
+					"eventId", id);
+		} else {
+			eList = getHibernateTemplate().find(queryString);
 		}
-		return null;
+		return toTreeSet(eList, new Comparator<Event>() {
+
+			@Override
+			public int compare(Event e1, Event e2) {
+				// TODO use CompareToBuilder
+				// TODO compare in more fields to avoid to erase events with
+				// identical name
+				return e1.getName().compareTo(e2.getName());
+			}
+		});
 	}
 
 	public void resetDb() {

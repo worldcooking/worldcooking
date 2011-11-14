@@ -3,6 +3,7 @@ package org.worldcooking.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,6 @@ public class EventService {
 	@Autowired
 	private MultiEntitiesHibernateDAOImpl dao;
 
-	public EventDAOImpl getEventDao() {
-		return eventDao;
-	}
-
 	public void setEventDao(EventDAOImpl eventDao) {
 		this.eventDao = eventDao;
 	}
@@ -47,11 +44,15 @@ public class EventService {
 		return eventDao.findById(id);
 	}
 
+	/**
+	 * @return
+	 */
+	@Deprecated
 	public Event getLastEvent() {
 		Event lastEvent = null;
-		List<Event> allEvents = eventDao.findAllFullEvent();
+		SortedSet<Event> allEvents = eventDao.findAllFullEvents();
 		if (allEvents != null && !allEvents.isEmpty()) {
-			lastEvent = allEvents.get(allEvents.size() - 1);
+			lastEvent = allEvents.last();
 		}
 		return lastEvent;
 	}
@@ -180,6 +181,14 @@ public class EventService {
 		}
 
 		return validatedParticipants;
+	}
+
+	public List<Event> findAll() {
+		return eventDao.findAll();
+	}
+
+	public SortedSet<Event> findAllFullEvents() {
+		return eventDao.findAllFullEvents();
 	}
 
 }

@@ -24,7 +24,7 @@ public class Participant {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column
+	@Column(nullable = false)
 	private String name;
 
 	@ManyToOne

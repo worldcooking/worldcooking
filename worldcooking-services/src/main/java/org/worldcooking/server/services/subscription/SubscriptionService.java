@@ -1,7 +1,10 @@
 package org.worldcooking.server.services.subscription;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,11 +63,12 @@ public class SubscriptionService {
 
 	}
 
-	public double calculateSubscriptionPrice(Set<Participant> set)
+	public double calculateSubscriptionPrice(
+			Collection<Participant> participants)
 			throws EntityIdNotFountException {
 		// initial amount is zero
 		double amount = 0;
-		for (Participant participant : set) {
+		for (Participant participant : participants) {
 
 			// add the price of participant to subscription amount
 			amount += participant.getTask().getPricePerParticipant();
@@ -88,17 +92,41 @@ public class SubscriptionService {
 		Subscription subscription = null;
 		try {
 			if (newSubscription.getEventId() != null) {
+				// create subscriber participant
+				Participant subscriberParticipant = createParticipant(newSubscription
+						.getSubscriber().getSubscriberParticipant());
+
+				dao.saveOrUpdate(subscriberParticipant);
+
 				// create a new subscription
 				subscription = createSubscription(newSubscription);
-				// add participants
-				createParticipants(newSubscription, subscription);
-				// initialize payment
-				createPayment(newSubscription, subscription);
+				subscription.setSubscriberParticipant(subscriberParticipant);
+				dao.saveOrUpdate(subscription);
+
+				Set<Participant> participants = new HashSet<Participant>();
+
+				// create and add all additional participants
+				for (NewParticipant newParticipant : newSubscription
+						.getAdditionalParticipants()) {
+					participants.add(createParticipant(newParticipant));
+				}
+				// add subscriber
+				participants.add(subscriberParticipant);
+
+				// set all participants
+				subscription.addParticipants(participants);
+
+				dao.saveOrUpdateAll(participants);
+
+				// create payment
+				Payment payment = createPayment(newSubscription, participants);
+				payment.setSubscription(subscription);
+				dao.saveOrUpdate(payment);
 			}
 			logger.info(
 					"Successfully created subscription of '{}' with {} participants.",
 					newSubscription.getSubscriber().getEmailAddress(),
-					newSubscription.getParticipants().size());
+					newSubscription.getAdditionalParticipants().size());
 		} catch (EntityIdNotFountException e) {
 			logger.error(
 					"Unable to register subscription because "
@@ -108,12 +136,12 @@ public class SubscriptionService {
 		return subscription;
 	}
 
-	private void createPayment(NewSubscription newSubscription,
-			Subscription subscription) throws EntityIdNotFountException {
+	private Payment createPayment(NewSubscription newSubscription,
+			Collection<Participant> participants)
+			throws EntityIdNotFountException {
 		// TODO Payment or Facturation ?
 		Payment payment = new Payment();
-		payment.setAmount(calculateSubscriptionPrice(subscription
-				.getParticipants()));
+		payment.setAmount(calculateSubscriptionPrice(participants));
 		if (newSubscription.getPaymentMode() == NewSubscriptionPaymentMode.PAYPAL) {
 			// paypal
 			payment.setMode(PaymentMode.PAYPAL);
@@ -123,25 +151,19 @@ public class SubscriptionService {
 			// the person who is receiving the money
 			payment.setReference(newSubscription.getPaymentTarget());
 		}
-		subscription.setPayment(payment);
-		dao.makePersistent(payment);
+		return payment;
 	}
 
-	private void createParticipants(NewSubscription newSubscription,
-			Subscription subscription) throws EntityIdNotFountException {
+	private Participant createParticipant(NewParticipant newParticipant)
+			throws EntityIdNotFountException {
+		Participant participant = new Participant();
+		participant.setName(newParticipant.getName());
 
-		// create and add all participants
-		for (NewParticipant newParticipant : newSubscription.getParticipants()) {
-			Participant participant = new Participant();
-			participant.setName(newParticipant.getName());
+		// retrieve the corresponding task
+		Task task = taskDao.findById(newParticipant.getTaskId());
+		participant.setTask(task);
 
-			// retrieve the corresponding task
-			Task task = taskDao.findById(newParticipant.getTaskId());
-			participant.setTask(task);
-
-			subscription.addParticipant(participant);
-			dao.makePersistent(participant);
-		}
+		return participant;
 	}
 
 	private Subscription createSubscription(NewSubscription newSubscription)
@@ -151,26 +173,47 @@ public class SubscriptionService {
 		Subscription subscription;
 		// create subscription
 		subscription = new Subscription();
+		subscription.setSubscriptionDate(new Date());
 		subscription.setEvent(e);
 		if (newSubscription.getSubscriber() != null) {
 			subscription.setEmail(newSubscription.getSubscriber()
 					.getEmailAddress());
 		}
-		dao.makePersistent(subscription);
 		return subscription;
 	}
 
-	public void validatePayment(Long subscriptionId)
+	public Subscription validatePayment(Long subscriptionId)
 			throws EntityIdNotFountException {
 		try {
 			Subscription subscription = subscriptionDAOImpl
 					.findById(subscriptionId);
 
 			subscription.setValidate(true);
-			dao.makePersistent(subscription);
+			dao.saveOrUpdate(subscription);
+
+			return subscription;
 		} catch (EntityIdNotFountException e) {
 			logger.error(
 					"Unable to validate payment of subscription '"
+							+ subscriptionId + "' because "
+							+ e.getErrorMessage() + ".", e);
+			throw e;
+		}
+	}
+
+	public Subscription unvalidatePayment(Long subscriptionId)
+			throws EntityIdNotFountException {
+		try {
+			Subscription subscription = subscriptionDAOImpl
+					.findById(subscriptionId);
+
+			subscription.setValidate(false);
+			dao.saveOrUpdate(subscription);
+
+			return subscription;
+		} catch (EntityIdNotFountException e) {
+			logger.error(
+					"Unable to unvalidate payment of subscription '"
 							+ subscriptionId + "' because "
 							+ e.getErrorMessage() + ".", e);
 			throw e;
@@ -182,7 +225,11 @@ public class SubscriptionService {
 		return subscriptionDAOImpl.findFullSubscriptionById(id);
 	}
 
-	public List<Subscription> findNonValidatedSubscriptions(Long eventId) {
+	public SortedSet<Subscription> findNonValidatedSubscriptions(Long eventId) {
 		return subscriptionDAOImpl.findNonValidatedSubscriptions(eventId);
+	}
+
+	public SortedSet<Subscription> findValidatedSubscriptions(Long eventId) {
+		return subscriptionDAOImpl.findValidatedSubscriptions(eventId);
 	}
 }
