@@ -1,4 +1,4 @@
-package org.worldcooking.server.services.subscription;
+package org.worldcooking.server.services.registration;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,23 +11,24 @@ import org.junit.Test;
 import org.worldcooking.ApplicationContextAwareTest;
 import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
-import org.worldcooking.server.services.subscription.model.NewParticipant;
-import org.worldcooking.server.services.subscription.model.NewSubscription;
+import org.worldcooking.server.services.registration.RegistrationService;
+import org.worldcooking.server.services.registration.model.NewParticipant;
+import org.worldcooking.server.services.registration.model.NewRegistration;
 
-public class SubscriptionServiceTest extends ApplicationContextAwareTest {
+public class RegistrationServiceTest extends ApplicationContextAwareTest {
 
 	@Resource
-	private SubscriptionService subscriptionService;
+	private RegistrationService registrationService;
 
 	@Resource
 	private MultiEntitiesHibernateDAOImpl dao;
 
 	@Test
-	public void testCalculateSubscriptionPrice()
+	public void testCalculateRegistrationPrice()
 			throws EntityIdNotFountException {
 		Task t1 = new Task();
 		t1.setPricePerParticipant(10d);
@@ -42,16 +43,16 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 		p1.setTask(t1);
 
 		// T1 (10)
-		Assert.assertEquals(10d, subscriptionService
-				.calculateSubscriptionPrice(new HashSet<Participant>(Arrays
+		Assert.assertEquals(10d, registrationService
+				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
 						.asList(p1))));
 
 		Participant p2 = new Participant();
 		p2.setTask(t2);
 
 		// T1 (10) + T2 (12) = 22
-		Assert.assertEquals(22d, subscriptionService
-				.calculateSubscriptionPrice(new HashSet<Participant>(Arrays
+		Assert.assertEquals(22d, registrationService
+				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
 						.asList(p1, p2))));
 
 		Participant p3 = new Participant();
@@ -61,13 +62,13 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 		p4.setTask(t3);
 
 		// T1 (10) + T2 (12) + T2 (12) + T3 (0) = 34
-		Assert.assertEquals(34d, subscriptionService
-				.calculateSubscriptionPrice(new HashSet<Participant>(Arrays
+		Assert.assertEquals(34d, registrationService
+				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
 						.asList(p1, p2, p3, p4))));
 
 		// T3 (0)
-		Assert.assertEquals(0d, subscriptionService
-				.calculateSubscriptionPrice(new HashSet<Participant>(Arrays
+		Assert.assertEquals(0d, registrationService
+				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
 						.asList(p4))));
 
 	}
@@ -95,7 +96,7 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 		e.addAvailableTask(t3);
 		dao.saveOrUpdate(t3);
 
-		NewSubscription newSubscription = new NewSubscription()
+		NewRegistration newRegistration = new NewRegistration()
 				.configureWithPaypalPayment(
 						e.getId(),
 						"subscriber@paypal-member.com",
@@ -106,19 +107,19 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 				.addParticipant("Tarif normal2", t2.getId())
 				.addParticipant("Tarif eco3", t1.getId());
 
-		Subscription subscription = subscriptionService
-				.subscribe(newSubscription);
+		Registration registration = registrationService
+				.subscribe(newRegistration);
 
 		// amount = 0 + 10 + 10 + 12 + 12 + 10 = 54
-		Assert.assertEquals(54d, subscription.getPayment().getAmount());
+		Assert.assertEquals(54d, registration.getPayment().getAmount());
 
 		// 6 participants
-		Assert.assertEquals(6, subscription.getParticipants().size());
+		Assert.assertEquals(6, registration.getParticipants().size());
 
 		// check that payment is NOT validated
-		Assert.assertFalse(subscription.getValidate());
+		Assert.assertFalse(registration.getValidate());
 
-		Participant subscriberParticipant = subscription
+		Participant subscriberParticipant = registration
 				.getSubscriberParticipant();
 		// check the subscriber participant
 		Assert.assertNotNull(subscriberParticipant);
@@ -129,11 +130,11 @@ public class SubscriptionServiceTest extends ApplicationContextAwareTest {
 
 	@Test
 	public void testValidatePayment() throws EntityIdNotFountException {
-		Subscription subscription = new Subscription();
-		dao.saveOrUpdate(subscription);
-		subscriptionService.validatePayment(subscription.getId());
+		Registration registration = new Registration();
+		dao.saveOrUpdate(registration);
+		registrationService.validatePayment(registration.getId());
 		// check that payment is validated
-		Assert.assertTrue(subscription.getValidate());
+		Assert.assertTrue(registration.getValidate());
 
 	}
 

@@ -39,7 +39,7 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 	private SortedSet<Event> findAllFullEvents(Long id) {
 		String queryString = "from Event e"
 				+ " left join fetch e.availableTasks as t"
-				+ " left join fetch e.subscriptions as s"
+				+ " left join fetch e.registrations as s"
 				+ " left join fetch s.participants as p";
 		List<Event> eList;
 		if (id != null) {

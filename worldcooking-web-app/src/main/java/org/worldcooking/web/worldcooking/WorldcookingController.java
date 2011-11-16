@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.web.util.ModelViewMapper;
@@ -40,14 +40,14 @@ public class WorldcookingController {
 					e, WorldcookingEventModel.class);
 
 			List<String> waitingParticipants = new ArrayList<String>();
-			Set<Subscription> subscriptions = e.getSubscriptions();
+			Set<Registration> registrations = e.getRegistrations();
 
-			// Iteration on subscription to get all the participants,
-			for (Subscription subscription : subscriptions) {
-				if (subscription.getValidate()) {
-					// if a subscription is validated, all its partcipants are
+			// Iteration on registration to get all the participants,
+			for (Registration registration : registrations) {
+				if (registration.getValidate()) {
+					// if a registration is validated, all its partcipants are
 					// confirmed
-					Set<Participant> partList = subscription.getParticipants();
+					Set<Participant> partList = registration.getParticipants();
 					for (Participant participant : partList) {
 						wcEvent.addValidatedParticipantTask(participant
 								.getName(), participant.getTask().getId(),
@@ -60,10 +60,10 @@ public class WorldcookingController {
 						}
 					}
 				} else {
-					// if a subscription is not validated, all its partcipants
+					// if a registration is not validated, all its partcipants
 					// are
 					// waiting for confirmation
-					Set<Participant> partList = subscription.getParticipants();
+					Set<Participant> partList = registration.getParticipants();
 					for (Participant participant : partList) {
 						waitingParticipants.add(participant.getName());
 

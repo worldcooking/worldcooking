@@ -2,7 +2,7 @@ package org.worldcooking.web.admin.event;
 
 import java.util.List;
 
-public class Registration {
+public class RegistrationModel {
 
 	private Long id;
 

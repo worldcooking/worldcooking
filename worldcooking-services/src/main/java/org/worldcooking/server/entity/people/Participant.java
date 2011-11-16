@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 
 /**
@@ -31,7 +31,7 @@ public class Participant {
 	private Task task;
 
 	@ManyToOne
-	private Subscription subscription;
+	private Registration registration;
 
 	public Participant() {
 		// nothing to do
@@ -81,12 +81,12 @@ public class Participant {
 		this.id = id;
 	}
 
-	public Subscription getSubscription() {
-		return subscription;
+	public Registration getRegistration() {
+		return registration;
 	}
 
-	public void setSubscription(Subscription subscription) {
-		this.subscription = subscription;
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
 	}
 
 }

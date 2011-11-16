@@ -26,7 +26,7 @@ public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
 						"from Task t"
 								+ " where t.event.id=:eventId"
 								+ " and t.nbMax > (select count(p)"
-								+ " from Participant p where p.task.id = t.id and p.subscription.validate = true)"
+								+ " from Participant p where p.task.id = t.id and p.registration.validate = true)"
 								+ " order by t.name", "eventId", eventId);
 		return tasks;
 	}

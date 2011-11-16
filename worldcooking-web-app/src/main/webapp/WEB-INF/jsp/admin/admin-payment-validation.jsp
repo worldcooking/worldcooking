@@ -13,8 +13,8 @@
 		<form:form commandName="paymentValidation">
 			<div class="admin">
 				<div class="admin_element">
-					<label for="subscriptionId">* Registration payment to validate :</label>
-					<form:select id="subscriptionId" path="subscriptionId" items="${subscriptions}" multiple="false" />
+					<label for="registrationId">* Registration payment to validate :</label>
+					<form:select id="registrationId" path="registrationId" items="${registrations}" multiple="false" />
 					
 					<label for="pwd">* Password :</label>
 					<form:input id="pwd" path="password" />

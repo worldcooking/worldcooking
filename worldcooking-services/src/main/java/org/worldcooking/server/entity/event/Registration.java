@@ -20,16 +20,16 @@ import org.worldcooking.server.entity.payment.Payment;
 import org.worldcooking.server.entity.people.Participant;
 
 /**
- * A subscription is an association between participants and event.
+ * A registration is an association between participants and event.
  * 
  * @author MatthieuG
  * 
  */
 @Entity
-public class Subscription {
+public class Registration {
 
 	/**
-	 * Identify a subscription in DB.
+	 * Identify a registration in DB.
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -40,37 +40,37 @@ public class Subscription {
 	private String email;
 
 	@Column(nullable = false)
-	private Date subscriptionDate;
+	private Date registrationDate;
 
-	/** If the subscription is validated. */
+	/** If the registration is validated. */
 	@Column(nullable = false)
 	private Boolean validate = false;
 
-	/** How this subscription is paid. */
-	@OneToOne(mappedBy = "subscription")
+	/** How this registration is paid. */
+	@OneToOne(mappedBy = "registration")
 	private Payment payment;
 
 	@OneToOne
 	private Participant subscriberParticipant;
 
-	/** Event associated to this subscription. */
+	/** Event associated to this registration. */
 	@ManyToOne
 	private Event event;
 
-	/** People registered with this subscription. */
-	@OneToMany(mappedBy = "subscription")
+	/** People registered with this registration. */
+	@OneToMany(mappedBy = "registration")
 	@Cascade({ CascadeType.DELETE })
 	private Set<Participant> participants = new HashSet<Participant>();
 
-	public Subscription() {
+	public Registration() {
 		// nothing to do
 	}
 
-	public Subscription(String email, Payment payment, Event event) {
+	public Registration(String email, Payment payment, Event event) {
 		this.email = email;
 		this.payment = payment;
 		this.event = event;
-		this.subscriptionDate = new Date();
+		this.registrationDate = new Date();
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class Subscription {
 	 */
 	public void setPayment(Payment payment) {
 		this.payment = payment;
-		if (payment.getSubscription() == null
-				|| payment.getSubscription() != this) {
-			payment.setSubscription(this);
+		if (payment.getRegistration() == null
+				|| payment.getRegistration() != this) {
+			payment.setRegistration(this);
 		}
 	}
 
@@ -131,13 +131,13 @@ public class Subscription {
 	}
 
 	public void addParticipant(Participant participant) {
-		participant.setSubscription(this);
+		participant.setRegistration(this);
 		participants.add(participant);
 	}
 
 	public void addParticipants(Collection<Participant> newParticipants) {
 		for (Participant participant : newParticipants) {
-			participant.setSubscription(this);
+			participant.setRegistration(this);
 		}
 		participants.addAll(newParticipants);
 	}
@@ -166,12 +166,12 @@ public class Subscription {
 		this.subscriberParticipant = subscriber;
 	}
 
-	public Date getSubscriptionDate() {
-		return subscriptionDate;
+	public Date getRegistrationDate() {
+		return registrationDate;
 	}
 
-	public void setSubscriptionDate(Date subscriptionDate) {
-		this.subscriptionDate = subscriptionDate;
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 }

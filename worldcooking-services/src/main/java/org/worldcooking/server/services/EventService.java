@@ -13,7 +13,7 @@ import org.worldcooking.server.dao.impl.EventDAOImpl;
 import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
 import org.worldcooking.server.dao.impl.TaskDAOImpl;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
@@ -62,7 +62,7 @@ public class EventService {
 	 * 
 	 * @param eventId
 	 *            Event id.
-	 * @return List of participant waiting for validation of their subscription.
+	 * @return List of participant waiting for validation of their registration.
 	 * 
 	 */
 	public List<Participant> getWaitingParticipants(Long eventId) {
@@ -141,10 +141,10 @@ public class EventService {
 	 */
 	private List<Participant> getWaitingParticipants(Event event) {
 		List<Participant> waitingParticipants = new ArrayList<Participant>();
-		Set<Subscription> subscriptions = event.getSubscriptions();
-		for (Subscription subscription : subscriptions) {
-			if (!subscription.getValidate()) {
-				waitingParticipants.addAll(subscription.getParticipants());
+		Set<Registration> registrations = event.getRegistrations();
+		for (Registration registration : registrations) {
+			if (!registration.getValidate()) {
+				waitingParticipants.addAll(registration.getParticipants());
 			}
 		}
 
@@ -173,10 +173,10 @@ public class EventService {
 	 */
 	private List<Participant> getValidatedParticipants(Event event) {
 		List<Participant> validatedParticipants = new ArrayList<Participant>();
-		Set<Subscription> subscriptions = event.getSubscriptions();
-		for (Subscription subscription : subscriptions) {
-			if (!subscription.getValidate()) {
-				validatedParticipants.addAll(subscription.getParticipants());
+		Set<Registration> registrations = event.getRegistrations();
+		for (Registration registration : registrations) {
+			if (!registration.getValidate()) {
+				validatedParticipants.addAll(registration.getParticipants());
 			}
 		}
 

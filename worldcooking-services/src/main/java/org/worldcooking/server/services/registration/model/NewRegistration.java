@@ -1,47 +1,47 @@
-package org.worldcooking.server.services.subscription.model;
+package org.worldcooking.server.services.registration.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewSubscription {
+public class NewRegistration {
 	private Long eventId;
 	private NewSubscriber subscriber;
 
 	private List<NewParticipant> additionalParticipants;
 
-	private NewSubscriptionPaymentMode paymentMode;
+	private NewRegistrationPaymentMode paymentMode;
 
 	/**
 	 * Personne a qui le paiement est effectué.
 	 */
 	private String paymentTarget;
 
-	public NewSubscription() {
+	public NewRegistration() {
 		super();
 		this.additionalParticipants = new ArrayList<NewParticipant>();
 	}
 
-	public NewSubscription configureWithPaypalPayment(Long eventId,
+	public NewRegistration configureWithPaypalPayment(Long eventId,
 			String subscriberEmailAddress, NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
 		this.subscriber = new NewSubscriber(subscriberEmailAddress,
 				subscriberParticipant);
-		paymentMode = NewSubscriptionPaymentMode.PAYPAL;
+		paymentMode = NewRegistrationPaymentMode.PAYPAL;
 		return this;
 	}
 
-	public NewSubscription configureWithManualPayment(Long eventId,
+	public NewRegistration configureWithManualPayment(Long eventId,
 			String subscriberEmailAddress, String paymentTarget,
 			NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
 		this.subscriber = new NewSubscriber(subscriberEmailAddress,
 				subscriberParticipant);
-		paymentMode = NewSubscriptionPaymentMode.MANUAL;
+		paymentMode = NewRegistrationPaymentMode.MANUAL;
 		this.paymentTarget = paymentTarget;
 		return this;
 	}
 
-	public NewSubscription addParticipant(String name, Long taskId) {
+	public NewRegistration addParticipant(String name, Long taskId) {
 		this.additionalParticipants.add(new NewParticipant(name, taskId));
 		return this;
 	}
@@ -58,7 +58,7 @@ public class NewSubscription {
 		return additionalParticipants;
 	}
 
-	public NewSubscriptionPaymentMode getPaymentMode() {
+	public NewRegistrationPaymentMode getPaymentMode() {
 		return paymentMode;
 	}
 

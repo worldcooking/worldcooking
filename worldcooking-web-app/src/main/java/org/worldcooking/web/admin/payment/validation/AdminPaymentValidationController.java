@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.subscription.SubscriptionService;
+import org.worldcooking.server.services.registration.RegistrationService;
 
 /**
  * @author MatthieuG
@@ -36,7 +36,7 @@ public class AdminPaymentValidationController {
 	private EventService eventService;
 
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private RegistrationService registrationService;
 
 	@RequestMapping(value = "/admin/payment/validation", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
@@ -49,31 +49,31 @@ public class AdminPaymentValidationController {
 		return modelAndView;
 	}
 
-	@ModelAttribute("subscriptions")
-	public Map<Long, String> populateSubscriptions()
+	@ModelAttribute("registrations")
+	public Map<Long, String> populateRegistrations()
 			throws EntityIdNotFountException {
 		// TODO manage error
 
-		Map<Long, String> subscriptionsDesc = new LinkedHashMap<Long, String>();
+		Map<Long, String> registrationsDesc = new LinkedHashMap<Long, String>();
 
 		Event lastEvent = eventService.getLastEvent();
 
 		if (lastEvent != null) {
-			SortedSet<Subscription> subscriptions = subscriptionService
-					.findNonValidatedSubscriptions(lastEvent.getId());
+			SortedSet<Registration> registrations = registrationService
+					.findNonValidatedRegistrations(lastEvent.getId());
 
-			subscriptionsDesc.put(-1L, "");
-			for (Subscription subscription : subscriptions) {
-				double price = subscriptionService
-						.calculateSubscriptionPrice(subscription
+			registrationsDesc.put(-1L, "");
+			for (Registration registration : registrations) {
+				double price = registrationService
+						.calculateRegistrationPrice(registration
 								.getParticipants());
 
-				String description = subscription.getEmail() + " - " + price
+				String description = registration.getEmail() + " - " + price
 						+ "€";
 
 				String participantDescription = null;
 
-				for (Participant participant : subscription.getParticipants()) {
+				for (Participant participant : registration.getParticipants()) {
 					if (participantDescription == null) {
 						participantDescription = "";
 					} else {
@@ -85,11 +85,11 @@ public class AdminPaymentValidationController {
 				description += " (participants: " + participantDescription
 						+ ")";
 
-				subscriptionsDesc.put(subscription.getId(), description);
+				registrationsDesc.put(registration.getId(), description);
 			}
 		}
 
-		return subscriptionsDesc;
+		return registrationsDesc;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -102,8 +102,8 @@ public class AdminPaymentValidationController {
 		}
 
 		if ("pépérou".equals(adminPaymentValidation.getPassword())) {
-			subscriptionService.validatePayment(adminPaymentValidation
-					.getSubscriptionId());
+			registrationService.validatePayment(adminPaymentValidation
+					.getRegistrationId());
 			return JSP;
 		}
 		// redirect to main page

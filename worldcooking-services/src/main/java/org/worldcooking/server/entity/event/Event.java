@@ -43,12 +43,12 @@ public class Event {
 	private String description;
 
 	/**
-	 * List of all the action of subscription done by users. Can contain
-	 * validated et non-validated subscriptions.
+	 * List of all the action of registration done by users. Can contain
+	 * validated et non-validated registrations.
 	 */
 	@OneToMany(mappedBy = "event")
 	@Cascade({ CascadeType.DELETE })
-	private Set<Subscription> subscriptions = new HashSet<Subscription>();
+	private Set<Registration> registrations = new HashSet<Registration>();
 
 	/**
 	 * Tasks available for this event. Only those tasks can be affected to the
@@ -91,17 +91,17 @@ public class Event {
 		this.description = description;
 	}
 
-	public Set<Subscription> getSubscriptions() {
-		return subscriptions;
+	public Set<Registration> getRegistrations() {
+		return registrations;
 	}
 
-	protected void setSubscriptions(Set<Subscription> subscriptions) {
-		this.subscriptions = subscriptions;
+	protected void setRegistrations(Set<Registration> registrations) {
+		this.registrations = registrations;
 	}
 
-	public void addSubscription(Subscription subscription) {
-		this.subscriptions.add(subscription);
-		subscription.setEvent(this);
+	public void addRegistration(Registration registration) {
+		this.registrations.add(registration);
+		registration.setEvent(this);
 	}
 
 	public Set<Task> getAvailableTasks() {

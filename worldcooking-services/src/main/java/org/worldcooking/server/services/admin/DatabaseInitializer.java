@@ -1,4 +1,4 @@
-package org.worldcooking.server.dao.init;
+package org.worldcooking.server.services.admin;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.worldcooking.server.services.EventService;
 
-public class InitDatabaseService {
+public class DatabaseInitializer {
 
 	public static void main(String... args) {
 		ApplicationContext springContext = new ClassPathXmlApplicationContext(

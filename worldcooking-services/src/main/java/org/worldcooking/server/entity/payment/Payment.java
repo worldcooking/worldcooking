@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 
 /**
  * 
@@ -35,9 +35,9 @@ public class Payment {
 	@Column
 	private String reference;
 
-	/** How this subscription is paid. */
+	/** How this registration is paid. */
 	@OneToOne
-	private Subscription subscription;
+	private Registration registration;
 
 	public PaymentMode getMode() {
 		return mode;
@@ -79,15 +79,15 @@ public class Payment {
 		this.reference = target;
 	}
 
-	public Subscription getSubscription() {
-		return subscription;
+	public Registration getRegistration() {
+		return registration;
 	}
 
-	public void setSubscription(Subscription subscription) {
-		this.subscription = subscription;
-		if (subscription.getPayment() == null
-				|| subscription.getPayment() != this) {
-			subscription.setPayment(this);
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+		if (registration.getPayment() == null
+				|| registration.getPayment() != this) {
+			registration.setPayment(this);
 		}
 	}
 

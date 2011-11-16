@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.subscription.SubscriptionService;
+import org.worldcooking.server.services.registration.RegistrationService;
 
 /**
  * @author MatthieuG
@@ -34,7 +34,7 @@ public class AdminEventController {
 	private EventService eventService;
 
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private RegistrationService registrationService;
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
 	public ModelAndView handleRequest(@RequestParam Long eventId)
@@ -48,14 +48,14 @@ public class AdminEventController {
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Subscription> nonValidatedRegistrations = subscriptionService
-				.findNonValidatedSubscriptions(eventId);
+		SortedSet<Registration> nonValidatedRegistrations = registrationService
+				.findNonValidatedRegistrations(eventId);
 
 		modelAndView.addObject("nonValidatedRegistrations",
 				registrationsToModel(nonValidatedRegistrations));
 
-		SortedSet<Subscription> validatedRegistrations = subscriptionService
-				.findValidatedSubscriptions(eventId);
+		SortedSet<Registration> validatedRegistrations = registrationService
+				.findValidatedRegistrations(eventId);
 
 		modelAndView.addObject("validatedRegistrations",
 				registrationsToModel(validatedRegistrations));
@@ -63,13 +63,13 @@ public class AdminEventController {
 		return modelAndView;
 	}
 
-	private List<Registration> registrationsToModel(
-			SortedSet<Subscription> nonValidatedRegistrations)
+	private List<RegistrationModel> registrationsToModel(
+			SortedSet<Registration> nonValidatedRegistrations)
 			throws EntityIdNotFountException {
-		List<Registration> registrations = new ArrayList<Registration>();
+		List<RegistrationModel> registrations = new ArrayList<RegistrationModel>();
 
-		for (Subscription s : nonValidatedRegistrations) {
-			Registration registration = new Registration();
+		for (Registration s : nonValidatedRegistrations) {
+			RegistrationModel registration = new RegistrationModel();
 			registration.setId(s.getId());
 			Registrer r = new Registrer();
 			r.setName(s.getSubscriberParticipant().getName());
@@ -88,7 +88,7 @@ public class AdminEventController {
 				}
 			}
 
-			Double amount = subscriptionService.calculateSubscriptionPrice(s
+			Double amount = registrationService.calculateRegistrationPrice(s
 					.getParticipants());
 			registration.setAmount(amount);
 

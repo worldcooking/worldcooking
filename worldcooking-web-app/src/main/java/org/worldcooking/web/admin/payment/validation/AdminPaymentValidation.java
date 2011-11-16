@@ -6,18 +6,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AdminPaymentValidation {
 
-	@Min(value = 0, message = "Please choose the subscription to validate")
-	private Long subscriptionId;
+	@Min(value = 0, message = "Please choose the registration to validate")
+	private Long registrationId;
 
 	@NotEmpty(message = "Please enter your password")
 	private String password;
 
-	public Long getSubscriptionId() {
-		return subscriptionId;
+	public Long getRegistrationId() {
+		return registrationId;
 	}
 
-	public void setSubscriptionId(Long subscriptionId) {
-		this.subscriptionId = subscriptionId;
+	public void setRegistrationId(Long registrationId) {
+		this.registrationId = registrationId;
 	}
 
 	public String getPassword() {

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Subscription;
+import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.subscription.SubscriptionService;
-import org.worldcooking.server.services.subscription.model.NewParticipant;
-import org.worldcooking.server.services.subscription.model.NewSubscription;
-import org.worldcooking.server.services.subscription.model.NewSubscriptionPaymentMode;
+import org.worldcooking.server.services.registration.RegistrationService;
+import org.worldcooking.server.services.registration.model.NewParticipant;
+import org.worldcooking.server.services.registration.model.NewRegistration;
+import org.worldcooking.server.services.registration.model.NewRegistrationPaymentMode;
 
 @Controller
 @RequestMapping(value = "/registration")
@@ -34,7 +34,7 @@ public class RegistrationController {
 	private static final String PAYPAL_MODE_KEY = "paypal";
 
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private RegistrationService registrationService;
 
 	@Autowired
 	private EventService eventService;
@@ -45,14 +45,14 @@ public class RegistrationController {
 	public String initializeForm(ModelMap model)
 			throws EntityIdNotFountException {
 
-		Registration registration = new Registration();
+		RegistrationModel registration = new RegistrationModel();
 
 		Event lastEvent = eventService.getLastEvent();
 
 		if (lastEvent != null) {
 			registration.setEventId(lastEvent.getId());
 
-			if (subscriptionService.isRegistrationClosed(lastEvent.getId())) {
+			if (registrationService.isRegistrationClosed(lastEvent.getId())) {
 				logger.warn(
 						"Attempt to access to closed registration of event '{}'.",
 						lastEvent.getName());
@@ -100,13 +100,13 @@ public class RegistrationController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(
-			@Valid @ModelAttribute("registration") Registration registration,
+			@Valid @ModelAttribute("registration") RegistrationModel registrationModel,
 			BindingResult result) throws Exception {
 
-		Event event = eventService.findById(registration.getEventId());
+		Event event = eventService.findById(registrationModel.getEventId());
 
 		if (event != null) {
-			if (subscriptionService.isRegistrationClosed(event.getId())) {
+			if (registrationService.isRegistrationClosed(event.getId())) {
 				logger.warn(
 						"Attempt to access to closed registration of event '{}'.",
 						event.getName());
@@ -116,9 +116,9 @@ public class RegistrationController {
 
 		// check parameters (TODO manage errors)
 		// TODO add a custom constraint (using group constraints?)
-		int participantsNb = registration.getAdditionalParticipantsNames()
+		int participantsNb = registrationModel.getAdditionalParticipantsNames()
 				.size();
-		int tasksNb = registration.getAdditionalParticipantsTasks().size();
+		int tasksNb = registrationModel.getAdditionalParticipantsTasks().size();
 		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks ("
 				+ tasksNb + ") should be as large as participants names ("
 				+ participantsNb + ").");
@@ -129,20 +129,20 @@ public class RegistrationController {
 		}
 
 		// create new registration
-		NewSubscription newRegistration = createNewRegistration(registration);
+		NewRegistration newRegistration = createNewRegistration(registrationModel);
 
 		// persiste new registration
-		Subscription subscription = subscriptionService
+		Registration registration = registrationService
 				.subscribe(newRegistration);
 
 		String returnView;
-		if (newRegistration.getPaymentMode() == NewSubscriptionPaymentMode.PAYPAL) {
+		if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {
 			// redirect to paypal
-			returnView = "redirect:/registration/confirmation/paypal?subscriptionId="
-					+ subscription.getId();
+			returnView = "redirect:/registration/confirmation/paypal?registrationId="
+					+ registration.getId();
 		} else {
-			returnView = "redirect:/registration/confirmation?subscriptionId="
-					+ subscription.getId();
+			returnView = "redirect:/registration/confirmation?registrationId="
+					+ registration.getId();
 		}
 		// redirect to main page
 		return returnView;
@@ -154,10 +154,10 @@ public class RegistrationController {
 	 * @param registration
 	 * @throws EntityIdNotFountException
 	 */
-	private NewSubscription createNewRegistration(Registration registration)
+	private NewRegistration createNewRegistration(RegistrationModel registration)
 			throws EntityIdNotFountException {
-		// create subscription
-		NewSubscription newSubscription = new NewSubscription();
+		// create registration
+		NewRegistration newRegistration = new NewRegistration();
 		Long eventId = registration.getEventId();
 		String subscriberEmailAddress = registration.getEmailAddress();
 
@@ -169,7 +169,7 @@ public class RegistrationController {
 			if (participantName != null) {
 				participantName = participantName.trim();
 				if (!participantName.isEmpty()) {
-					newSubscription.addParticipant(participantName,
+					newRegistration.addParticipant(participantName,
 							participantsTasksIt.next());
 				}
 			}
@@ -180,7 +180,7 @@ public class RegistrationController {
 		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
 			// paypal
 
-			newSubscription.configureWithPaypalPayment(eventId,
+			newRegistration.configureWithPaypalPayment(eventId,
 					subscriberEmailAddress, subscriberParticipant);
 		} else {
 			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
@@ -189,12 +189,12 @@ public class RegistrationController {
 					.getPaymentMode());
 			// TODO meilleure gestion des erreurs
 			Assert.notNull(paymentTarget);
-			newSubscription.configureWithManualPayment(eventId,
+			newRegistration.configureWithManualPayment(eventId,
 					subscriberEmailAddress, paymentTarget,
 					subscriberParticipant);
 		}
 
-		return newSubscription;
+		return newRegistration;
 	}
 
 	// http://java.dzone.com/articles/converting-spring

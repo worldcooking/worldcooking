@@ -1,4 +1,4 @@
-package org.worldcooking.server.services.subscription.model;
+package org.worldcooking.server.services.registration.model;
 
 
 public class NewSubscriber {
