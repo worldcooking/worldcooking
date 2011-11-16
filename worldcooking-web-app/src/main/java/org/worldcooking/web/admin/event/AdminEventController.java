@@ -4,22 +4,32 @@
 package org.worldcooking.web.admin.event;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Registration;
+import org.worldcooking.server.entity.event.Task;
+import org.worldcooking.server.entity.payment.PaymentMode;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.registration.RegistrationService;
+import org.worldcooking.web.admin.event.form.TaskForm;
+import org.worldcooking.web.admin.event.model.ParticipantModel;
+import org.worldcooking.web.admin.event.model.RegistrationModel;
+import org.worldcooking.web.admin.event.model.RegistrerModel;
+import org.worldcooking.web.admin.event.model.TaskModel;
 
 /**
  * @author MatthieuG
@@ -60,7 +70,29 @@ public class AdminEventController {
 		modelAndView.addObject("validatedRegistrations",
 				registrationsToModel(validatedRegistrations));
 
+		TaskForm taskModel = new TaskForm();
+
+		modelAndView.addObject("taskForm", taskModel);
+
 		return modelAndView;
+	}
+
+	@ModelAttribute("tasks")
+	public Map<Long, String> populateTasks() {
+
+		Map<Long, String> tasksIdName = new LinkedHashMap<Long, String>();
+
+		Event lastEvent = eventService.getLastEvent();
+		if (lastEvent != null) {
+			List<Task> availableTasks = eventService.findAllTasks(lastEvent
+					.getId());
+
+			for (Task t : availableTasks) {
+				tasksIdName.put(t.getId(), t.getName());
+			}
+		}
+
+		return tasksIdName;
 	}
 
 	private List<RegistrationModel> registrationsToModel(
@@ -68,27 +100,47 @@ public class AdminEventController {
 			throws EntityIdNotFountException {
 		List<RegistrationModel> registrations = new ArrayList<RegistrationModel>();
 
-		for (Registration s : nonValidatedRegistrations) {
+		for (Registration reg : nonValidatedRegistrations) {
 			RegistrationModel registration = new RegistrationModel();
-			registration.setId(s.getId());
-			Registrer r = new Registrer();
-			r.setName(s.getSubscriberParticipant().getName());
-			r.setEmail(s.getEmail());
-			r.setTaskName(s.getSubscriberParticipant().getTask().getName());
+			registration.setId(reg.getId());
+			RegistrerModel r = new RegistrerModel();
+
+			ParticipantModel pm = new ParticipantModel();
+
+			pm.setName(reg.getSubscriberParticipant().getName());
+			pm.setId(reg.getSubscriberParticipant().getId());
+
+			r.setParticipant(pm);
+
+			r.setEmail(reg.getEmail());
+			Task task = reg.getSubscriberParticipant().getTask();
+			TaskModel taskModel = new TaskModel(task.getName(), task.getId());
+			pm.setTask(taskModel);
 			registration.setRegistrer(r);
 
-			List<AdditionalParticipant> additionalParticipants = new ArrayList<AdditionalParticipant>();
+			List<ParticipantModel> additionalParticipants = new ArrayList<ParticipantModel>();
 
-			for (Participant p : s.getParticipants()) {
-				if (!p.equals(s.getSubscriberParticipant())) {
-					AdditionalParticipant ap = new AdditionalParticipant();
+			for (Participant p : reg.getParticipants()) {
+				if (!p.equals(reg.getSubscriberParticipant())) {
+					ParticipantModel ap = new ParticipantModel();
 					ap.setName(p.getName());
-					ap.setTaskName(p.getTask().getName());
+					ap.setId(p.getId());
+					Task pTask = p.getTask();
+					TaskModel pTaskModel = new TaskModel(pTask.getName(),
+							pTask.getId());
+					ap.setTask(pTaskModel);
 					additionalParticipants.add(ap);
 				}
 			}
 
-			Double amount = registrationService.calculateRegistrationPrice(s
+			if (reg.getPayment().getMode() == PaymentMode.PAYPAL) {
+				registration.setPaymentDescription("paypal");
+			} else {
+				registration.setPaymentDescription(reg.getPayment()
+						.getReference());
+			}
+
+			Double amount = registrationService.calculateRegistrationPrice(reg
 					.getParticipants());
 			registration.setAmount(amount);
 
@@ -99,5 +151,4 @@ public class AdminEventController {
 
 		return registrations;
 	}
-
 }

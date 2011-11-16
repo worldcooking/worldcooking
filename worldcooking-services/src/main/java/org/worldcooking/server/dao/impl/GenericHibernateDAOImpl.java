@@ -90,13 +90,13 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 	}
 
 	@Override
-	public T makePersistent(T entity) {
+	public T saveOrUpdate(T entity) {
 		getHibernateTemplate().saveOrUpdate(entity);
 		return entity;
 	}
 
 	@Override
-	public void makeTransient(T entity) {
+	public void delete(T entity) {
 		getHibernateTemplate().delete(entity);
 	}
 

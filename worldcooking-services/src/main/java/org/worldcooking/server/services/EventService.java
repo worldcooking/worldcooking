@@ -74,6 +74,10 @@ public class EventService {
 		return taskDao.getAvailableTasks(eventId);
 	}
 
+	public List<Task> findAllTasks(Long eventId) {
+		return taskDao.findAllTasks(eventId);
+	}
+
 	public void resetDb() {
 		logger.info("The database will be reset now.");
 		eventDao.resetDb();

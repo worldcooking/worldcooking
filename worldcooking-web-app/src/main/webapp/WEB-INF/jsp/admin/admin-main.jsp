@@ -3,18 +3,30 @@
 <html>
 <head>
 <title>Administration</title>
-<link rel="stylesheet" type="text/css"
+	<link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/administration.css"
 	media="screen" title="bbxcss" />
 </head>
 <body>
 	<div class="main_chapter">
-		<h2>Administration</h2>
-		Select an event to manage:
-		<ul><c:forEach items="${events}" var="event">
-			<li><a href="${pageContext.request.contextPath}/admin/event?eventId=<c:out value="${event.id}"/>"><c:out value="${event.name}"/></a>
-			<p style="max-height: 45px;overflow: scroll;"><c:out value="${event.description}" escapeXml="false" /></p></li>
-		</c:forEach></ul>
+		<h2>Select an event to manage</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>name</th>
+					<th>description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${events}" var="event">
+					<tr>
+						<td><a href="${pageContext.request.contextPath}/admin/event?eventId=<c:out value="${event.id}"/>"><c:out
+									value="${event.name}" /></a></td>
+						<td>${event.description}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 
 </body>

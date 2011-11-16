@@ -76,7 +76,7 @@
 		<div class="main_chapter">
 			<h2>Participants confirmed</h2>
 			<div id="div_participants" class="participants">
-				<table class="participants">
+				<table class="table">
 					<thead>
 						<tr>
 							<th>Participant
@@ -111,7 +111,7 @@
 		<div class="main_chapter">
 			<h2>Participants waiting for payment confirmation</h2>
 			<div id="div_participants" class="participants">
-				<table class="participants">
+				<table class="table">
 					<thead>
 						<tr>
 							<th>Participant waiting for confirmation

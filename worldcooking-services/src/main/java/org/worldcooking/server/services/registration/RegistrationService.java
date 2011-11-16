@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
 import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
+import org.worldcooking.server.dao.impl.ParticipantDAOImpl;
 import org.worldcooking.server.dao.impl.RegistrationDAOImpl;
 import org.worldcooking.server.dao.impl.TaskDAOImpl;
 import org.worldcooking.server.entity.event.Event;
@@ -41,6 +42,9 @@ public class RegistrationService {
 
 	@Autowired
 	private MultiEntitiesHibernateDAOImpl dao;
+
+	@Autowired
+	private ParticipantDAOImpl participantDAO;
 
 	public boolean isRegistrationClosed(Long eventId)
 			throws EntityIdNotFountException {
@@ -220,6 +224,26 @@ public class RegistrationService {
 		}
 	}
 
+	public Registration removeRegistration(Long registrationId)
+			throws EntityIdNotFountException {
+		try {
+			Registration registration = registrationDAOImpl
+					.findById(registrationId);
+
+			registration.setSubscriberParticipant(null);
+
+			registrationDAOImpl.saveOrUpdate(registration);
+
+			registrationDAOImpl.delete(registration);
+
+			return registration;
+		} catch (EntityIdNotFountException e) {
+			logger.error("Unable to remove registration '" + registrationId
+					+ "' because " + e.getErrorMessage() + ".", e);
+			throw e;
+		}
+	}
+
 	public Registration findFullRegistrationById(Long id)
 			throws EntityIdNotFountException {
 		return registrationDAOImpl.findFullRegistrationById(id);
@@ -231,5 +255,18 @@ public class RegistrationService {
 
 	public SortedSet<Registration> findValidatedRegistrations(Long eventId) {
 		return registrationDAOImpl.findValidatedRegistrations(eventId);
+	}
+
+	public Participant updateTask(Long participantId, Long taskId)
+			throws EntityIdNotFountException {
+		Participant participant = participantDAO.findById(participantId);
+
+		Task task = taskDao.findById(taskId);
+
+		participant.setTask(task);
+
+		dao.saveOrUpdate(participant);
+
+		return participant;
 	}
 }

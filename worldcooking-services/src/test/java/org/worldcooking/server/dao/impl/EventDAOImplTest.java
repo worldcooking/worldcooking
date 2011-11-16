@@ -24,7 +24,7 @@ public class EventDAOImplTest extends ApplicationContextAwareTest {
         int countBefore = dao.findAll().size();
         Event e = new Event();
         e.setName("Worlcooking Peru");
-        dao.makePersistent(e);
+        dao.saveOrUpdate(e);
 
         int countAfter = dao.findAll().size();
         assertEquals(countBefore + 1, countAfter);

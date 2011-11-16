@@ -23,7 +23,7 @@ public interface GenericDAO<T, ID extends Serializable> {
 
 	List<T> findByExample(T exampleInstance, String[] excludeProperty);
 
-	T makePersistent(T entity);
+	T saveOrUpdate(T entity);
 
-	void makeTransient(T entity);
+	void delete(T entity);
 }

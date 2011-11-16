@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -48,6 +49,7 @@ public class Registration {
 
 	/** How this registration is paid. */
 	@OneToOne(mappedBy = "registration")
+	@Cascade({ CascadeType.DELETE })
 	private Payment payment;
 
 	@OneToOne
@@ -59,6 +61,7 @@ public class Registration {
 
 	/** People registered with this registration. */
 	@OneToMany(mappedBy = "registration")
+	@OrderBy(value = "name")
 	@Cascade({ CascadeType.DELETE })
 	private Set<Participant> participants = new HashSet<Participant>();
 

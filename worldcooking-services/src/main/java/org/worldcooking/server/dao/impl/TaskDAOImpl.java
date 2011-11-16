@@ -30,4 +30,19 @@ public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
 								+ " order by t.name", "eventId", eventId);
 		return tasks;
 	}
+
+	/**
+	 * Method returning the tasks corresponding to the event id parameter. <br/>
+	 * 
+	 * @param eventId
+	 *            Unique id use to retrieve the Event.
+	 * @return The list of tasks.
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Task> findAllTasks(Long eventId) {
+		List<Task> tasks = getHibernateTemplate().findByNamedParam(
+				"from Task t" + " where t.event.id=:eventId"
+						+ " order by t.name", "eventId", eventId);
+		return tasks;
+	}
 }

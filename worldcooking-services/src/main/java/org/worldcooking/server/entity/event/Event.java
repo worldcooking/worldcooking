@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -47,6 +48,7 @@ public class Event {
 	 * validated et non-validated registrations.
 	 */
 	@OneToMany(mappedBy = "event")
+	@OrderBy(value = "registrationDate, email")
 	@Cascade({ CascadeType.DELETE })
 	private Set<Registration> registrations = new HashSet<Registration>();
 
@@ -58,6 +60,7 @@ public class Event {
 	 */
 	@OneToMany(mappedBy = "event")
 	@Cascade({ CascadeType.DELETE })
+	@OrderBy(value = "name")
 	private Set<Task> availableTasks = new HashSet<Task>();
 
 	/**

@@ -82,7 +82,7 @@ div.participants{
 	padding: 0px 0px 0px 0px;
 	border:1px solid #aaa;
 }
-table.participants{
+table.table{
 	color:#333;
 	font-family:Arial,sans-serif;
 	font-size:12px;
@@ -90,30 +90,30 @@ table.participants{
 	cellspacing:0px;
 	border-collapse: collapse;
 }
-table.participants thead {
+table.table thead {
 	border-bottom: 1px solid #EEE;
 }
-table.participants thead tr{
+table.table thead tr{
 	background:#ABCAC6;
 }
-table.participants thead th{
+table.table thead th{
 	border-left:5px;
 }
-table.participants td{
+table.table td{
 	width:15%;
 	text-align:center;
 }
-table.participants tbody th{
+table.table tbody th{
 	text-align:left;
 	padding-left:5px;
 }
-table.participants tbody tr{
+table.table tbody tr{
 	border-bottom: 1px solid #DDD;
 }
-table.participants tbody tr:nth-child(2n+1){
+table.table tbody tr:nth-child(2n+1){
 	background:#E3EDEC;
 }
-table.participants tbody tr:nth-child(2n){
+table.table tbody tr:nth-child(2n){
 	background:#F3FAFA;
 }
 input[type="text"]{
