@@ -1,0 +1,25 @@
+
+#validated_registrations h3{
+	color:green;
+}
+
+#unvalidated_registrations h3{
+	color:red;
+}
+
+input[type="submit"].removeButton:hover{
+	background: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#dddddd));
+    background: -moz-linear-gradient(90deg, #bbbbbb, #cccccc) repeat scroll 0 0 transparent;
+    border-color: red;
+    text-decoration: none;
+	color: #FFF;
+}
+
+table select {
+	font-size:0.8em;
+	width:auto;
+}
+
+.important{
+	font-weight: bold;
+}

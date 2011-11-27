@@ -1,0 +1,220 @@
+
+html {
+	overflow:-moz-scrollbars-vertical;
+	width:100%;
+}
+body{
+	background:#FFF;
+	color:#000;
+	font-family:Arial,sans-serif;
+	font-size:12px;
+	line-height:16px;
+	text-shadow:0 1px 0 #fff;
+	font-family: "Helvetica Neue",Helvetica,Arial,freesans;
+	margin:0; 
+	padding:0;
+	width:100%;
+}
+div, h1{ 
+	margin:0; 
+	padding:0;
+}
+
+h2{
+	border-bottom:1px solid #aaa;
+	font-size:13px;
+	font-weight:bold;
+	letter-spacing:2px;
+	margin-bottom:10px;
+	text-transform:uppercase;
+}
+
+h3{
+	font-size:13px;
+	font-weight:bold;
+	letter-spacing:2px;
+	margin-top:20px;
+	margin-bottom:10px;
+}
+
+.header{
+	position:relative;
+	background:#C2DCD9;
+	background:-moz-linear-gradient(90deg, #C2DCD9, #E5EDEC);
+	background:-webkit-gradient(linear, left top, left bottom, from(#E5EDEC), to(#C2DCD9));
+	-moz-box-shadow:0 0 5px #aaa;
+	-webkit-box-shadow:0 0 5px #aaa;
+	height: 80px;
+	margin: 20px 0 -20px; 
+	padding: 25px 0px 0px 0px;
+}
+
+.header_title{
+	width: 840px;
+	height : 150px;
+	margin: 0 auto 0 auto; 
+	background:url(../img/peruflag-50px.png) no-repeat;
+	padding-top : 15;
+	background-size:50;
+}
+.header_title h1{
+	margin-left : 60;
+}
+
+.main{
+	position:relative;
+	background: #FFF;
+	border:1px solid #aaa;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-box-shadow:0 0 5px #aaa;
+	-webkit-box-shadow:0 0 5px #aaa;
+	margin:0px auto 0;
+	padding:20px;
+	width:800px;
+}
+
+.main_chapter{
+	margin: 20px auto 20px;
+}
+
+div.participants{
+	overflow-y:scroll;
+	height: 200px;
+	padding: 0px 0px 0px 0px;
+	border:1px solid #aaa;
+}
+table.table{
+	color:#333;
+	font-family:Arial,sans-serif;
+	font-size:12px;
+	width:100%;
+	cellspacing:0px;
+	border-collapse: collapse;
+}
+table.table thead {
+	border-bottom: 1px solid #EEE;
+}
+table.table thead tr{
+	background:#ABCAC6;
+}
+table.table thead th{
+	border-left:5px;
+}
+table.table td{
+	width:15%;
+	text-align:center;
+}
+table.table tbody th{
+	text-align:left;
+	padding-left:5px;
+}
+table.table tbody tr{
+	border-bottom: 1px solid #DDD;
+}
+table.table tbody tr:nth-child(2n+1){
+	background:#E3EDEC;
+}
+table.table tbody tr:nth-child(2n){
+	background:#F3FAFA;
+}
+input[type="text"]{
+	border: 1px solid #FFF;
+    box-shadow: 0 0 3px #555;
+    padding: 3px;
+	margin : 3px;
+	width : 200px;
+}
+input[type="text"]:active, input[type="text"]:focus {
+    border: 1px solid #093C75;
+    box-shadow: 0 0 3px #0459B7;
+}
+select {
+	border: 1px solid #FFF;
+    box-shadow: 0 0 3px #555;
+    padding: 3px;
+	margin : 3px;
+	width:200px;
+}
+select:active, select:focus {
+    border: 1px solid #093C75;
+    box-shadow: 0 0 3px #0459B7;
+}
+input[type="submit"], input[type="button"], a.submit, input[type="button"].form {
+    background: -moz-linear-gradient(90deg, #98CBC4, #ABCAC6) repeat scroll 0 0 transparent;
+    border: 1px solid #67AFA5;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 0 #FFFFFF;
+    color: #333;
+    cursor: pointer;
+    font-family: Arial,sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+    text-shadow: 0 1px 1px #AAA;
+    text-transform:uppercase
+    
+}
+input[type="button"]{
+    background: #FFF;
+    border-radius: 10px 10px 10px 10px;
+   	text-transform:uppercase
+}
+
+input[type="button"].form:hover {
+	background: -webkit-gradient(linear, left top, left bottom, from(#0C49B2), to(#3F71C8));
+    background: -moz-linear-gradient(90deg, #0C49B2, #3F71C8) repeat scroll 0 0 transparent;
+    border-color: #67AFA5;
+    text-decoration: none;
+	color: #FFF;
+}
+
+input[type="submit"]:hover, a.submit:hover, input[type="button"].form:hover {
+	background: -webkit-gradient(linear, left top, left bottom, from(#0C49B2), to(#3F71C8));
+    background: -moz-linear-gradient(90deg, #0C49B2, #3F71C8) repeat scroll 0 0 transparent;
+    border-color: #67AFA5;
+    text-decoration: none;
+	color: #FFF;
+}
+
+div.address {
+	display: inline-block;
+	width: 60%;
+}
+div.form {
+	display: block;	
+	padding : 5px
+}
+div.form.supp {
+	display: none;
+}
+
+.form_element {
+	width:200px;
+	height:50px;
+    display: inline-block;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.form_input {
+	vertical-align:top; 
+}
+.form_buttonaction {
+	margin-top: 50px;
+}
+
+div.info_bottom {
+	position:relative;
+	margin:0px auto 0;
+	padding:20px;
+	width:800px;
+	text-align: center;
+}
+
+.error{
+	color: red;
+}
+
+form{
+	padding: 0;
+	margin: 0;
+}
