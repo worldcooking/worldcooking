@@ -1,6 +1,7 @@
 package org.worldcooking.server.services.registration;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.annotation.Resource;
@@ -15,7 +16,6 @@ import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.exception.EntityIdNotFountException;
-import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.server.services.registration.model.NewParticipant;
 import org.worldcooking.server.services.registration.model.NewRegistration;
 
@@ -84,14 +84,20 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		Task t1 = new Task();
 		t1.setPricePerParticipant(10d);
 		e.addAvailableTask(t1);
+
+		t1.setName("Task 1");
+		t1.setDescription("Description of task 1");
+
 		dao.saveOrUpdate(t1);
 
 		Task t2 = new Task();
+		t2.setName("Task 2");
 		t2.setPricePerParticipant(12d);
 		e.addAvailableTask(t2);
 		dao.saveOrUpdate(t2);
 
 		Task t3 = new Task();
+		t3.setName("Task 3");
 		t3.setPricePerParticipant(0d);
 		e.addAvailableTask(t3);
 		dao.saveOrUpdate(t3);
@@ -131,6 +137,10 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 	@Test
 	public void testValidatePayment() throws EntityIdNotFountException {
 		Registration registration = new Registration();
+
+		registration.setEmail("a@b.c");
+		registration.setRegistrationDate(new Date());
+
 		dao.saveOrUpdate(registration);
 		registrationService.validatePayment(registration.getId());
 		// check that payment is validated

@@ -14,3 +14,12 @@ input[type="submit"].removeButton:hover{
     text-decoration: none;
 	color: #FFF;
 }
+
+table select {
+	font-size:0.8em;
+	width:auto;
+}
+
+.important{
+	font-weight: bold;
+}

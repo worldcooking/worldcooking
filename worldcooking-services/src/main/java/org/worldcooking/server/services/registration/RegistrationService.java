@@ -41,6 +41,9 @@ public class RegistrationService {
 	private RegistrationDAOImpl registrationDAOImpl;
 
 	@Autowired
+	private ParticipantDAOImpl participantDAOImplDao;
+
+	@Autowired
 	private MultiEntitiesHibernateDAOImpl dao;
 
 	@Autowired
@@ -64,6 +67,15 @@ public class RegistrationService {
 					+ "/" + maxParticipantsNb + " participants)");
 			return false;
 		}
+
+	}
+
+	public double calculateRegistrationPrice(Long registrationId)
+			throws EntityIdNotFountException {
+		Registration registration = registrationDAOImpl
+				.findFullRegistrationById(registrationId);
+
+		return calculateRegistrationPrice(registration.getParticipants());
 
 	}
 
@@ -257,9 +269,16 @@ public class RegistrationService {
 		return registrationDAOImpl.findValidatedRegistrations(eventId);
 	}
 
-	public Participant updateTask(Long participantId, Long taskId)
+	public Participant findParticipantById(Long participantId)
+			throws EntityIdNotFountException {
+		return participantDAO.findById(participantId);
+	}
+
+	public Task updateTask(Long participantId, Long taskId)
 			throws EntityIdNotFountException {
 		Participant participant = participantDAO.findById(participantId);
+
+		Task previousTask = participant.getTask();
 
 		Task task = taskDao.findById(taskId);
 
@@ -267,6 +286,6 @@ public class RegistrationService {
 
 		dao.saveOrUpdate(participant);
 
-		return participant;
+		return previousTask;
 	}
 }

@@ -4,9 +4,7 @@
 package org.worldcooking.web.admin.event;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,21 +76,12 @@ public class AdminEventController {
 	}
 
 	@ModelAttribute("tasks")
-	public Map<Long, String> populateTasks() {
-
-		Map<Long, String> tasksIdName = new LinkedHashMap<Long, String>();
+	public List<Task> populateTasks() {
 
 		Event lastEvent = eventService.getLastEvent();
-		if (lastEvent != null) {
-			List<Task> availableTasks = eventService.findAllTasks(lastEvent
-					.getId());
+		List<Task> tasks = eventService.findAllTasks(lastEvent.getId());
 
-			for (Task t : availableTasks) {
-				tasksIdName.put(t.getId(), t.getName());
-			}
-		}
-
-		return tasksIdName;
+		return tasks;
 	}
 
 	private List<RegistrationModel> registrationsToModel(

@@ -9,7 +9,7 @@
 	media="screen" title="bbxcss" />
 <style type="text/css">
 </style>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js"></script> 
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/worldcooking/main.js"></script> 
 </head>
 <body onload="<decorator:getProperty property="body.onload"/>">
 	<div class="header">

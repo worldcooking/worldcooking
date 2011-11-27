@@ -13,20 +13,20 @@ import org.worldcooking.server.entity.event.Event;
  */
 public class EventDAOImplTest extends ApplicationContextAwareTest {
 
-    @Resource
-    private GenericHibernateDAOImpl<Event, Long> dao;
+	@Resource(type = EventDAOImpl.class)
+	private GenericHibernateDAOImpl<Event, Long> dao;
 
-    /**
-     * Tries to store {@link org.worldcooking.server.entity.DummyEntity}.
-     */
-    @Test
-    public void testPersiEventstTestEntity() {
-        int countBefore = dao.findAll().size();
-        Event e = new Event();
-        e.setName("Worlcooking Peru");
-        dao.saveOrUpdate(e);
+	/**
+	 * Tries to store {@link org.worldcooking.server.entity.DummyEntity}.
+	 */
+	@Test
+	public void testPersiEventstTestEntity() {
+		int countBefore = dao.findAll().size();
+		Event e = new Event();
+		e.setName("Worlcooking Peru");
+		dao.saveOrUpdate(e);
 
-        int countAfter = dao.findAll().size();
-        assertEquals(countBefore + 1, countAfter);
-    }
+		int countAfter = dao.findAll().size();
+		assertEquals(countBefore + 1, countAfter);
+	}
 }

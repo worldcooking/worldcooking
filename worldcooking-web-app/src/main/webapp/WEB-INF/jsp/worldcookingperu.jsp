@@ -1,23 +1,18 @@
-<%@page import="org.worldcooking.server.entity.payment.*"%>
-<%@ page language="java"%>
-<%@page import="org.worldcooking.server.entity.event.Registration"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page import="org.worldcooking.server.entity.event.Event"%>
-<%@ page import="org.worldcooking.server.entity.people.Participant"%>
-<%@ page import="org.worldcooking.server.entity.event.Task"%>
-<%@ page import="org.worldcooking.server.entity.payment.*"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Set"%>
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.Date"%>
-<%@ page import="java.lang.Integer"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="loc" uri="http://www.worlcooking.org/tags/localisation"  %>
+
 <html>
 <head>
-<title>${event.name}</title>
+	<title>${event.name}</title>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-ui-1.8.16/ui/minified/jquery-ui.min.js"></script>	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/map.js"></script>	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/map.css"
+	media="screen" title="bbxcss" />
 </head>
 <body>
+
 <c:if test="${event.registrationClosed == true}" >
 <div class="main_chapter">
 		<h2>Registration closed!</h2>
@@ -61,17 +56,9 @@
 		</div>
 		<div class="information">
 			<h3>Place :</h3>
-			<div class="adress" onmouseover="showElement('googlemap')"
-				onmouseout="hideElement('googlemap')">
-				<b>La soupe au Caillou</b><br /> 15 Rue Charles Gounod<br /> 31200
-				Toulouse<br /> <a
-					href="http://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=la+soupe+aux+caillou&amp;aq=&amp;gl=fr&amp;g=15+Rue+Charles+Gounod,+31200+Toulouse&amp;ie=UTF8&amp;hq=la+soupe+aux+caillou&amp;hnear=Toulouse,+Haute-Garonne,+Midi-Pyr%C3%A9n%C3%A9es&amp;t=m&amp;vpsrc=0&amp;z=14&amp;iwloc=A&amp;cid=12869456708502713567&amp;ll=43.613686,1.424100"
-					target="_blank">See the map</a>
-				<iframe class="map" id="googlemap"
-					src="http://maps.google.fr/maps?q=la+soupe+au+caillou&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hl=fr&amp;hq=la+soupe+au+caillou&amp;hnear=Toulouse,+Midi-Pyr%C3%A9n%C3%A9es&amp;ll=43.625,1.405&amp;spn=0,0&amp;t=m&amp;z=14&amp;vpsrc=6&amp;iwloc=A&amp;cid=12869456708502713567&amp;output=embed">
-				</iframe>
-			</div>
-
+			<loc:map mapContainerId="locationMap" name="La soupe au Caillou" addressLine1="15 Rue Charles Gounod" addressLine2="31200 Toulouse"
+						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
+						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
 		</div>
 		<div class="main_chapter">
 			<h2>Participants confirmed</h2>

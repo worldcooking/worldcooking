@@ -1,6 +1,7 @@
 
 html {
 	overflow:-moz-scrollbars-vertical;
+	width:100%;
 }
 body{
 	background:#FFF;
@@ -12,6 +13,7 @@ body{
 	font-family: "Helvetica Neue",Helvetica,Arial,freesans;
 	margin:0; 
 	padding:0;
+	width:100%;
 }
 div, h1{ 
 	margin:0; 
@@ -51,7 +53,7 @@ h3{
 	width: 840px;
 	height : 150px;
 	margin: 0 auto 0 auto; 
-	background:url(../img/peruflag.png) no-repeat;
+	background:url(../img/peruflag-50px.png) no-repeat;
 	padding-top : 15;
 	background-size:50;
 }
@@ -174,7 +176,7 @@ input[type="submit"]:hover, a.submit:hover, input[type="button"].form:hover {
 	color: #FFF;
 }
 
-div.adress {
+div.address {
 	display: inline-block;
 	width: 60%;
 }
@@ -199,22 +201,6 @@ div.form.supp {
 .form_buttonaction {
 	margin-top: 50px;
 }
-iframe.map {
-	margin-top: 10;
-	position : absolute;
-	display: none;
-	border: 1px solid #AAA;
-	border-radius: 5px 5px 5px 5px;
-	background:#C2DCD9;
-	background:-moz-linear-gradient(90deg, #C2DCD9, #E5EDEC);
-	background:-webkit-gradient(linear, left top, left bottom, from(#E5EDEC), to(#C2DCD9));
-	-moz-box-shadow:0 0 15px #aaa;
-	-webkit-box-shadow:0 0 15px #aaa;
-	width:500; 
-	height:350;
-	margin-left:150;
-	margin-top:-100;
-}
 
 div.info_bottom {
 	position:relative;
@@ -224,10 +210,11 @@ div.info_bottom {
 	text-align: center;
 }
 
-
-
-
 .error{
 	color: red;
 }
 
+form{
+	padding: 0;
+	margin: 0;
+}

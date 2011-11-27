@@ -9,6 +9,7 @@
 	<modules>
 		<module>worldcooking-services</module>
 		<module>worldcooking-web-app</module>
+		<module>worldcooking-localisation-taglib</module>
 	</modules>
 
 	<properties>
@@ -44,7 +45,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -66,7 +66,7 @@
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
-		
+
 			<!-- LOGGING DEPENDENCIES - LOG4J -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -166,6 +166,11 @@
 			<dependency>
 				<groupId>org.worldcooking</groupId>
 				<artifactId>worldcooking-services</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.worldcooking</groupId>
+				<artifactId>worldcooking-localisation-taglib</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
