@@ -56,7 +56,10 @@
 		</div>
 		<div class="information">
 			<h3>Place :</h3>
-			<loc:map mapContainerId="locationMap" name="La soupe au Caillou" addressLine1="15 Rue Charles Gounod" addressLine2="31200 Toulouse"
+			<loc:map mapContainerId="locationMap" 
+				name="La soupe au Caillou" 
+				addressLine1="15 Rue Charles Gounod" 
+				addressLine2="31200 Toulouse"
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
 						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
 		</div>
