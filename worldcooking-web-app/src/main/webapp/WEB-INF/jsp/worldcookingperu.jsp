@@ -1,15 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="loc" uri="http://www.worlcooking.org/tags/localisation"  %>
+<%@ taglib prefix="loc" uri="http://www.oups-asso.org/tags/localization"  %>
+<%@page import="javax.servlet.jsp.JspException"%>
 
 <html>
 <head>
 	<title>${event.name}</title>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-ui-1.8.16/ui/minified/jquery-ui.min.js"></script>	
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/map.js"></script>	
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/map.css"
-	media="screen" title="bbxcss" />
+	<!-- load JS and CSS resources from localization taglib (using Spring mvc:resources interceptor defined in spring-web-context.xml) -->
+	<loc:import-static-resources />
 </head>
 <body>
 

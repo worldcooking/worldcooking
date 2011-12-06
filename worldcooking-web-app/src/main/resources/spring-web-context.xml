@@ -21,6 +21,11 @@
 		</property>
 	</bean>
 
+	<!-- intercept /resources/css requests and map them to specified location -->
+	<mvc:resources mapping="/resources/css/**" location="/, classpath:/META-INF/css/"/>
+	<!-- intercept /resources/js requests and map them to specified location -->
+	<mvc:resources mapping="/resources/js/**" location="/, classpath:/META-INF/js/"/>
+
 	<context:component-scan base-package="org.worldcooking.web" />
 
 	<context:annotation-config />

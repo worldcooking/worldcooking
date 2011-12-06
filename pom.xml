@@ -9,7 +9,6 @@
 	<modules>
 		<module>worldcooking-services</module>
 		<module>worldcooking-web-app</module>
-		<module>worldcooking-localisation-taglib</module>
 	</modules>
 
 	<properties>
@@ -134,7 +133,12 @@
 				<artifactId>sitemesh</artifactId>
 				<version>2.4.2</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>6.0.32</version>
+				<scope>provided</scope>
+			</dependency>
 			<!--Test dependencies -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -169,9 +173,9 @@
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.worldcooking</groupId>
-				<artifactId>worldcooking-localisation-taglib</artifactId>
-				<version>${project.version}</version>
+				<groupId>org.oups-asso.taglib</groupId>
+				<artifactId>localization-taglib</artifactId>
+				<version>0.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
