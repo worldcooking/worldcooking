@@ -21,7 +21,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>**/*.taglib</include>
+					<include>**/*.tld</include>
 					<include>**/tags/*.tag</include>
 				</includes>
 			</resource>
