@@ -1,7 +1,8 @@
+<%@page import="javax.servlet.jsp.JspException"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="loc" uri="http://www.oups-asso.org/mish-k/tags/localization"  %>
-<%@page import="javax.servlet.jsp.JspException"%>
 <%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
+<%@ taglib prefix="tpl" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 
 <html>
 <head>
@@ -15,20 +16,22 @@
 <body>  
 
 <c:if test="${event.registrationClosed == true}" >
-<div class="main_chapter">
-		<h2>Registration closed!</h2>
-		<p>
-			The event is now full, so <b>the registration is closed</b>. 
-			<br/>If you were thinking to come, but do not have payed yet, you are not in the confirmed list, so you will have to be faster next time.
-			<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
-		</p>
-	</div>
+	<tpl:chapter>
+		<jsp:attribute name="title">Registration closed!</jsp:attribute>
+		<jsp:body>
+			<p>The event is now full, so <b>the registration is closed</b>. 
+				<br/>If you were thinking to come, but do not have payed yet, you are not in the confirmed list, so you will have to be faster next time.
+				<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
+			</p>
+		</jsp:body>
+	</tpl:chapter>
 </c:if>
 <c:if test="${event.registrationClosed == false}" >
-<div class="main_chapter">
-		<h2>Join us!</h2>
-		<p>
-			The price for this meal is <b>15€ per person. This meal will not generate any profit,</b><br/> 
+	<tpl:chapter>
+		<jsp:attribute name="title">Join us!</jsp:attribute>
+		<jsp:body>
+			<p>
+			The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b><br/> 
 			This amount goes to pay for the location, all the drinks and the food.
 			<br/> To pay you can :
 			<ul>
@@ -38,12 +41,15 @@
 			will be validated only when you give them the money.</li>
 			</ul>
 			<br/><br/>
-			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center><br/> 
-		</p>
-	</div>
+			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center>
+			<br/> 
+			</p>
+		</jsp:body>
+	</tpl:chapter>
 </c:if>
-	<div class="main_chapter">
-		<h2>Informations</h2>
+<tpl:chapter>
+	<jsp:attribute name="title">Informations</jsp:attribute>
+	<jsp:body>
 		<p>${event.information}</p>
 		<div class="information">
 			<h3>Menu :</h3>
@@ -64,9 +70,12 @@
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
 						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
 		</div>
-		<div class="main_chapter">
-			<h2>Participants confirmed</h2>
-			<div id="div_participants" class="participants">
+	</jsp:body>
+</tpl:chapter>
+<tpl:chapter>
+	<jsp:attribute name="title">Participants confirmed</jsp:attribute>
+	<jsp:body>
+		<div id="div_participants" class="participants">
 				<table class="table">
 					<thead>
 						<tr>
@@ -97,12 +106,13 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+	</jsp:body>
+</tpl:chapter>
 <c:if test="${event.registrationClosed == false}" >
-		<div class="main_chapter">
-			<h2>Participants waiting for payment confirmation</h2>
-			<div id="div_participants" class="participants">
-				<table class="table">
+	<tpl:chapter>
+		<jsp:attribute name="title">Participants waiting for payment confirmation</jsp:attribute>
+		<jsp:body>
+			<table class="table">
 					<thead>
 						<tr>
 							<th>Participant waiting for confirmation
@@ -117,9 +127,9 @@
 						</c:forEach>
 					</tbody>
 				</table>
-			</div>
-		</div>
+		</jsp:body>
+	</tpl:chapter>
 </c:if>
-	</div>
+
 </body>
 </html>

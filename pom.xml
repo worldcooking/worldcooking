@@ -41,6 +41,10 @@
 			<id>oups-asso-mish-k</id>
 			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k/</url>
 		</repository>
+		<repository>
+			<id>oups-asso-mish-k</id>
+			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k-snapshots/</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<!-- Spring dependencies -->
@@ -202,6 +206,12 @@
 				<artifactId>mish-k-resources-taglib</artifactId>
 				<version>${org.oups-asso.mish-k.taglib.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-template-taglib</artifactId>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<build>
