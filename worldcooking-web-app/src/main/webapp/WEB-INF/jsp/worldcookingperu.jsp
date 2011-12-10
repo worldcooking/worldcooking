@@ -32,7 +32,8 @@
 		<jsp:attribute name="title">Join us!</jsp:attribute>
 		<jsp:body>
 			<p>
-			The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b><br/> 
+			The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b>
+			<br/> 
 			This amount goes to pay for the location, all the drinks and the food.
 			<br/> To pay you can :
 			<ul>
@@ -65,7 +66,7 @@
 		<div class="information">
 			<h3>Place :</h3>
 			<loc:map mapContainerId="locationMap" 
-				name="La soupe au Caillou" 
+				placeName="La soupe au Caillou" 
 				addressLine1="15 Rue Charles Gounod" 
 				addressLine2="31200 Toulouse"
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
