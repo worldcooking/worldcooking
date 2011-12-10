@@ -1,15 +1,21 @@
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
-	prefix="decorator"%>
+<%@ page  trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources" %>
 <decorator:usePage id="myPage" />
 <html>
 <head>
 <title><decorator:title default="Worldcooking" /></title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css"
-	media="screen" title="bbxcss" />
-<style type="text/css">
-</style>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/worldcooking/main.js"></script> 
+
 <decorator:head/>
+
+<res:import-required-css 
+	internalResourcesPrefixPath="css" 
+	externalResourcesPrefixPath="resources/css" />
+
+<res:import-required-scripts 
+	internalResourcesPrefixPath="js" 
+	externalResourcesPrefixPath="resources/js" />
+
 </head>
 <body onload="<decorator:getProperty property="body.onload"/>">
 	<div class="header">

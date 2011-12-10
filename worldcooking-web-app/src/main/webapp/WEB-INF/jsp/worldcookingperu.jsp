@@ -1,16 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="loc" uri="http://www.oups-asso.org/tags/localization"  %>
+<%@ taglib prefix="loc" uri="http://www.oups-asso.org/mish-k/tags/localization"  %>
 <%@page import="javax.servlet.jsp.JspException"%>
+<%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
 
 <html>
 <head>
 	<title>${event.name}</title>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-1.7.1.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/3rdparty/jquery-ui-1.8.16/ui/minified/jquery-ui.min.js"></script>	
-	<!-- load JS and CSS resources from localization taglib (using Spring mvc:resources interceptor defined in spring-web-context.xml) -->
-	<loc:import-static-resources />
+	<res:require-css resourceURI="main.css"/>
+	<res:require-script resourceURI="worldcooking/main.js" />
+	<res:require-script resourceURI="jquery.js" locationType="JAR" />
+	<res:require-script resourceURI="jquery-ui/ui/minified/jquery-ui.js" locationType="JAR" />
+	<loc:require-static-resources />
 </head>
-<body>
+<body>  
 
 <c:if test="${event.registrationClosed == true}" >
 <div class="main_chapter">

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.worldcooking</groupId>
 	<artifactId>worldcooking-parent</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>worldcooking-services</module>
@@ -22,6 +22,7 @@
 		<maven-jetty-plugin.version>6.1.24</maven-jetty-plugin.version>
 		<postgresql.version>9.1-901</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.oups-asso.mish-k.taglib.version>0.1-SNAPSHOT</org.oups-asso.mish-k.taglib.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -32,9 +33,17 @@
 			<id>spring-repo</id>
 			<url>http://maven.springframework.org</url>
 		</repository>
+		<repository>
+			<id>oups-asso-thirdparty</id>
+			<url>http://oups-asso.no-ip.org/nexus/content/repositories/thirdparty/</url>
+		</repository>
+		<repository>
+			<id>oups-asso-mish-k</id>
+			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k/</url>
+		</repository>
 	</repositories>
 	<dependencies>
-		<!-- SPRING DEPENDENCIES -->
+		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -53,7 +62,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<!-- Logging dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -65,8 +74,18 @@
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
-
-			<!-- LOGGING DEPENDENCIES - LOG4J -->
+			<!-- Javascript dependencies -->
+			<dependency>
+				<groupId>org.oups-asso.mish-k.javascript</groupId>
+				<artifactId>mish-k-javascript-jquery</artifactId>
+				<version>1.7.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.javascript</groupId>
+				<artifactId>mish-k-javascript-jquery-ui</artifactId>
+				<version>1.8.16</version>
+			</dependency>
+			<!-- Logging dependencies -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
@@ -77,7 +96,7 @@
 				<artifactId>log4j</artifactId>
 				<version>1.2.16</version>
 			</dependency>
-			<!-- SPRING DEPENDENCIES -->
+			<!-- Spring dependencies -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
@@ -94,7 +113,7 @@
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-			<!-- Hibernate DEPENDENCIES -->
+			<!-- Hibernate dependencies -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
@@ -127,7 +146,7 @@
 				<artifactId>commons-dbcp</artifactId>
 				<version>${commons-dbcp.version}</version>
 			</dependency>
-			<!--Web tier -->
+			<!-- Web tier dependencies -->
 			<dependency>
 				<groupId>opensymphony</groupId>
 				<artifactId>sitemesh</artifactId>
@@ -172,10 +191,16 @@
 				<artifactId>worldcooking-services</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
 			<dependency>
-				<groupId>org.oups-asso.taglib</groupId>
-				<artifactId>localization-taglib</artifactId>
-				<version>0.1</version>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-localization-taglib</artifactId>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-resources-taglib</artifactId>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
