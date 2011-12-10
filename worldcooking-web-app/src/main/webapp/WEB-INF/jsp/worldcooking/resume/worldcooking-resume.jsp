@@ -1,8 +1,8 @@
 <%@page import="javax.servlet.jsp.JspException"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="loc" uri="http://www.oups-asso.org/mish-k/tags/localization"  %>
-<%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
-<%@ taglib prefix="tpl" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
+<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
+<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="jquery-ui" uri="http://www.oups-asso.org/mish-k/tags/jquery-ui" %>
 <%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
 
@@ -11,13 +11,14 @@
 	<title>${event.name}</title>
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
-	<res:require-css resourceURI="main.css"/>
-	<res:require-script resourceURI="worldcooking/main.js" />
+	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
+	<resources:require-css resourceURI="worldcooking/resume/worldcooking-resume.css"/>
+
 </head>
 <body>  
 
 <c:if test="${event.registrationClosed == true}" >
-	<tpl:chapter>
+	<template:chapter>
 		<jsp:attribute name="title">Registration closed!</jsp:attribute>
 		<jsp:body>
 			<p>The event is now full, so <b>the registration is closed</b>. 
@@ -25,10 +26,10 @@
 				<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
 			</p>
 		</jsp:body>
-	</tpl:chapter>
+	</template:chapter>
 </c:if>
 <c:if test="${event.registrationClosed == false}" >
-	<tpl:chapter>
+	<template:chapter>
 		<jsp:attribute name="title">Join us!</jsp:attribute>
 		<jsp:body>
 			<p>
@@ -47,9 +48,9 @@
 			<br/> 
 			</p>
 		</jsp:body>
-	</tpl:chapter>
+	</template:chapter>
 </c:if>
-<tpl:chapter>
+<template:chapter>
 	<jsp:attribute name="title">Informations</jsp:attribute>
 	<jsp:body>
 		<p>${event.information}</p>
@@ -73,64 +74,57 @@
 						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
 		</div>
 	</jsp:body>
-</tpl:chapter>
-<tpl:chapter>
+</template:chapter>
+<template:chapter>
 	<jsp:attribute name="title">Participants confirmed</jsp:attribute>
 	<jsp:body>
 		<div id="div_participants" class="participants">
-				<table class="table">
-					<thead>
+			<template:table>
+				<jsp:attribute name="header">
+					<th>Participant (${event.nbParticipants}/${event.nbParticipantsMax})</th>
+					<c:forEach var="task" items="${event.tasks}">
+						<th>${task.name} (${task.totalRegister}/${task.totalMax})</th>
+					</c:forEach>
+				</jsp:attribute>
+				<jsp:attribute name="content">
+					<c:forEach var="participant"
+						items="${event.validatedParticipantsTaskOrdered}">
 						<tr>
-							<th>Participant
-								(${event.nbParticipants}/${event.nbParticipantsMax})</th>
+							<th>${participant.name}</th>
 							<c:forEach var="task" items="${event.tasks}">
-								<th>${task.name} (${task.totalRegister}/${task.totalMax})</th>
+								<td><c:if test="${task.id == participant.taskId}">
+										<input type="radio" name="task${participant.id}"
+											value="${participant.taskId}" checked="checked" />
+									</c:if> <c:if test="${task.id != participant.taskId}">
+										<input type="radio" name="task${participant.id}"
+											value="${task.id}" disabled="disabled" />
+									</c:if></td>
 							</c:forEach>
-
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="participant"
-							items="${event.validatedParticipantsTaskOrdered}">
-							<tr>
-								<th>${participant.name}</th>
-								<c:forEach var="task" items="${event.tasks}">
-									<td><c:if test="${task.id == participant.taskId}">
-											<input type="radio" name="task${participant.id}"
-												value="${participant.taskId}" checked="checked" />
-										</c:if> <c:if test="${task.id != participant.taskId}">
-											<input type="radio" name="task${participant.id}"
-												value="${task.id}" disabled="disabled" />
-										</c:if></td>
-								</c:forEach>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</jsp:attribute>
+			</template:table>
+		</div>
 	</jsp:body>
-</tpl:chapter>
+</template:chapter>
 <c:if test="${event.registrationClosed == false}" >
-	<tpl:chapter>
+	<template:chapter>
 		<jsp:attribute name="title">Participants waiting for payment confirmation</jsp:attribute>
 		<jsp:body>
-			<table class="table">
-					<thead>
+			<template:table>
+				<jsp:attribute name="header">
+					<th>Participant waiting for confirmation (${event.nbParticipantsWaiting})</th>
+				</jsp:attribute>
+				<jsp:attribute name="content">
+					<c:forEach var="pwaiting" items="${event.waitingParticipants}">
 						<tr>
-							<th>Participant waiting for confirmation
-								(${event.nbParticipantsWaiting})</th>
+							<th>${pwaiting}</th>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="pwaiting" items="${event.waitingParticipants}">
-							<tr>
-								<th>${pwaiting}</th>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+					</c:forEach>
+				</jsp:attribute>
+			</template:table>
 		</jsp:body>
-	</tpl:chapter>
+	</template:chapter>
 </c:if>
 
 </body>

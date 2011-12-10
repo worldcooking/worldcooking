@@ -1,4 +1,4 @@
-package org.worldcooking.web.worldcooking;
+package org.worldcooking.web.worldcooking.resume;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +16,30 @@ import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.web.util.ModelViewMapper;
+import org.worldcooking.web.worldcooking.resume.model.WorldcookingResumeEvent;
+import org.worldcooking.web.worldcooking.resume.model.WorldcookingResumeTask;
 
 /**
  * Simple index page controller serving hello.jsp file
  */
 @Controller
-public class WorldcookingController {
+public class WorldcookingResumeController {
 
 	@Autowired
 	private EventService eventService;
 
 	private final static Logger LOGGER = LoggerFactory
-			.getLogger(WorldcookingController.class);
+			.getLogger(WorldcookingResumeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
 		// Acces to the event in DB.
 		Event e = eventService.getLastEvent();
-		ModelAndView modelAndView = new ModelAndView("worldcookingperu");
+		ModelAndView modelAndView = new ModelAndView("worldcooking/resume/worldcooking-resume");
 
 		if (e != null) {
-			WorldcookingEventModel wcEvent = ModelViewMapper.getInstance().map(
-					e, WorldcookingEventModel.class);
+			WorldcookingResumeEvent wcEvent = ModelViewMapper.getInstance().map(
+					e, WorldcookingResumeEvent.class);
 
 			List<String> waitingParticipants = new ArrayList<String>();
 			Set<Registration> registrations = e.getRegistrations();
@@ -52,7 +54,7 @@ public class WorldcookingController {
 						wcEvent.addValidatedParticipantTask(participant
 								.getName(), participant.getTask().getId(),
 								participant.getId());
-						parcoursTasks: for (TaskModel t : wcEvent.getTasks()) {
+						parcoursTasks: for (WorldcookingResumeTask t : wcEvent.getTasks()) {
 							if (t.getId().equals(participant.getTask().getId())) {
 								t.setTotalRegister(t.getTotalRegister() + 1);
 								break parcoursTasks;

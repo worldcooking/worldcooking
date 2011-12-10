@@ -1,4 +1,4 @@
-package org.worldcooking.web.registration;
+package org.worldcooking.web.worldcooking.registration;
 
 import javax.servlet.http.HttpServletRequest;
 

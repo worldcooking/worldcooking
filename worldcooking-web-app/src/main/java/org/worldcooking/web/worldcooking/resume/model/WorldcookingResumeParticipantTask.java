@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking;
+package org.worldcooking.web.worldcooking.resume.model;
 
 /**
  * @author MatthieuG
  * 
  */
-public class ParticipantTask {
+public class WorldcookingResumeParticipantTask {
 
 	private Long taskId;
 
@@ -15,7 +15,7 @@ public class ParticipantTask {
 
 	private Long id;
 
-	public ParticipantTask(Long taskId, String name, Long participantId) {
+	public WorldcookingResumeParticipantTask(Long taskId, String name, Long participantId) {
 		this.taskId = taskId;
 		this.name = name;
 		this.id = participantId;

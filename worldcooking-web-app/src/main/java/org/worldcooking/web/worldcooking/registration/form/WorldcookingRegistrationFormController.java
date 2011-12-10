@@ -1,4 +1,4 @@
-package org.worldcooking.web.registration;
+package org.worldcooking.web.worldcooking.registration.form;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -27,11 +27,13 @@ import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.server.services.registration.model.NewParticipant;
 import org.worldcooking.server.services.registration.model.NewRegistration;
 import org.worldcooking.server.services.registration.model.NewRegistrationPaymentMode;
+import org.worldcooking.web.worldcooking.registration.form.model.WorldcookingRegistrationFormDetail;
 
 @Controller
 @RequestMapping(value = "/registration")
-public class RegistrationController {
+public class WorldcookingRegistrationFormController {
 	private static final String PAYPAL_MODE_KEY = "paypal";
+	private static final String JSP = "worldcooking/registration/form/worldcooking-registration-form";
 
 	@Autowired
 	private RegistrationService registrationService;
@@ -45,7 +47,7 @@ public class RegistrationController {
 	public String initializeForm(ModelMap model)
 			throws EntityIdNotFountException {
 
-		RegistrationModel registration = new RegistrationModel();
+		WorldcookingRegistrationFormDetail registration = new WorldcookingRegistrationFormDetail();
 
 		Event lastEvent = eventService.getLastEvent();
 
@@ -63,7 +65,7 @@ public class RegistrationController {
 		registration.setAdditionalParticipantsTasks(Arrays.asList(0l, 0l));
 
 		model.addAttribute("registration", registration);
-		return "registration";
+		return JSP;
 	}
 
 	@ModelAttribute("availableTasks")
@@ -100,7 +102,7 @@ public class RegistrationController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(
-			@Valid @ModelAttribute("registration") RegistrationModel registrationModel,
+			@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
 			BindingResult result) throws Exception {
 
 		Event event = eventService.findById(registrationModel.getEventId());
@@ -125,7 +127,7 @@ public class RegistrationController {
 
 		if (result.hasErrors()) {
 
-			return "registration";
+			return JSP;
 		}
 
 		// create new registration
@@ -154,7 +156,8 @@ public class RegistrationController {
 	 * @param registration
 	 * @throws EntityIdNotFountException
 	 */
-	private NewRegistration createNewRegistration(RegistrationModel registration)
+	private NewRegistration createNewRegistration(
+			WorldcookingRegistrationFormDetail registration)
 			throws EntityIdNotFountException {
 		// create registration
 		NewRegistration newRegistration = new NewRegistration();

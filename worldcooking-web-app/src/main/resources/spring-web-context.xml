@@ -22,9 +22,7 @@
 	</bean>
 
 	<!-- intercept /resources/css requests and map them to specified location -->
-	<mvc:resources mapping="/resources/css/**" location="/, classpath:/META-INF/css/"/>
-	<!-- intercept /resources/js requests and map them to specified location -->
-	<mvc:resources mapping="/resources/js/**" location="/, classpath:/META-INF/js/"/>
+	<mvc:resources mapping="/resources/**" location="/, classpath:/META-INF/"/>
 
 	<context:component-scan base-package="org.worldcooking.web" />
 

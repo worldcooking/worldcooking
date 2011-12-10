@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking;
+package org.worldcooking.web.worldcooking.resume.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import org.dozer.Mapping;
  * @author MatthieuG
  * 
  */
-public class WorldcookingEventModel {
+public class WorldcookingResumeEvent {
 
 	/** Name of the event. */
 
@@ -30,10 +30,10 @@ public class WorldcookingEventModel {
 	private List<String> waitingParticipants = new ArrayList<String>();
 
 	/** Participants validated associated to their task id. */
-	private Set<ParticipantTask> validatedParticipantsTask = new HashSet<ParticipantTask>();
+	private Set<WorldcookingResumeParticipantTask> validatedParticipantsTask = new HashSet<WorldcookingResumeParticipantTask>();
 
 	/** List of task with their ids. */
-	private List<TaskModel> tasks = new ArrayList<TaskModel>();
+	private List<WorldcookingResumeTask> tasks = new ArrayList<WorldcookingResumeTask>();
 
 	private int nbParticipantsMax = 0;
 
@@ -78,12 +78,12 @@ public class WorldcookingEventModel {
 		waitingParticipants.addAll(participants);
 	}
 
-	public Set<ParticipantTask> getValidatedParticipantsTask() {
+	public Set<WorldcookingResumeParticipantTask> getValidatedParticipantsTask() {
 		return validatedParticipantsTask;
 	}
 
-	public List<ParticipantTask> getValidatedParticipantsTaskOrdered() {
-		List<ParticipantTask> participants = new ArrayList<ParticipantTask>(
+	public List<WorldcookingResumeParticipantTask> getValidatedParticipantsTaskOrdered() {
+		List<WorldcookingResumeParticipantTask> participants = new ArrayList<WorldcookingResumeParticipantTask>(
 				validatedParticipantsTask);
 
 		Collections.sort(participants, ParticipantTaskComparator.getInstance());
@@ -92,21 +92,21 @@ public class WorldcookingEventModel {
 	}
 
 	public void addValidatedParticipantTask(String name, Long taskId, Long id) {
-		validatedParticipantsTask.add(new ParticipantTask(taskId, name, id));
+		validatedParticipantsTask.add(new WorldcookingResumeParticipantTask(taskId, name, id));
 	}
 
 	@Mapping("availableTasks")
-	public List<TaskModel> getTasks() {
+	public List<WorldcookingResumeTask> getTasks() {
 		Collections.sort(tasks, TaskComparator.getInstance());
 		return tasks;
 	}
 
-	public void addTask(TaskModel task) {
+	public void addTask(WorldcookingResumeTask task) {
 		tasks.add(task);
 	}
 
 	public void addTask(Long id, String name, int totalRegister, int totalMax) {
-		tasks.add(new TaskModel(id, name, totalRegister, totalMax));
+		tasks.add(new WorldcookingResumeTask(id, name, totalRegister, totalMax));
 	}
 
 	public void setWaitingParticipants(List<String> waitingParticipants) {
@@ -114,11 +114,11 @@ public class WorldcookingEventModel {
 	}
 
 	public void setValidatedParticipantsTask(
-			Set<ParticipantTask> validatedParticipantsTask) {
+			Set<WorldcookingResumeParticipantTask> validatedParticipantsTask) {
 		this.validatedParticipantsTask = validatedParticipantsTask;
 	}
 
-	public void setTasks(List<TaskModel> tasks) {
+	public void setTasks(List<WorldcookingResumeTask> tasks) {
 		this.tasks = tasks;
 	}
 
@@ -131,7 +131,7 @@ public class WorldcookingEventModel {
 		this.nbParticipantsMax = nbParticipantsMax;
 	}
 
-	public void addTasks(List<TaskModel> tasks) {
+	public void addTasks(List<WorldcookingResumeTask> tasks) {
 		this.tasks.addAll(tasks);
 	}
 
@@ -144,7 +144,7 @@ public class WorldcookingEventModel {
 		}
 	}
 
-	private static class TaskComparator implements Comparator<TaskModel> {
+	private static class TaskComparator implements Comparator<WorldcookingResumeTask> {
 
 		private static TaskComparator instance;
 
@@ -160,7 +160,7 @@ public class WorldcookingEventModel {
 		}
 
 		@Override
-		public int compare(TaskModel o1, TaskModel o2) {
+		public int compare(WorldcookingResumeTask o1, WorldcookingResumeTask o2) {
 
 			return o1.getName().compareTo(o2.getName());
 		}
@@ -168,7 +168,7 @@ public class WorldcookingEventModel {
 	}
 
 	private static class ParticipantTaskComparator implements
-			Comparator<ParticipantTask> {
+			Comparator<WorldcookingResumeParticipantTask> {
 
 		private static ParticipantTaskComparator instance;
 
@@ -184,7 +184,7 @@ public class WorldcookingEventModel {
 		}
 
 		@Override
-		public int compare(ParticipantTask o1, ParticipantTask o2) {
+		public int compare(WorldcookingResumeParticipantTask o1, WorldcookingResumeParticipantTask o2) {
 
 			return o1.getName().toLowerCase()
 					.compareTo(o2.getName().toLowerCase());

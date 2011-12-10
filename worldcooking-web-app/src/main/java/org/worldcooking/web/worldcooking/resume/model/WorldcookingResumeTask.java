@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking;
+package org.worldcooking.web.worldcooking.resume.model;
 
 import org.dozer.Mapping;
 
@@ -9,7 +9,7 @@ import org.dozer.Mapping;
  * @author MatthieuG
  * 
  */
-public class TaskModel {
+public class WorldcookingResumeTask {
 
 	private Long id;
 
@@ -19,11 +19,11 @@ public class TaskModel {
 
 	private int totalMax = 0;
 
-	public TaskModel() {
+	public WorldcookingResumeTask() {
 
 	}
 
-	public TaskModel(Long id, String name, int totalRegister, int totalMax) {
+	public WorldcookingResumeTask(Long id, String name, int totalRegister, int totalMax) {
 		super();
 		this.id = id;
 		this.name = name;

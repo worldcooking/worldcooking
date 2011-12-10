@@ -1,0 +1,6 @@
+div.participants{
+	overflow-y:scroll;
+	height: 200px;
+	padding: 0px 0px 0px 0px;
+	border:1px solid #aaa;
+}

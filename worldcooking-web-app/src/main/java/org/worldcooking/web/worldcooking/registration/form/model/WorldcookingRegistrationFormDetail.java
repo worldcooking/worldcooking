@@ -1,4 +1,4 @@
-package org.worldcooking.web.registration;
+package org.worldcooking.web.worldcooking.registration.form.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class RegistrationModel {
+public class WorldcookingRegistrationFormDetail {
 
 	/**
 	 * Event id.
@@ -48,7 +48,7 @@ public class RegistrationModel {
 	 */
 	private List<Long> additionalParticipantsTasks = new ArrayList<Long>();
 
-	public RegistrationModel() {
+	public WorldcookingRegistrationFormDetail() {
 	}
 
 	public String getEmailAddress() {
