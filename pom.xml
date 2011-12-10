@@ -80,13 +80,13 @@
 		<dependencies>
 			<!-- Javascript dependencies -->
 			<dependency>
-				<groupId>org.oups-asso.mish-k.javascript</groupId>
-				<artifactId>mish-k-javascript-jquery</artifactId>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-jquery-taglib</artifactId>
 				<version>1.7.1</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.javascript</groupId>
-				<artifactId>mish-k-javascript-jquery-ui</artifactId>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-jquery-ui-taglib</artifactId>
 				<version>1.8.16</version>
 			</dependency>
 			<!-- Logging dependencies -->

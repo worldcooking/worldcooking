@@ -13,12 +13,12 @@
 	<dependencies>
 		<!-- Javascript dependencies -->
 		<dependency>
-			<groupId>org.oups-asso.mish-k.javascript</groupId>
-			<artifactId>mish-k-javascript-jquery</artifactId>
+			<groupId>org.oups-asso.mish-k.taglib</groupId>
+			<artifactId>mish-k-jquery-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.javascript</groupId>
-			<artifactId>mish-k-javascript-jquery-ui</artifactId>
+			<groupId>org.oups-asso.mish-k.taglib</groupId>
+			<artifactId>mish-k-jquery-ui-taglib</artifactId>
 		</dependency>
 
 		<!-- Spring dependencies -->

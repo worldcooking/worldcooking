@@ -3,15 +3,16 @@
 <%@ taglib prefix="loc" uri="http://www.oups-asso.org/mish-k/tags/localization"  %>
 <%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
 <%@ taglib prefix="tpl" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
+<%@ taglib prefix="jquery-ui" uri="http://www.oups-asso.org/mish-k/tags/jquery-ui" %>
+<%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
 
 <html>
 <head>
 	<title>${event.name}</title>
+	<jquery:require-static-resources />
+	<jquery-ui:require-static-resources />
 	<res:require-css resourceURI="main.css"/>
 	<res:require-script resourceURI="worldcooking/main.js" />
-	<res:require-script resourceURI="jquery.js" locationType="JAR" />
-	<res:require-script resourceURI="jquery-ui/ui/minified/jquery-ui.js" locationType="JAR" />
-	<loc:require-static-resources />
 </head>
 <body>  
 
