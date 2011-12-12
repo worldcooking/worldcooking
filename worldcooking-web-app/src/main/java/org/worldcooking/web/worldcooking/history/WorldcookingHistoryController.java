@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.exception.EntityIdNotFountException;
-import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryEntry;
 import org.worldcooking.web.worldcooking.history.model.WorldcookingHistory;
+import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryEntry;
 
 /**
  * @author MatthieuG
@@ -44,7 +44,7 @@ public class WorldcookingHistoryController {
 		return historyModel;
 	}
 
-	private static WorldcookingHistory getHistory(HttpSession session) {
+	public static WorldcookingHistory getHistory(HttpSession session) {
 		WorldcookingHistory historyModel = (WorldcookingHistory) session
 				.getAttribute("history");
 

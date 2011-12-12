@@ -1,20 +1,39 @@
-$(document).ready(function() {
-  $(".validateButton").click(function(event) {
-    // prevent form submit
-    event.preventDefault();
-
-    var formElement = $(this).parents("form");
+function validateRegistration(validateButton){
+	var formElement = validateButton.parents("form");
     var formAction = formElement.attr("action");
     var registrationIdElement = formElement.children(".registrationId");
 
-    alert(formAction);
-    
-    jQuery.getJSON(formAction, {
-      registrationId : registrationIdElement.val()
-    }, function(data, status) {
-      // TODO manage errors
-      updateHistory();
-    });
-  });
+    $.ajax({
+    	  url: formAction,
+    	  dataType: 'json',
+    	  data: {registrationId : registrationIdElement.val()},
+    	  complete: function(data, status) {
+		      // TODO manage errors
+		      updateHistory();
+		      
+		      updateValidatedRegistrations();
+		      
+		      updateUnvalidatedRegistrations();
+	      }
+    	});
+}
 
-});
+function unvalidateRegistration(unvalidateButton){
+	var formElement = unvalidateButton.parents("form");
+    var formAction = formElement.attr("action");
+    var registrationIdElement = formElement.children(".registrationId");
+
+    $.ajax({
+  	  url: formAction,
+  	  dataType: 'json',
+  	  data: {registrationId : registrationIdElement.val()},
+  	  complete: function(data, status) {
+		      // TODO manage errors
+		      updateHistory();
+		      
+		      updateValidatedRegistrations();
+		      
+		      updateUnvalidatedRegistrations();
+	      }
+  	});
+}

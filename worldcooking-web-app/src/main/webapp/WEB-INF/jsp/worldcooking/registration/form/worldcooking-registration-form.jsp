@@ -17,9 +17,7 @@
 	<form:form commandName="registration"   > 
 	<form:hidden path="eventId"/>
 	
-	<template:chapter>
-		<jsp:attribute name="title">Join us!</jsp:attribute>
-		<jsp:body>
+		<template:chapter title="Join us!">
 			<p>
 				The price for this meal is <b>15 &euros; per person.</b><br /> This
 				amount can pay the rent of the room, the ingredients for the meal
@@ -90,8 +88,7 @@
 						<input type="submit" value="Join" />
 					</div>
 				</div>
-		</jsp:body>
-	</template:chapter>
+		</template:chapter>
 	</form:form>
 </body>
 </html>

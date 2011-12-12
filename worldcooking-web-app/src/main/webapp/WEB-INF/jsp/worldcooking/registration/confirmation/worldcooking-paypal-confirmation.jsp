@@ -11,9 +11,7 @@
 	<title>${event.name} - Paypal & CB payment</title>
 </head>
 <body>
-	<template:chapter>
-		<jsp:attribute name="title">Paypal & CB payment</jsp:attribute>
-		<jsp:body>
+	<template:chapter title="Paypal & CB payment">
 			<p>
 				If you're not automatically redirected to the Paypal payment page, please click on the button below.<br/>
 				<br/>
@@ -34,7 +32,6 @@
 	<input type="submit" value="Go to paypal Web site to finalize my registration." title="WTF?! you're not redirected?!"/>
 </form>
 			</p>
-		</jsp:body>
 	</template:chapter>
 </body>
 </html>

@@ -18,41 +18,33 @@
 <body>  
 
 <c:if test="${event.registrationClosed == true}" >
-	<template:chapter>
-		<jsp:attribute name="title">Registration closed!</jsp:attribute>
-		<jsp:body>
-			<p>The event is now full, so <b>the registration is closed</b>. 
-				<br/>If you were thinking to come, but do not have payed yet, you are not in the confirmed list, so you will have to be faster next time.
-				<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
-			</p>
-		</jsp:body>
+	<template:chapter title="Registration closed!">
+		<p>The event is now full, so <b>the registration is closed</b>. 
+			<br/>If you were thinking to come, but do not have payed yet, you are not in the confirmed list, so you will have to be faster next time.
+			<br/>To be informed of the next event, feel free to join the world-cooking mailing-list by sending us a mail: <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>.
+		</p>
 	</template:chapter>
 </c:if>
 <c:if test="${event.registrationClosed == false}" >
-	<template:chapter>
-		<jsp:attribute name="title">Join us!</jsp:attribute>
-		<jsp:body>
-			<p>
-			The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b>
-			<br/> 
-			This amount goes to pay for the location, all the drinks and the food.
-			<br/> To pay you can :
-			<ul>
-				<li>use paypal or CB: in this way the registration is immediate.</li>
-				<li>pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
-			have the opportunity to see one of them very soon. Your registration
-			will be validated only when you give them the money.</li>
-			</ul>
-			<br/><br/>
-			<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center>
-			<br/> 
-			</p>
-		</jsp:body>
+	<template:chapter title="Join us!">
+		<p>
+		The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b>
+		<br/> 
+		This amount goes to pay for the location, all the drinks and the food.
+		<br/> To pay you can :
+		<ul>
+			<li>use paypal or CB: in this way the registration is immediate.</li>
+			<li>pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
+		have the opportunity to see one of them very soon. Your registration
+		will be validated only when you give them the money.</li>
+		</ul>
+		<br/><br/>
+		<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center>
+		<br/> 
+		</p>
 	</template:chapter>
 </c:if>
-<template:chapter>
-	<jsp:attribute name="title">Informations</jsp:attribute>
-	<jsp:body>
+<template:chapter title="Informations">
 		<p>${event.information}</p>
 		<div class="information">
 			<h3>Menu :</h3>
@@ -73,11 +65,8 @@
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
 						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
 		</div>
-	</jsp:body>
 </template:chapter>
-<template:chapter>
-	<jsp:attribute name="title">Participants confirmed</jsp:attribute>
-	<jsp:body>
+<template:chapter title="Participants confirmed">
 		<div id="div_participants" class="participants">
 			<template:table>
 				<jsp:attribute name="header">
@@ -105,12 +94,9 @@
 				</jsp:attribute>
 			</template:table>
 		</div>
-	</jsp:body>
 </template:chapter>
 <c:if test="${event.registrationClosed == false}" >
-	<template:chapter>
-		<jsp:attribute name="title">Participants waiting for payment confirmation</jsp:attribute>
-		<jsp:body>
+	<template:chapter title="Participants waiting for payment confirmation">
 			<template:table>
 				<jsp:attribute name="header">
 					<th>Participant waiting for confirmation (${event.nbParticipantsWaiting})</th>
@@ -123,7 +109,6 @@
 					</c:forEach>
 				</jsp:attribute>
 			</template:table>
-		</jsp:body>
 	</template:chapter>
 </c:if>
 

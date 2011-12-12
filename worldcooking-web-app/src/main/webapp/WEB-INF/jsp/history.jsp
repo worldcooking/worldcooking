@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<!-- AJAX URLS -->
+<input  id="showHistoryAjaxUrl" type="hidden" name="showHistoryAjaxUrl" value="${pageContext.request.contextPath}/direct/history" />
+
 <c:if test="${not empty history.historyEntries}">
 	<h3>Last actions</h3>
 	<c:forEach items="${history.historyEntries}" var="historyEntry" end="2" varStatus="loopStatus">

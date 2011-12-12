@@ -10,17 +10,13 @@
 	<title>Administration</title>
 </head>
 <body>
-	<template:chapter>
-		<jsp:attribute name="title">Select an event to manage</jsp:attribute>
-		<jsp:body>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>name</th>
-					<th>description</th>
-				</tr>
-			</thead>
-			<tbody>
+	<template:chapter title="Select an event to manage">
+		<template:table>
+			<jsp:attribute name="header">
+				<th>name</th>
+				<th>description</th>
+			</jsp:attribute>
+			<jsp:attribute name="content">
 				<c:forEach items="${events}" var="event">
 					<tr>
 						<td><a href="${pageContext.request.contextPath}/admin/event?eventId=<c:out value="${event.id}"/>"><c:out
@@ -28,9 +24,8 @@
 						<td>${event.description}</td>
 					</tr>
 				</c:forEach>
-			</tbody>
-		</table>
-		</jsp:body>
+			</jsp:attribute>
+		</template:table>
 	</template:chapter>
 
 </body>

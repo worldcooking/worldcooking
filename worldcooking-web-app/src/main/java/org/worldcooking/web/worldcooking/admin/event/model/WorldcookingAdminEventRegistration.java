@@ -12,6 +12,8 @@ public class WorldcookingAdminEventRegistration {
 
 	private String paymentDescription;
 
+	private Boolean validated = false;
+
 	private List<WorldcookingAdminEventParticipant> additionalParticipants;
 
 	public WorldcookingAdminEventRegistrer getRegistrer() {
@@ -53,5 +55,13 @@ public class WorldcookingAdminEventRegistration {
 
 	public void setPaymentDescription(String paymentDescription) {
 		this.paymentDescription = paymentDescription;
+	}
+
+	public Boolean getValidated() {
+		return validated;
+	}
+
+	public void setValidated(Boolean validated) {
+		this.validated = validated;
 	}
 }
