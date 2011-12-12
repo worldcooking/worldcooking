@@ -63,7 +63,7 @@
 				addressLine1="15 Rue Charles Gounod" 
 				addressLine2="31200 Toulouse"
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
-						flag="http://localhost:8080/worldcooking-web-app/img/restaurant-30px.png" />
+						flag="${pageContext.request.contextPath}/img/restaurant-30px.png" />
 		</div>
 </template:chapter>
 <template:chapter title="Participants confirmed">
