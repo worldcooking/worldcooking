@@ -119,6 +119,14 @@
 			<build>
 				<resources>
 					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+					<resource>
 						<directory>src/main/config/dev</directory>
 						<includes>
 							<include>**/*.xml</include>
@@ -136,6 +144,14 @@
 			<build>
 				<resources>
 					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+					<resource>
 						<directory>src/main/config/int</directory>
 						<includes>
 							<include>**/*.xml</include>
@@ -152,6 +168,14 @@
 			</activation>
 			<build>
 				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
 					<resource>
 						<directory>src/main/config/prod</directory>
 						<includes>
