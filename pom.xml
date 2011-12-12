@@ -42,7 +42,7 @@
 			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k/</url>
 		</repository>
 		<repository>
-			<id>oups-asso-mish-k</id>
+			<id>oups-asso-mish-k-snapshots</id>
 			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k-snapshots/</url>
 		</repository>
 	</repositories>
@@ -82,12 +82,12 @@
 			<dependency>
 				<groupId>org.oups-asso.mish-k.taglib</groupId>
 				<artifactId>mish-k-jquery-taglib</artifactId>
-				<version>1.7.1</version>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.oups-asso.mish-k.taglib</groupId>
 				<artifactId>mish-k-jquery-ui-taglib</artifactId>
-				<version>1.8.16</version>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
 			</dependency>
 			<!-- Logging dependencies -->
 			<dependency>
