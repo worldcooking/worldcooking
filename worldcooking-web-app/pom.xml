@@ -112,6 +112,57 @@
 	</build>
 	<profiles>
 		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/config/dev</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>integration</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/config/int</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/config/prod</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
 			<id>deployTomcat</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
