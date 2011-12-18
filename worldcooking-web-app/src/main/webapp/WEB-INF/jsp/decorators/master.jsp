@@ -12,6 +12,8 @@
 
 <decorator:head/>
 
+<web-security:require-static-resources />
+
 <res:import-required-css 
 	internalResourcesPrefixPath="css" 
 	externalResourcesPrefixPath="resources/css" />
@@ -23,8 +25,6 @@
 </head>
 <body>
 
-<web-security:login-area />
-
 	<div class="header">
 		<div class="header_title">
 			<h1><decorator:title /></h1>
@@ -32,6 +32,7 @@
 	</div>
 
 	<div id="main" class="main">
+		<web-security:login-area />
 		<decorator:body />
 	</div>
 	<div class="info_bottom">
