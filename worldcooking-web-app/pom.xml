@@ -11,7 +11,6 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-		<!-- Javascript dependencies -->
 		<dependency>
 			<groupId>org.oups-asso.mish-k.taglib</groupId>
 			<artifactId>mish-k-jquery-taglib</artifactId>
@@ -25,6 +24,26 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-openid</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook</artifactId>
 		</dependency>
 		<!-- Hibernate dependencies -->
 		<dependency>
@@ -59,6 +78,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.oups-asso.mish-k.taglib</groupId>
+			<artifactId>mish-k-web-security-taglib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.oups-asso.mish-k.taglib</groupId>
 			<artifactId>mish-k-resources-taglib</artifactId>
 		</dependency>
 		<dependency>
@@ -75,13 +98,17 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.5.3</version>
 		</dependency>
-		<!-- dependecy to fix JSPServletException -->
+		<!-- Tomcat dependencies -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
-			<artifactId>jsp-api</artifactId>
+			<artifactId>tomcat-jsp-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 

@@ -18,9 +18,8 @@ import org.springframework.test.context.ContextConfiguration;
  * @see org.springframework.transaction.annotation.Transactional
  * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)
  */
-@ContextConfiguration(locations = { "classpath:test-spring-dao-context.xml" })
-public abstract class ApplicationContextAwareTest extends
-		AbstractApplicationContextAware {
+@ContextConfiguration(locations = { "classpath:spring/test-spring-dao-context.xml" })
+public abstract class ApplicationContextAwareTest extends AbstractApplicationContextAware {
 
 	@Autowired
 	public SessionFactory sessionFactory;

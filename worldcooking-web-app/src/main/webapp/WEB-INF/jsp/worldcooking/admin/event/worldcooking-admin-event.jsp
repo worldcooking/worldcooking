@@ -22,7 +22,7 @@
 <body>
 
 <!-- AJAX URLS -->
-<input  id="updateTaskAjaxUrl" type="hidden" name="updateTaskUrl" value="${pageContext.request.contextPath}/direct/admin/event/update/task" />
+<input  id="updateTaskAjaxUrl" type="hidden" name="updateTaskUrl" value="<c:url value="/direct/admin/event/update/task"/>" />
 <input  id="showAdminValidatedRegistrationsAjaxUrl" type="hidden" name="showAdminValidatedRegistrationsAjaxUrl" value="${pageContext.request.contextPath}/direct/admin/event/validated/registrations?eventId=${event.id}" />
 <input  id="showAdminUnvalidatedRegistrationsAjaxUrl" type="hidden" name="showAdminUnvalidatedRegistrationsAjaxUrl" value="${pageContext.request.contextPath}/direct/admin/event/unvalidated/registrations?eventId=${event.id}" />
 

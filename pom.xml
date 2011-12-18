@@ -16,6 +16,7 @@
 		<hibernate.version>3.6.8.Final</hibernate.version>
 		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
 		<spring.version>3.0.6.RELEASE</spring.version>
+		<org.springframework.social.version>1.0.0.RELEASE</org.springframework.social.version>
 		<hsqldb.version>1.8.0.7</hsqldb.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<maven-compiler-plugin.version>2.3.1</maven-compiler-plugin.version>
@@ -24,6 +25,8 @@
 		<postgresql.version>9.1-901</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.oups-asso.mish-k.taglib.version>0.1-SNAPSHOT</org.oups-asso.mish-k.taglib.version>
+		<java.version>1.6</java.version>
+		<tomcat.version>7.0.23</tomcat.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -87,6 +90,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.oups-asso.mish-k.taglib</groupId>
+				<artifactId>mish-k-web-security-taglib</artifactId>
+				<version>${org.oups-asso.mish-k.taglib.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.taglib</groupId>
 				<artifactId>mish-k-jquery-ui-taglib</artifactId>
 				<version>${org.oups-asso.mish-k.taglib.version}</version>
 			</dependency>
@@ -114,9 +122,34 @@
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-openid</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-facebook</artifactId>
+				<version>${org.springframework.social.version}</version>
 			</dependency>
 			<!-- Hibernate dependencies -->
 			<dependency>
@@ -159,8 +192,14 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.tomcat</groupId>
-				<artifactId>jsp-api</artifactId>
-				<version>6.0.32</version>
+				<artifactId>tomcat-jsp-api</artifactId>
+				<version>${tomcat.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-jasper</artifactId>
+				<version>${tomcat.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<!--Test dependencies -->
@@ -232,8 +271,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<optimize>true</optimize>
 					<debug>true</debug>
 				</configuration>
