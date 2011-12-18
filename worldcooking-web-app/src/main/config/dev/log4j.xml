@@ -5,7 +5,7 @@
 	<!-- Console appender -->
 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{dd/MM/yyyy - HH:mm:ss} - [%t] -  %-5p - %c - %m %n" />
+			<param name="ConversionPattern" value="%d{dd/MM/yyyy - HH:mm:ss} - [%t] -  %-5p - %c.%M:%L - %m %n" />
 		</layout>
 	</appender>
 
@@ -14,7 +14,7 @@
 		<param name="file" value="worldcooking.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{dd/MM/yyyy - HH:mm:ss} - [%t] - %-5p - %c - %m %n" />
+			<param name="ConversionPattern" value="%d{dd/MM/yyyy - HH:mm:ss} - [%t] - %-5p - %c.%M:%L - %m %n" />
 		</layout>
 	</appender>
 
@@ -35,7 +35,10 @@
 	<logger name="org.springframework">
 		<level value="warn" />
 	</logger>
-
+	
+	<logger name="org.springframework.web">
+		<level value="warn" />
+	</logger>
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="CONSOLE" />
