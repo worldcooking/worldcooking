@@ -8,7 +8,6 @@
 <html>
 <head>
 	<title>${event.name}</title>
-	<template:require-static-resources />
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
 	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>

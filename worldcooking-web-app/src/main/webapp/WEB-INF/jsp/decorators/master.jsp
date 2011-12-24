@@ -12,6 +12,9 @@
 <head>
 <title><decorator:title default="Worldcooking" /></title>
 
+<%-- ensure that template CSS are loaded first (cause it is customized by worldcooking CSS files) --%>
+<template:require-static-resources />
+	
 <decorator:head/>
 
 <web-security:require-static-resources />
