@@ -21,8 +21,7 @@ h3{
 }
 
 
-.header {
-	position: relative;
+#mishk-template-layout_header-center {
 	background: #C2DCD9;
 	background: -moz-linear-gradient(90deg, #C2DCD9, #E5EDEC);
 	background: -webkit-gradient(linear, left top, left bottom, from(#E5EDEC),
@@ -30,20 +29,22 @@ h3{
 	-moz-box-shadow: 0 0 5px #aaa;
 	-webkit-box-shadow: 0 0 5px #aaa;
 	height: 80px;
-	margin: 20px 0 -20px;
-	padding: 25px 0px 0px 0px;
+	
+	margin-bottom: -50px;
+	
 }
 
-.header_title {
+#header_title {
 	width: 840px;
 	height: 150px;
 	margin: 0 auto 0 auto;
 	background: url(../../img/peruflag-50px.png) no-repeat;
 	padding-top: 15;
 	background-size: 50;
+	text-align: left;
 }
 
-.header_title h1 {
+#header_title h1 {
 	margin-left: 60;
 }
 

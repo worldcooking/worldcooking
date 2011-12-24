@@ -1,10 +1,12 @@
-<%@page import="org.worldcooking.web.authentication.MishkUserHolder"%>
+<%@page import="org.oupsasso.mishk.web.security.authentication.MishkUserHolder"%>
 <%@ page  trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
-<%@ taglib prefix="res" uri="http://www.oups-asso.org/mish-k/tags/resources" %>
+<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="web-security" uri="http://www.oups-asso.org/mish-k/tags/web-security" %>
+<%@ taglib prefix="template"
+	uri="http://www.oups-asso.org/mish-k/tags/template"%>
 <decorator:usePage id="myPage" />
 <html>
 <head>
@@ -14,29 +16,35 @@
 
 <web-security:require-static-resources />
 
-<res:import-required-css 
+<resources:import-required-css 
 	internalResourcesPrefixPath="css" 
 	externalResourcesPrefixPath="resources/css" />
 
-<res:import-required-scripts 
+<resources:import-required-scripts 
 	internalResourcesPrefixPath="js" 
 	externalResourcesPrefixPath="resources/js" />
 
 </head>
 <body>
 
-	<div class="header">
-		<div class="header_title">
-			<h1><decorator:title /></h1>
-		</div>
-	</div>
-
-	<div id="main" class="main">
-		<web-security:login-area />
-		<decorator:body />
-	</div>
-	<div class="info_bottom">
-		If you have problems with this page, please contact <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>
-	</div>
+	<template:layout>
+		<jsp:attribute name="headerCenter">
+			<div id="header_title"><h1><decorator:title /></h1></div>
+		</jsp:attribute>
+		
+		<jsp:attribute name="bodyRight">
+			<web-security:login-area />
+		</jsp:attribute>
+		
+		
+		<jsp:attribute name="footerCenter">
+			If you have problems with this page, please contact <a href="mailto:matthieutrashbox@gmail.com">matthieutrashbox@gmail.com</a>
+		</jsp:attribute>
+		
+		<jsp:body>
+		    <decorator:body />
+	    </jsp:body>
+	</template:layout>
+	
 </body>
 </html>

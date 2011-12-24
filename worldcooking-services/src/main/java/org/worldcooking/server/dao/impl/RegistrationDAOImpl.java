@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 
+import org.oupsasso.mishk.core.dao.GenericDao;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.event.Registration;
 
@@ -12,8 +13,7 @@ import org.worldcooking.server.entity.event.Registration;
  * {@link org.worldcooking.server.dao.impl.GenericHibernateDAOImpl} methods
  */
 @Repository
-public class RegistrationDAOImpl extends
-		GenericHibernateDAOImpl<Registration, Long> {
+public class RegistrationDAOImpl extends GenericDao<Registration, Long> {
 
 	/**
 	 * Method returning the Registration corresponding to the registrationId
@@ -26,11 +26,9 @@ public class RegistrationDAOImpl extends
 	 */
 	public Registration findFullRegistrationById(Long registrationId) {
 		@SuppressWarnings("unchecked")
-		List<Registration> registrations = getHibernateTemplate()
-				.findByNamedParam(
-						"from Registration s left join fetch s.participants as p "
-								+ " where s.id=:registrationId",
-						"registrationId", registrationId);
+		List<Registration> registrations = getHibernateTemplate().findByNamedParam(
+				"from Registration s left join fetch s.participants as p " + " where s.id=:registrationId",
+				"registrationId", registrationId);
 		if (registrations != null && !registrations.isEmpty()) {
 			return registrations.get(0);
 		}
@@ -45,23 +43,19 @@ public class RegistrationDAOImpl extends
 		return findRegistrations(eventId, true);
 	}
 
-	private SortedSet<Registration> findRegistrations(Long eventId,
-			Boolean validatedRegistration) {
+	private SortedSet<Registration> findRegistrations(Long eventId, Boolean validatedRegistration) {
 		@SuppressWarnings("unchecked")
-		List<Registration> registrations = getHibernateTemplate()
-				.findByNamedParam(
-						"from Registration s left join fetch s.participants as p "
-								+ " where s.event.id=:eventId and s.validate=:validatedRegistration",
-						new String[] { "eventId", "validatedRegistration" },
-						new Object[] { eventId, validatedRegistration });
+		List<Registration> registrations = getHibernateTemplate().findByNamedParam(
+				"from Registration s left join fetch s.participants as p "
+						+ " where s.event.id=:eventId and s.validate=:validatedRegistration",
+				new String[] { "eventId", "validatedRegistration" }, new Object[] { eventId, validatedRegistration });
 		return toTreeSet(registrations, new Comparator<Registration>() {
 
 			@Override
 			public int compare(Registration s1, Registration s2) {
 				// TODO use comparetobuilder to avoid to erase 2 subscribtions
 				// done on same date
-				return s1.getRegistrationDate().compareTo(
-						s2.getRegistrationDate());
+				return s1.getRegistrationDate().compareTo(s2.getRegistrationDate());
 			}
 
 		});
@@ -69,11 +63,10 @@ public class RegistrationDAOImpl extends
 
 	public Long countValidatedParticipants(Long eventId) {
 		@SuppressWarnings("unchecked")
-		List<Long> counts = getHibernateTemplate()
-				.findByNamedParam(
-						"select count (p) from Participant p"
-								+ " where p.registration.event.id=:eventId and p.registration.validate=true",
-						"eventId", eventId);
+		List<Long> counts = getHibernateTemplate().findByNamedParam(
+				"select count (p) from Participant p"
+						+ " where p.registration.event.id=:eventId and p.registration.validate=true", "eventId",
+				eventId);
 		if (counts != null && counts.size() == 1) {
 			return counts.get(0);
 		}

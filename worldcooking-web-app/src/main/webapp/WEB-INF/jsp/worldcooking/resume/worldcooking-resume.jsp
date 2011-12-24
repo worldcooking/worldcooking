@@ -1,4 +1,3 @@
-<%@page import="javax.servlet.jsp.JspException"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="loc" uri="http://www.oups-asso.org/mish-k/tags/localization"  %>
 <%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
@@ -9,11 +8,11 @@
 <html>
 <head>
 	<title>${event.name}</title>
+	<template:require-static-resources />
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
 	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<resources:require-css resourceURI="worldcooking/resume/worldcooking-resume.css"/>
-
 </head>
 <body>  
 

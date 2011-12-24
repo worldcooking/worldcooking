@@ -5,18 +5,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
-import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
 import org.worldcooking.server.dao.impl.TaskDAOImpl;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 
 @Repository
 public class EventService {
@@ -28,9 +27,6 @@ public class EventService {
 
 	@Autowired
 	private TaskDAOImpl taskDao;
-
-	@Autowired
-	private MultiEntitiesHibernateDAOImpl dao;
 
 	public void setEventDao(EventDAOImpl eventDao) {
 		this.eventDao = eventDao;
@@ -92,48 +88,47 @@ public class EventService {
 				+ "The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.<br>"
 				+ "<br>"
 				+ "This year we ask each person to help. When registering you have to choose a task from the following ones:<br>"
-				+ "- Cooking with Nidia from 4pm"
-				+ "<br>- Set the table"
-				+ "<br>- Doing the dishes" + "<br>- Cleaning the room<br>");
+				+ "- Cooking with Nidia from 4pm" + "<br>- Set the table" + "<br>- Doing the dishes"
+				+ "<br>- Cleaning the room<br>");
 		e.setMaxParticipants(36);
-		dao.makePersistent(e);
+		eventDao.saveOrUpdate(e);
 
 		Task t1 = new Task();
 		t1.setName("Chef");
 		t1.setNbMax(1);
 		t1.setPricePerParticipant(0d);
 		e.addAvailableTask(t1);
-		dao.makePersistent(t1);
+		eventDao.saveOrUpdate(t1);
 
 		Task t2 = new Task();
 		t2.setName("Cooking");
 		t2.setNbMax(7);
 		t2.setPricePerParticipant(15d);
 		e.addAvailableTask(t2);
-		dao.makePersistent(t2);
+		eventDao.saveOrUpdate(t2);
 
 		Task t3 = new Task();
 		t3.setName("Setting the table");
 		t3.setNbMax(10);
 		t3.setPricePerParticipant(15d);
 		e.addAvailableTask(t3);
-		dao.makePersistent(t3);
+		eventDao.saveOrUpdate(t3);
 
 		Task t4 = new Task();
 		t4.setName("Doing the dishes");
 		t4.setNbMax(9);
 		t4.setPricePerParticipant(15d);
 		e.addAvailableTask(t4);
-		dao.makePersistent(t4);
+		eventDao.saveOrUpdate(t4);
 
 		Task t5 = new Task();
 		t5.setName("Cleaning the room");
 		t5.setNbMax(9);
 		t5.setPricePerParticipant(15d);
 		e.addAvailableTask(t5);
-		dao.makePersistent(t5);
+		eventDao.saveOrUpdate(t5);
 
-		dao.makePersistent(e);
+		eventDao.saveOrUpdate(e);
 	}
 
 	/**

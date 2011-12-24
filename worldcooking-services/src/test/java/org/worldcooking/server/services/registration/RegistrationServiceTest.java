@@ -9,13 +9,13 @@ import javax.annotation.Resource;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.worldcooking.ApplicationContextAwareTest;
-import org.worldcooking.server.dao.impl.MultiEntitiesHibernateDAOImpl;
+import org.worldcooking.server.dao.impl.RegistrationDAOImpl;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.registration.model.NewParticipant;
 import org.worldcooking.server.services.registration.model.NewRegistration;
 
@@ -25,11 +25,10 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 	private RegistrationService registrationService;
 
 	@Resource
-	private MultiEntitiesHibernateDAOImpl dao;
+	private RegistrationDAOImpl dao;
 
 	@Test
-	public void testCalculateRegistrationPrice()
-			throws EntityIdNotFountException {
+	public void testCalculateRegistrationPrice() throws EntityIdNotFountException {
 		Task t1 = new Task();
 		t1.setPricePerParticipant(10d);
 
@@ -43,17 +42,15 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		p1.setTask(t1);
 
 		// T1 (10)
-		Assert.assertEquals(10d, registrationService
-				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
-						.asList(p1))));
+		Assert.assertEquals(10d,
+				registrationService.calculateRegistrationPrice(new HashSet<Participant>(Arrays.asList(p1))));
 
 		Participant p2 = new Participant();
 		p2.setTask(t2);
 
 		// T1 (10) + T2 (12) = 22
-		Assert.assertEquals(22d, registrationService
-				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
-						.asList(p1, p2))));
+		Assert.assertEquals(22d,
+				registrationService.calculateRegistrationPrice(new HashSet<Participant>(Arrays.asList(p1, p2))));
 
 		Participant p3 = new Participant();
 		p3.setTask(t2);
@@ -62,14 +59,12 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		p4.setTask(t3);
 
 		// T1 (10) + T2 (12) + T2 (12) + T3 (0) = 34
-		Assert.assertEquals(34d, registrationService
-				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
-						.asList(p1, p2, p3, p4))));
+		Assert.assertEquals(34d,
+				registrationService.calculateRegistrationPrice(new HashSet<Participant>(Arrays.asList(p1, p2, p3, p4))));
 
 		// T3 (0)
-		Assert.assertEquals(0d, registrationService
-				.calculateRegistrationPrice(new HashSet<Participant>(Arrays
-						.asList(p4))));
+		Assert.assertEquals(0d,
+				registrationService.calculateRegistrationPrice(new HashSet<Participant>(Arrays.asList(p4))));
 
 	}
 
@@ -103,18 +98,12 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		dao.saveOrUpdate(t3);
 
 		NewRegistration newRegistration = new NewRegistration()
-				.configureWithPaypalPayment(
-						e.getId(),
-						"subscriber@paypal-member.com",
-						new NewParticipant("Tarif eco1 and subscriber", t1
-								.getId())).addParticipant("Chef", t3.getId())
-				.addParticipant("Tarif eco2", t1.getId())
-				.addParticipant("Tarif normal1", t2.getId())
-				.addParticipant("Tarif normal2", t2.getId())
-				.addParticipant("Tarif eco3", t1.getId());
+				.configureWithPaypalPayment(e.getId(), "subscriber@paypal-member.com",
+						new NewParticipant("Tarif eco1 and subscriber", t1.getId())).addParticipant("Chef", t3.getId())
+				.addParticipant("Tarif eco2", t1.getId()).addParticipant("Tarif normal1", t2.getId())
+				.addParticipant("Tarif normal2", t2.getId()).addParticipant("Tarif eco3", t1.getId());
 
-		Registration registration = registrationService
-				.subscribe(newRegistration);
+		Registration registration = registrationService.subscribe(newRegistration);
 
 		// amount = 0 + 10 + 10 + 12 + 12 + 10 = 54
 		Assert.assertEquals(54d, registration.getPayment().getAmount());
@@ -125,13 +114,11 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		// check that payment is NOT validated
 		Assert.assertFalse(registration.getValidate());
 
-		Participant subscriberParticipant = registration
-				.getSubscriberParticipant();
+		Participant subscriberParticipant = registration.getSubscriberParticipant();
 		// check the subscriber participant
 		Assert.assertNotNull(subscriberParticipant);
 
-		Assert.assertEquals("Tarif eco1 and subscriber",
-				subscriberParticipant.getName());
+		Assert.assertEquals("Tarif eco1 and subscriber", subscriberParticipant.getName());
 	}
 
 	@Test

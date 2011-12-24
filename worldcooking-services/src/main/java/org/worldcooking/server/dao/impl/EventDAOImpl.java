@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.oupsasso.mishk.core.dao.GenericDao;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.event.Event;
 
@@ -13,7 +14,7 @@ import org.worldcooking.server.entity.event.Event;
  * {@link org.worldcooking.server.dao.impl.GenericHibernateDAOImpl} methods
  */
 @Repository
-public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
+public class EventDAOImpl extends GenericDao<Event, Long> {
 
 	/**
 	 * Method returning the event corresponding to the id parameter. <br/>
@@ -37,15 +38,12 @@ public class EventDAOImpl extends GenericHibernateDAOImpl<Event, Long> {
 
 	@SuppressWarnings("unchecked")
 	private SortedSet<Event> findAllFullEvents(Long id) {
-		String queryString = "from Event e"
-				+ " left join fetch e.availableTasks as t"
-				+ " left join fetch e.registrations as s"
-				+ " left join fetch s.participants as p";
+		String queryString = "from Event e" + " left join fetch e.availableTasks as t"
+				+ " left join fetch e.registrations as s" + " left join fetch s.participants as p";
 		List<Event> eList;
 		if (id != null) {
 			queryString += " where e.id=:eventId";
-			eList = getHibernateTemplate().findByNamedParam(queryString,
-					"eventId", id);
+			eList = getHibernateTemplate().findByNamedParam(queryString, "eventId", id);
 		} else {
 			eList = getHibernateTemplate().find(queryString);
 		}

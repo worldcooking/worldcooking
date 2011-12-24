@@ -2,6 +2,7 @@ package org.worldcooking.server.dao.impl;
 
 import java.util.List;
 
+import org.oupsasso.mishk.core.dao.GenericDao;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.event.Task;
 
@@ -10,7 +11,7 @@ import org.worldcooking.server.entity.event.Task;
  * {@link org.worldcooking.server.dao.impl.GenericHibernateDAOImpl} methods
  */
 @Repository
-public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
+public class TaskDAOImpl extends GenericDao<Task, Long> {
 	/**
 	 * Method returning the available tasks corresponding to the event id
 	 * parameter. <br/>
@@ -21,13 +22,10 @@ public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Task> getAvailableTasks(Long eventId) {
-		List<Task> tasks = getHibernateTemplate()
-				.findByNamedParam(
-						"from Task t"
-								+ " where t.event.id=:eventId"
-								+ " and t.nbMax > (select count(p)"
-								+ " from Participant p where p.task.id = t.id and p.registration.validate = true)"
-								+ " order by t.name", "eventId", eventId);
+		List<Task> tasks = getHibernateTemplate().findByNamedParam(
+				"from Task t" + " where t.event.id=:eventId" + " and t.nbMax > (select count(p)"
+						+ " from Participant p where p.task.id = t.id and p.registration.validate = true)"
+						+ " order by t.name", "eventId", eventId);
 		return tasks;
 	}
 
@@ -41,8 +39,7 @@ public class TaskDAOImpl extends GenericHibernateDAOImpl<Task, Long> {
 	@SuppressWarnings("unchecked")
 	public List<Task> findAllTasks(Long eventId) {
 		List<Task> tasks = getHibernateTemplate().findByNamedParam(
-				"from Task t" + " where t.event.id=:eventId"
-						+ " order by t.name", "eventId", eventId);
+				"from Task t" + " where t.event.id=:eventId" + " order by t.name", "eventId", eventId);
 		return tasks;
 	}
 }

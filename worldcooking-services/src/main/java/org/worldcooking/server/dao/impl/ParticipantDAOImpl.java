@@ -1,5 +1,6 @@
 package org.worldcooking.server.dao.impl;
 
+import org.oupsasso.mishk.core.dao.GenericDao;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.people.Participant;
 
@@ -8,7 +9,6 @@ import org.worldcooking.server.entity.people.Participant;
  * {@link org.worldcooking.server.dao.impl.GenericHibernateDAOImpl} methods
  */
 @Repository
-public class ParticipantDAOImpl extends
-		GenericHibernateDAOImpl<Participant, Long> {
+public class ParticipantDAOImpl extends GenericDao<Participant, Long> {
 
 }

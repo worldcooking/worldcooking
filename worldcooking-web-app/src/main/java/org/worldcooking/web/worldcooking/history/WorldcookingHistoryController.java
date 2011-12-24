@@ -5,11 +5,11 @@ package org.worldcooking.web.worldcooking.history;
 
 import javax.servlet.http.HttpSession;
 
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.web.worldcooking.history.model.WorldcookingHistory;
 import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryEntry;
 

@@ -1,5 +1,6 @@
 package org.worldcooking.web.worldcooking.registration.confirmation;
 
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.registration.RegistrationService;
 

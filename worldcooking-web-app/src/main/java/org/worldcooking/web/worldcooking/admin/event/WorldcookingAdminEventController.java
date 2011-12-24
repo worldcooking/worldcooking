@@ -9,6 +9,7 @@ import java.util.SortedSet;
 
 import javax.servlet.http.HttpSession;
 
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -22,7 +23,6 @@ import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.payment.PaymentMode;
 import org.worldcooking.server.entity.people.Participant;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.web.worldcooking.admin.event.model.WorldcookingAdminEventParticipant;

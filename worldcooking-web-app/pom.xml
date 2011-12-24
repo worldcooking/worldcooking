@@ -12,14 +12,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-jquery-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-jquery-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-jquery-ui-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-jquery-ui-taglib</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.oups-asso.mish-k.framework.core</groupId>
+			<artifactId>mish-k-framework-core-web</artifactId>
+		</dependency>
 		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -73,20 +76,20 @@
 			<artifactId>worldcooking-services</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-localization-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-localization-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-web-security-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-web-security-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-resources-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-resources-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.taglib</groupId>
-			<artifactId>mish-k-template-taglib</artifactId>
+			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
+			<artifactId>mish-k-framework-template-taglib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.dozer</groupId>

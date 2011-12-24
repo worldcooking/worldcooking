@@ -5,6 +5,7 @@ package org.worldcooking.web.worldcooking.admin.event.registration;
 
 import javax.servlet.http.HttpSession;
 
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
-import org.worldcooking.server.exception.EntityIdNotFountException;
 import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.web.worldcooking.admin.event.model.WorldcookingAdminEventParticipantRegistration;
 import org.worldcooking.web.worldcooking.history.WorldcookingHistoryController;
