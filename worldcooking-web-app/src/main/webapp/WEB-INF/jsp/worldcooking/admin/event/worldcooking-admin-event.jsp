@@ -11,7 +11,6 @@
 <title>Worldcooking '${event.name}' administration</title>
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<resources:require-css resourceURI="worldcooking/admin/event/worldcooking-admin-event.css"/>
 	<resources:require-script resourceURI="worldcooking/history/worldcooking-history.js" />
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event.js" />

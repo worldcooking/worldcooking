@@ -8,7 +8,6 @@
 <head>
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>	
 	<resources:require-script resourceURI="worldcooking/registration/form/worldcooking-registration-form.js" />
 	
 	<title>Worldcooking Peru - Registration</title>

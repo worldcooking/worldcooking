@@ -4,7 +4,6 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <html>
 <head>
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<title>Worldcooking Peru - Pre-registration confirmation</title>
 </head>
 <body>

@@ -5,7 +5,6 @@
 
 <html>
 <head>
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<resources:require-css resourceURI="worldcooking/admin/worldcooking-admin-main.css"/>
 	<title>Administration</title>
 </head>

@@ -10,7 +10,6 @@
 	<title>${event.name}</title>
 	<jquery:require-static-resources />
 	<jquery-ui:require-static-resources />
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<resources:require-css resourceURI="worldcooking/resume/worldcooking-resume.css"/>
 </head>
 <body>  

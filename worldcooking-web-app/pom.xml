@@ -150,7 +150,6 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-						<filtering>true</filtering>
 						<includes>
 							<include>**/*.xml</include>
 							<include>**/*.properties</include>
@@ -175,7 +174,6 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-						<filtering>true</filtering>
 						<includes>
 							<include>**/*.xml</include>
 							<include>**/*.properties</include>
@@ -200,7 +198,6 @@
 				<resources>
 					<resource>
 						<directory>src/main/resources</directory>
-						<filtering>true</filtering>
 						<includes>
 							<include>**/*.xml</include>
 							<include>**/*.properties</include>

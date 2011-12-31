@@ -6,7 +6,6 @@
 <html>
 <head>
 	<jquery:require-static-resources />
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<resources:require-script resourceURI="worldcooking/registration/confirmation/worldcooking-paypal-confirmation.js" />
 	<title>${event.name} - Paypal & CB payment</title>
 </head>

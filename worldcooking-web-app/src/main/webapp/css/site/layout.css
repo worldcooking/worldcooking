@@ -1,0 +1,35 @@
+#mishk-template-layout_header-center {
+	background: #C2DCD9;
+	background: -moz-linear-gradient(90deg, #C2DCD9, #E5EDEC);
+	background: -webkit-gradient(linear, left top, left bottom, from(#E5EDEC),
+		to(#C2DCD9) );
+	-moz-box-shadow: 0 0 5px #aaa;
+	-webkit-box-shadow: 0 0 5px #aaa;
+	height: 100px;
+	margin: 10px 0 -35px 0;
+	width: 100%;
+	text-align: center;
+}
+
+#header_title {
+	margin: 0 auto 0 auto;
+	text-align: center;
+	padding-top: 10px;
+}
+
+#header_title h1 {
+	height: 150px;
+	margin: 10px auto 0 25%;
+	background: url(../../img/peruflag-50px.png) no-repeat;
+	padding-top: 15;
+	background-size: 50;
+	text-align: left;
+	padding-left: 60px;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: bold;
+}
+
+.mishk-template-layout_body-area {
+	background: white;
+}

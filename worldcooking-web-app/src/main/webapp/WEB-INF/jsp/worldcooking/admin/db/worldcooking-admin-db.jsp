@@ -5,7 +5,6 @@
 <html>
 <head>
 	<title>Administration</title>
-	<resources:require-css resourceURI="worldcooking/worldcooking-main.css"/>
 	<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
 </head>
 <body>
