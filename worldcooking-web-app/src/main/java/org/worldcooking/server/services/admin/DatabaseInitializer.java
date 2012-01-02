@@ -2,21 +2,27 @@ package org.worldcooking.server.services.admin;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.worldcooking.server.services.EventService;
 
 public class DatabaseInitializer {
 
-	public static void main(String... args) {
-		ApplicationContext springContext = new ClassPathXmlApplicationContext(
-				"init-db-spring-dao-context.xml");
+	private static Logger logger = LoggerFactory.getLogger(DatabaseInitializer.class);
 
-		Map<String, EventService> services = springContext
-				.getBeansOfType(EventService.class);
+	public static void main(String... args) {
+		logger.info("Reseting database.");
+
+		ApplicationContext springContext = new ClassPathXmlApplicationContext("spring/init-db-spring-dao-context.xml");
+
+		Map<String, EventService> services = springContext.getBeansOfType(EventService.class);
 
 		EventService service = services.values().iterator().next();
 
 		service.resetDb();
+
+		logger.info("Database has been reset.");
 	}
 }
