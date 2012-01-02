@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,7 @@ import org.worldcooking.server.services.registration.RegistrationService;
 @Controller
 public class WorldcookingManualPaymentConfirmationController {
 
-	private final Logger logger = LoggerFactory
-			.getLogger(WorldcookingManualPaymentConfirmationController.class);
+	private final Logger logger = LoggerFactory.getLogger(WorldcookingManualPaymentConfirmationController.class);
 
 	@Autowired
 	private RegistrationService registrationService;
@@ -27,30 +27,26 @@ public class WorldcookingManualPaymentConfirmationController {
 	@Autowired
 	private EventService eventService;
 
-	@RequestMapping(value = "/registration/confirmation", method = RequestMethod.GET)
-	public String handleRequest(@RequestParam Long registrationId,
-			ModelMap model) throws EntityIdNotFountException {
+	@RequestMapping(value = "/event/{eventReference}/registration/confirmation", method = RequestMethod.GET)
+	public String handleRequest(@PathVariable String eventReference, @RequestParam Long registrationId, ModelMap model)
+			throws EntityIdNotFountException {
 		// TODO do not throw exception: manage errors!
 
 		// TODO manage errors
 		Assert.notNull(registrationId);
 
-		Event event = eventService.getLastEvent();
+		Event event = eventService.findByReference(eventReference);
 
 		if (event != null) {
 			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn(
-						"Attempt to access to closed registration of event '{}'.",
-						event.getName());
+				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
 				return "redirect:/";
 			}
 		}
 
-		Registration registration = registrationService
-				.findFullRegistrationById(registrationId);
+		Registration registration = registrationService.findFullRegistrationById(registrationId);
 
-		if (registration.getValidate() != null
-				&& registration.getValidate().booleanValue()) {
+		if (registration.getValidate() != null && registration.getValidate().booleanValue()) {
 			// registration already validated: redirect to welcome page
 			return "redirect:/";
 		}
@@ -58,8 +54,7 @@ public class WorldcookingManualPaymentConfirmationController {
 		model.addAttribute("event", registration.getEvent());
 
 		// calculate amount
-		Double paypalAmount = registrationService
-				.calculateRegistrationPrice(registration.getParticipants());
+		Double paypalAmount = registrationService.calculateRegistrationPrice(registration.getParticipants());
 
 		// TODO display pre-registration details and price to pay
 

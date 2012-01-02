@@ -23,6 +23,10 @@ public class WorldcookingResumeEvent {
 
 	private String name;
 
+	/** Reference of the event. */
+
+	private String reference;
+
 	/** General information / description. */
 	private String information;
 
@@ -113,8 +117,7 @@ public class WorldcookingResumeEvent {
 		this.waitingParticipants = waitingParticipants;
 	}
 
-	public void setValidatedParticipantsTask(
-			Set<WorldcookingResumeParticipantTask> validatedParticipantsTask) {
+	public void setValidatedParticipantsTask(Set<WorldcookingResumeParticipantTask> validatedParticipantsTask) {
 		this.validatedParticipantsTask = validatedParticipantsTask;
 	}
 
@@ -135,12 +138,10 @@ public class WorldcookingResumeEvent {
 		this.tasks.addAll(tasks);
 	}
 
-	private final class IgnoreCaseStringComparator implements
-			Comparator<String> {
+	private final class IgnoreCaseStringComparator implements Comparator<String> {
 		@Override
 		public int compare(String o1, String o2) {
-			return new CompareToBuilder().append(o1.toLowerCase(),
-					o2.toLowerCase()).toComparison();
+			return new CompareToBuilder().append(o1.toLowerCase(), o2.toLowerCase()).toComparison();
 		}
 	}
 
@@ -167,8 +168,7 @@ public class WorldcookingResumeEvent {
 
 	}
 
-	private static class ParticipantTaskComparator implements
-			Comparator<WorldcookingResumeParticipantTask> {
+	private static class ParticipantTaskComparator implements Comparator<WorldcookingResumeParticipantTask> {
 
 		private static ParticipantTaskComparator instance;
 
@@ -186,8 +186,7 @@ public class WorldcookingResumeEvent {
 		@Override
 		public int compare(WorldcookingResumeParticipantTask o1, WorldcookingResumeParticipantTask o2) {
 
-			return o1.getName().toLowerCase()
-					.compareTo(o2.getName().toLowerCase());
+			return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
 		}
 
 	}
@@ -198,6 +197,15 @@ public class WorldcookingResumeEvent {
 
 	public void setRegistrationClosed(Boolean registrationClosed) {
 		this.registrationClosed = registrationClosed;
+	}
+
+	@Mapping("reference")
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 
 }

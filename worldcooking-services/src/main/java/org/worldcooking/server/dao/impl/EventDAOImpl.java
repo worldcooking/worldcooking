@@ -38,8 +38,8 @@ public class EventDAOImpl extends GenericDao<Event, Long> {
 
 	@SuppressWarnings("unchecked")
 	private SortedSet<Event> findAllFullEvents(Long id) {
-		String queryString = "from Event e" + " left join fetch e.availableTasks as t"
-				+ " left join fetch e.registrations as s" + " left join fetch s.participants as p";
+
+		String queryString = "from Event e" + getFetchFullEventSubquery();
 		List<Event> eList;
 		if (id != null) {
 			queryString += " where e.id=:eventId";
@@ -59,9 +59,34 @@ public class EventDAOImpl extends GenericDao<Event, Long> {
 		});
 	}
 
+	private String getFetchFullEventSubquery() {
+		return " left join fetch e.availableTasks as t" + " left join fetch e.registrations as s"
+				+ " left join fetch s.participants as p";
+	}
+
 	public void resetDb() {
 		List<Event> allEvents = findAll();
 		getHibernateTemplate().deleteAll(allEvents);
+	}
+
+	public Event findFullLastEvent() {
+		@SuppressWarnings("unchecked")
+		List<Event> eList = getHibernateTemplate().find(
+				"from Event e" + getFetchFullEventSubquery() + " where e.dateTime = (select max(dateTime) from Event)");
+		if (eList != null && !eList.isEmpty()) {
+			return eList.iterator().next();
+		}
+		return null;
+	}
+
+	public Event findByReference(String reference) {
+		@SuppressWarnings("unchecked")
+		List<Event> eList = getHibernateTemplate().findByNamedParam("from Event where reference=:reference",
+				"reference", reference);
+		if (eList != null && !eList.isEmpty()) {
+			return eList.iterator().next();
+		}
+		return null;
 	}
 
 }

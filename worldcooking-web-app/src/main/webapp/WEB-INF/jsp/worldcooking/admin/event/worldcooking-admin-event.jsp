@@ -6,6 +6,7 @@
 <%@ taglib prefix="jquery-ui" uri="http://www.oups-asso.org/mish-k/tags/jquery-ui" %>
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="worldcooking-admin" tagdir="/WEB-INF/tags/worldcooking/admin/event"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <title>Worldcooking '${event.name}' administration</title>
@@ -21,9 +22,14 @@
 <body>
 
 <!-- AJAX URLS -->
-<input  id="updateTaskAjaxUrl" type="hidden" name="updateTaskUrl" value="<c:url value="/direct/admin/event/update/task"/>" />
-<input  id="showAdminValidatedRegistrationsAjaxUrl" type="hidden" name="showAdminValidatedRegistrationsAjaxUrl" value="${pageContext.request.contextPath}/direct/admin/event/validated/registrations?eventId=${event.id}" />
-<input  id="showAdminUnvalidatedRegistrationsAjaxUrl" type="hidden" name="showAdminUnvalidatedRegistrationsAjaxUrl" value="${pageContext.request.contextPath}/direct/admin/event/unvalidated/registrations?eventId=${event.id}" />
+<c:url var="updateTaskUrl" value="/direct/admin/event/${event.reference}/update/task"/>
+<input  id="updateTaskAjaxUrl" type="hidden" name="updateTaskUrl" value="${updateTaskUrl}" />
+
+<c:url var="showValidatedRegistrationsUrl" value="/direct/admin/event/${event.reference}/validated/registrations"/>
+<input  id="showAdminValidatedRegistrationsAjaxUrl" type="hidden" name="showAdminValidatedRegistrationsAjaxUrl" value="${showValidatedRegistrationsUrl}" />
+
+<c:url var="showUnvalidatedRegistrationsUrl" value="/direct/admin/event/${event.reference}/unvalidated/registrations"/>
+<input  id="showAdminUnvalidatedRegistrationsAjaxUrl" type="hidden" name="showAdminUnvalidatedRegistrationsAjaxUrl" value="${showUnvalidatedRegistrationsUrl}" />
 
 
 <!-- TODO dynamic auto update from server push (and add update to history: 'List of participants updated by Peter at 8:30 [open a chat with him]') -->

@@ -9,12 +9,17 @@
 
 	<template:chapter title="Admin" cssClass="menu">
 		<ul>
+			<c:url 	var="manageEventsUrl" value="/admin/event" />
+			<li><a href="${manageEventsUrl}">events</a></li>
+			
 			<sec:authorize access="hasRole('SUPER_ADMIN')">
 				<c:url 	var="manageUsersUrl" value="/admin/security/manage/users" />
 				<li><a href="${manageUsersUrl}">users</a></li>
+			
+				<c:url 	var="adminDbUrl" value="/admin/db" />
+				<li><a href="${adminDbUrl}">database</a></li>
+			
 			</sec:authorize>
-			<c:url 	var="manageEventsUrl" value="/admin" />
-			<li><a href="${manageEventsUrl}">events</a></li>
 		</ul>
 	</template:chapter>
 

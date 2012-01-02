@@ -11,12 +11,6 @@
 <template:chapter title="Reset database">
 	<form:form commandName="administrationResetDb">
 		<div class="admin">
-			<div class="admin_element">
-				<label for="pwd">* Password :</label>
-				<form:input id="pwd" path="password" />
-				<form:errors path="password" cssClass="error" lang="en" />
-			</div>
-			<br />
 			<br />
 			<div class="join_element">
 				<input type="submit" value="Reset Data Base" />

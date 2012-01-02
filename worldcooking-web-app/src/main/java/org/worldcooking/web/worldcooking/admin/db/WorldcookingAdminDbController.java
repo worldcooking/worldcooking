@@ -3,17 +3,12 @@
  */
 package org.worldcooking.web.worldcooking.admin.db;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.services.EventService;
-import org.worldcooking.web.worldcooking.admin.db.model.WorldcookingAdminDbResetDb;
 
 /**
  * @author MatthieuG
@@ -29,30 +24,16 @@ public class WorldcookingAdminDbController {
 	@RequestMapping(value = "/admin/db", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
 		ModelAndView modelAndView = new ModelAndView(JSP);
-		WorldcookingAdminDbResetDb resetDb = new WorldcookingAdminDbResetDb();
-
-		modelAndView.addObject("administrationResetDb", resetDb);
 
 		return modelAndView;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(
-			@Valid @ModelAttribute("administrationResetDb") WorldcookingAdminDbResetDb validate,
-			BindingResult result) throws Exception {
+	public String onSubmit() throws Exception {
+		// reset DB
+		eventService.resetDb();
 
-		if (result.hasErrors()) {
-
-			return JSP;
-		}
-
-		if ("supercoincoin".equals(validate.getPassword())) {
-			eventService.resetDb();
-			// redirect to main page
-			return "redirect:/";
-		}
-
-		return JSP;
-
+		// redirect to main page
+		return "redirect:/";
 	}
 }

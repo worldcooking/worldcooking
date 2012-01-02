@@ -1,5 +1,8 @@
 package org.worldcooking.server.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,17 +43,15 @@ public class EventService {
 		return eventDao.findById(id);
 	}
 
+	public Event findByReference(String reference) throws EntityIdNotFountException {
+		return eventDao.findByReference(reference);
+	}
+
 	/**
 	 * @return
 	 */
-	@Deprecated
 	public Event getLastEvent() {
-		Event lastEvent = null;
-		SortedSet<Event> allEvents = eventDao.findAllFullEvents();
-		if (allEvents != null && !allEvents.isEmpty()) {
-			lastEvent = allEvents.last();
-		}
-		return lastEvent;
+		return eventDao.findFullLastEvent();
 	}
 
 	/**
@@ -80,8 +81,9 @@ public class EventService {
 
 		// create worldcooking Peru
 		Event e = new Event();
-		e.setName("Worldcooking Peru");
-		e.setDescription("Up to 38 persons will share a peruvian meal in the restaurant La soupe au Caillou.<br>"
+		e.setReference("2011-01-Portugal");
+		e.setName("Worldcooking Portugal");
+		e.setDescription("Up to 38 persons will share a portuguese meal in the restaurant La soupe au Caillou.<br>"
 				+ "Our chef will be Nidia Torres.<br>"
 				+ "<br>"
 				+ "To participate in this event you must book and pay in advance.<br>"
@@ -90,6 +92,14 @@ public class EventService {
 				+ "This year we ask each person to help. When registering you have to choose a task from the following ones:<br>"
 				+ "- Cooking with Nidia from 4pm" + "<br>- Set the table" + "<br>- Doing the dishes"
 				+ "<br>- Cleaning the room<br>");
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		try {
+			e.setDateTime(df.parse("2011-01-20_19:00:00"));
+		} catch (ParseException ex) {
+			logger.error("Error while formatting date.", ex);
+		}
+
 		e.setMaxParticipants(36);
 		eventDao.saveOrUpdate(e);
 

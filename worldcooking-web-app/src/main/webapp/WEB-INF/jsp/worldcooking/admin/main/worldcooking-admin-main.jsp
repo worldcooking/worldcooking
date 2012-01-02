@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -13,14 +14,14 @@
 		<template:table>
 			<jsp:attribute name="header">
 				<th>name</th>
-				<th>description</th>
+				<th>date/time</th>
 			</jsp:attribute>
 			<jsp:attribute name="content">
 				<c:forEach items="${events}" var="event">
 					<tr>
-						<td><a href="${pageContext.request.contextPath}/admin/event?eventId=<c:out value="${event.id}"/>"><c:out
-									value="${event.name}" /></a></td>
-						<td>${event.description}</td>
+						<c:url var="eventAdminUrl" value="/admin/event/${event.reference}" />
+						<td><a href="${eventAdminUrl}"><c:out value="${event.name}" /></a></td>
+						<td><fmt:formatDate value="${event.dateTime}" pattern="MM/dd/yyyy HH:mm"/></td>
 					</tr>
 				</c:forEach>
 			</jsp:attribute>

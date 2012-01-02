@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ import org.worldcooking.server.services.EventService;
 import org.worldcooking.server.services.registration.RegistrationService;
 
 @Controller
-@RequestMapping(value = "/registration/confirmation/paypal")
+@RequestMapping(value = "/event/{eventReference}/registration/confirmation/paypal")
 public class WorldcookingPaypalConfirmationController {
 
 	private static final String JSP = "worldcooking/registration/confirmation/worldcooking-paypal-confirmation";
@@ -75,16 +76,14 @@ public class WorldcookingPaypalConfirmationController {
 	 * @throws Exception
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(@RequestParam Long registrationId,
-			ModelMap model) throws Exception {
+	public String initializeForm(@PathVariable String eventReference, @RequestParam Long registrationId, ModelMap model)
+			throws Exception {
 
-		Event event = eventService.getLastEvent();
+		Event event = eventService.findByReference(eventReference);
 
 		if (event != null) {
 			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn(
-						"Attempt to access to closed registration of event '{}'.",
-						event.getName());
+				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
 				return "redirect:/";
 			}
 		}
@@ -94,11 +93,9 @@ public class WorldcookingPaypalConfirmationController {
 		// TODO manage errors
 		Assert.notNull(registrationId);
 
-		Registration registration = registrationService
-				.findFullRegistrationById(registrationId);
+		Registration registration = registrationService.findFullRegistrationById(registrationId);
 
-		if (registration.getValidate() != null
-				&& registration.getValidate().booleanValue()) {
+		if (registration.getValidate() != null && registration.getValidate().booleanValue()) {
 			// registration already validated: redirect to welcome page
 			return "redirect:/";
 		}
@@ -106,8 +103,7 @@ public class WorldcookingPaypalConfirmationController {
 		model.addAttribute("event", registration.getEvent());
 
 		// calculate amount
-		Double paypalAmount = registrationService
-				.calculateRegistrationPrice(registration.getParticipants());
+		Double paypalAmount = registrationService.calculateRegistrationPrice(registration.getParticipants());
 
 		// Paypal form 'amount' field.
 		model.addAttribute("paypalAmount", paypalAmount);
@@ -175,8 +171,8 @@ public class WorldcookingPaypalConfirmationController {
 	}
 
 	private String buildAppUrl(HttpServletRequest request) {
-		return request.getScheme() + "://" + request.getServerName() + ":"
-				+ request.getServerPort() + request.getContextPath();
+		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
 	}
 
 	public EventService getEventService() {

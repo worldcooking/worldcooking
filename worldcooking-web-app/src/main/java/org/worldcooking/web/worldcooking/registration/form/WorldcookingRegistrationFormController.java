@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.oupsasso.mishk.security.entity.SecurityUser;
+import org.oupsasso.mishk.security.service.SecurityUserManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.worldcooking.server.entity.event.Event;
@@ -30,7 +33,7 @@ import org.worldcooking.server.services.registration.model.NewRegistrationPaymen
 import org.worldcooking.web.worldcooking.registration.form.model.WorldcookingRegistrationFormDetail;
 
 @Controller
-@RequestMapping(value = "/registration")
+@RequestMapping(value = "/event/{eventReference}/registration")
 public class WorldcookingRegistrationFormController {
 	private static final String PAYPAL_MODE_KEY = "paypal";
 	private static final String JSP = "worldcooking/registration/form/worldcooking-registration-form";
@@ -41,42 +44,48 @@ public class WorldcookingRegistrationFormController {
 	@Autowired
 	private EventService eventService;
 
+	@Autowired
+	private SecurityUserManagementService securityUserManagementService;
+
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(ModelMap model)
-			throws EntityIdNotFountException {
+	public String initializeForm(@PathVariable String eventReference, ModelMap model) throws EntityIdNotFountException {
 
 		WorldcookingRegistrationFormDetail registration = new WorldcookingRegistrationFormDetail();
 
-		Event lastEvent = eventService.getLastEvent();
+		Event lastEvent = eventService.findByReference(eventReference);
 
 		if (lastEvent != null) {
 			registration.setEventId(lastEvent.getId());
 
 			if (registrationService.isRegistrationClosed(lastEvent.getId())) {
-				logger.warn(
-						"Attempt to access to closed registration of event '{}'.",
-						lastEvent.getName());
+				logger.warn("Attempt to access to closed registration of event '{}'.", lastEvent.getName());
 				return "redirect:/";
 			}
 
 		}
 		registration.setAdditionalParticipantsTasks(Arrays.asList(0l, 0l));
 
+		SecurityUser user = securityUserManagementService.getCurrentUser();
+
+		registration.setSubscriberParticipantName(user.getNickname());
+		registration.setEmailAddress(user.getEmailAddress());
+
 		model.addAttribute("registration", registration);
+
 		return JSP;
 	}
 
 	@ModelAttribute("availableTasks")
-	public Map<Long, String> populateAvailableTasks() {
+	public Map<Long, String> populateAvailableTasks(@PathVariable String eventReference)
+			throws EntityIdNotFountException {
 
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
 
-		Event lastEvent = eventService.getLastEvent();
+		Event lastEvent = eventService.findByReference(eventReference);
 		if (lastEvent != null) {
-			List<Task> availableTasks = eventService
-					.getAvailableTasks(lastEvent.getId());
+			List<Task> availableTasks = eventService.getAvailableTasks(lastEvent.getId());
 
 			for (Task t : availableTasks) {
 				availableTasksIdName.put(t.getId(), t.getName());
@@ -91,39 +100,29 @@ public class WorldcookingRegistrationFormController {
 		Map<String, String> availablePaymentModes = new LinkedHashMap<String, String>();
 
 		availablePaymentModes.put(PAYPAL_MODE_KEY, "Paypal or CB");
-		availablePaymentModes.put("manual-blevine", "Benjamin Levine");
 		availablePaymentModes.put("manual-mgaudet", "Matthieu Gaudet");
-		availablePaymentModes.put("manual-ngruyer", "Nicolas Gruyer");
-		availablePaymentModes.put("manual-ntoublanc", "Nicolas Toublanc");
-		availablePaymentModes.put("manual-ntorres", "Nidia Torres");
-		availablePaymentModes.put("manual-fbouvet", "Fred Bouvet");
 		return availablePaymentModes;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(
-			@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
+	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
 			BindingResult result) throws Exception {
 
 		Event event = eventService.findById(registrationModel.getEventId());
 
 		if (event != null) {
 			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn(
-						"Attempt to access to closed registration of event '{}'.",
-						event.getName());
+				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
 				return "redirect:/";
 			}
 		}
 
 		// check parameters (TODO manage errors)
 		// TODO add a custom constraint (using group constraints?)
-		int participantsNb = registrationModel.getAdditionalParticipantsNames()
-				.size();
+		int participantsNb = registrationModel.getAdditionalParticipantsNames().size();
 		int tasksNb = registrationModel.getAdditionalParticipantsTasks().size();
-		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks ("
-				+ tasksNb + ") should be as large as participants names ("
-				+ participantsNb + ").");
+		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks (" + tasksNb
+				+ ") should be as large as participants names (" + participantsNb + ").");
 
 		if (result.hasErrors()) {
 
@@ -134,16 +133,15 @@ public class WorldcookingRegistrationFormController {
 		NewRegistration newRegistration = createNewRegistration(registrationModel);
 
 		// persiste new registration
-		Registration registration = registrationService
-				.subscribe(newRegistration);
+		Registration registration = registrationService.subscribe(newRegistration);
 
 		String returnView;
 		if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {
 			// redirect to paypal
-			returnView = "redirect:/registration/confirmation/paypal?registrationId="
-					+ registration.getId();
+			returnView = "redirect:/event/" + event.getReference()
+					+ "/registration/confirmation/paypal?registrationId=" + registration.getId();
 		} else {
-			returnView = "redirect:/registration/confirmation?registrationId="
+			returnView = "redirect:/event/" + event.getReference() + "/registration/confirmation?registrationId="
 					+ registration.getId();
 		}
 		// redirect to main page
@@ -156,53 +154,39 @@ public class WorldcookingRegistrationFormController {
 	 * @param registration
 	 * @throws EntityIdNotFountException
 	 */
-	private NewRegistration createNewRegistration(
-			WorldcookingRegistrationFormDetail registration)
+	private NewRegistration createNewRegistration(WorldcookingRegistrationFormDetail registration)
 			throws EntityIdNotFountException {
 		// create registration
 		NewRegistration newRegistration = new NewRegistration();
 		Long eventId = registration.getEventId();
 		String subscriberEmailAddress = registration.getEmailAddress();
 
-		Iterator<Long> participantsTasksIt = registration
-				.getAdditionalParticipantsTasks().iterator();
+		Iterator<Long> participantsTasksIt = registration.getAdditionalParticipantsTasks().iterator();
 		// add additional participants
-		for (String participantName : registration
-				.getAdditionalParticipantsNames()) {
+		for (String participantName : registration.getAdditionalParticipantsNames()) {
 			if (participantName != null) {
 				participantName = participantName.trim();
 				if (!participantName.isEmpty()) {
-					newRegistration.addParticipant(participantName,
-							participantsTasksIt.next());
+					newRegistration.addParticipant(participantName, participantsTasksIt.next());
 				}
 			}
 		}
-		NewParticipant subscriberParticipant = new NewParticipant(
-				registration.getSubscriberParticipantName(),
+		NewParticipant subscriberParticipant = new NewParticipant(registration.getSubscriberParticipantName(),
 				registration.getSubscriberParticipantTask());
 		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
 			// paypal
 
-			newRegistration.configureWithPaypalPayment(eventId,
-					subscriberEmailAddress, subscriberParticipant);
+			newRegistration.configureWithPaypalPayment(eventId, subscriberEmailAddress, subscriberParticipant);
 		} else {
 			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
 
-			String paymentTarget = availablePaymentModes.get(registration
-					.getPaymentMode());
+			String paymentTarget = availablePaymentModes.get(registration.getPaymentMode());
 			// TODO meilleure gestion des erreurs
 			Assert.notNull(paymentTarget);
-			newRegistration.configureWithManualPayment(eventId,
-					subscriberEmailAddress, paymentTarget,
+			newRegistration.configureWithManualPayment(eventId, subscriberEmailAddress, paymentTarget,
 					subscriberParticipant);
 		}
 
 		return newRegistration;
 	}
-
-	// http://java.dzone.com/articles/converting-spring
-	// http://www.objis.com/formation-java/tutoriel-spring-formulaires-spring-mvc.html
-	// http://static.springsource.org/spring/docs/3.0.3.RELEASE/spring-framework-reference/html/view.html#view-jsp-formtaglib
-
-	// http://www.mkyong.com/spring-mvc/spring-3-mvc-and-jsr303-valid-example/
 }

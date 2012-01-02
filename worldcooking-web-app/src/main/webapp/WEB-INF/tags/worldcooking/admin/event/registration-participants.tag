@@ -60,19 +60,22 @@
 					<td rowspan="${rowspan}">
 						<c:if test="${validatedRegistrations}">
 							<%-- validated registration: actions is UNVALIDATE --%>
-							<form action="${pageContext.request.contextPath}/direct/admin/event/unvalidate/registration">
+							<c:url var="unvalidateRegistrationUrl" value="/direct/admin/event/${event.reference}/unvalidate/registration" />
+							<form action="${unvalidateRegistrationUrl}">
 								<input type="hidden" class="registrationId" name="registrationId" value="${registration.id}" />
 								<input type="submit" value="unvalidate" class="unvalidateButton" />
 							</form>
 						</c:if>
 						<c:if test="${not validatedRegistrations}">
 							<%--not validated registration: actions are VALIDATE and REMOVE --%>
-							<form action="${pageContext.request.contextPath}/direct/admin/event/validate/registration">
+							<c:url var="validateRegistrationUrl" value="/direct/admin/event/${event.reference}/validate/registration" />
+							<form action="${validateRegistrationUrl}">
 								<input type="hidden" class="registrationId" name="registrationId" value="${registration.id}" />
 								<input type="submit" value="validate" class="validateButton" />
 							</form>
 							<br />
-							<form action="${pageContext.request.contextPath}/admin/event/remove/registration">
+							<c:url var="removeRegistrationUrl" value="/admin/event/${event.reference}/remove/registration" />
+							<form action="${removeRegistrationUrl}">
 								<input type="hidden" class="registrationId" name="registrationId" value="${registration.id}" />
 								<input type="submit" value="remove" class="removeButton" />
 							</form>

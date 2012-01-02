@@ -21,7 +21,7 @@ import org.worldcooking.server.services.EventService;
 @Controller
 public class WorldcookingAdminMainController {
 
-	private static final String URL = "/admin";
+	private static final String URL = "/admin/event";
 	private static final String JSP = "worldcooking/admin/main/worldcooking-admin-main";
 	@Autowired
 	private EventService eventService;
@@ -36,11 +36,6 @@ public class WorldcookingAdminMainController {
 	@ModelAttribute("events")
 	public SortedSet<Event> populateEvents() {
 		SortedSet<Event> events = eventService.findAllFullEvents();
-		for (Event event : events) {
-			// TODO better split in javascript depending of available space
-			event.setDescription(event.getDescription().substring(0, 150)
-					+ "...");
-		}
 		return events;
 	}
 }

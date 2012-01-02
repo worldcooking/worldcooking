@@ -7,5 +7,5 @@
 
 	<context:property-placeholder location="init-db-dao.properties" />
 
-	<import resource="classpath:spring-dao-base-context.xml" />
+	<import resource="classpath:/spring/spring-dao-base-context.xml" />
 </beans>

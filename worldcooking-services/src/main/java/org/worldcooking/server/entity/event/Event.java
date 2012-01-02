@@ -1,5 +1,6 @@
 package org.worldcooking.server.entity.event;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,10 +33,22 @@ public class Event {
 	private Long id;
 
 	/**
+	 * Unique reference.
+	 */
+	@Column(unique = true, nullable = false)
+	private String reference;
+
+	/**
 	 * Event name use to identify the event for the users.
 	 */
 	@Column
 	private String name;
+
+	/**
+	 * Date and time of event.
+	 */
+	@Column
+	private Date dateTime;
 
 	/**
 	 * Text description of the event. Can contain html tags.
@@ -128,4 +141,19 @@ public class Event {
 		this.maxParticipants = maxParticipants;
 	}
 
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
 }

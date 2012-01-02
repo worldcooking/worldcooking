@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ public class WorldcookingAdminEventRegistrationUnvalidationController {
 	/**
 	 * JSP URL
 	 */
-	private static final String URL = "/admin/event/unvalidate/registration";
+	private static final String URL = "/admin/event/{eventReference}/unvalidate/registration";
 
 	/**
 	 * AJAX URL ("/direct" = "no SiteMesh decoration", @see decorators.xml)
@@ -37,7 +38,8 @@ public class WorldcookingAdminEventRegistrationUnvalidationController {
 
 	@RequestMapping(value = AJAX_URL)
 	public @ResponseBody
-	String handleAjaxRequest(HttpSession session, @RequestParam Long registrationId) throws EntityIdNotFountException {
+	String handleAjaxRequest(HttpSession session, @PathVariable String eventReference, @RequestParam Long registrationId)
+			throws EntityIdNotFountException {
 		Registration s = registrationService.unvalidatePayment(registrationId);
 
 		// TODO manage errors on client side
@@ -47,11 +49,12 @@ public class WorldcookingAdminEventRegistrationUnvalidationController {
 	}
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
-	public String handleRequest(@RequestParam Long registrationId) throws EntityIdNotFountException {
+	public String handleRequest(@PathVariable String eventReference, @RequestParam Long registrationId)
+			throws EntityIdNotFountException {
 
 		Registration s = registrationService.unvalidatePayment(registrationId);
 
-		return "redirect:/admin/event?eventId=" + s.getEvent().getId();
+		return "redirect:/admin/event/" + s.getEvent().getReference();
 	}
 
 }

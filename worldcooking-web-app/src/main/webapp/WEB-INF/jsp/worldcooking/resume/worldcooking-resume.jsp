@@ -31,12 +31,16 @@
 		<br/> To pay you can :
 		<ul>
 			<li>use paypal or CB: in this way the registration is immediate.</li>
-			<li>pay directly to Matthieu, Nidia, Ben, Nicolas, Fred or Toub if you
-		have the opportunity to see one of them very soon. Your registration
-		will be validated only when you give them the money.</li>
+			<li>pay directly to Matthieu if you have the opportunity to see him very soon. Your registration
+				will be validated only when you give them the money.</li>
 		</ul>
 		<br/><br/>
-		<center><input type="button" value="JOIN WORLDCOOKING PERU!" class="join" OnClick="window.location.href='registration'"/></center>
+		<center>
+			<c:url var="joinEventUrl" value="/event/${event.reference}/registration"/>
+			<form action="${joinEventUrl}">
+				<input type="submit" value="JOIN ${event.name}!" class="join"/>
+			</form>
+		</center>
 		<br/> 
 		</p>
 	</template:chapter>
@@ -55,12 +59,13 @@
 		</div>
 		<div class="information">
 			<h3>Place :</h3>
+			<c:url var="iconUrl" value="/img/restaurant-30px.png" />
 			<loc:map mapContainerId="locationMap" 
 				placeName="La soupe au Caillou" 
 				addressLine1="15 Rue Charles Gounod" 
 				addressLine2="31200 Toulouse"
 						latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
-						flag="${pageContext.request.contextPath}/img/restaurant-30px.png" />
+						flag="${iconUrl}" />
 		</div>
 </template:chapter>
 <template:chapter title="Participants confirmed">

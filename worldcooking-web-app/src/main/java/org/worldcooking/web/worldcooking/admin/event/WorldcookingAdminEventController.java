@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +40,7 @@ import org.worldcooking.web.worldcooking.history.model.WorldcookingHistory;
 @Controller
 public class WorldcookingAdminEventController {
 
-	private static final String URL = "/admin/event";
+	private static final String URL = "/admin/event/{eventReference}";
 	private static final String JSP = "worldcooking/admin/event/worldcooking-admin-event";
 	@Autowired
 	private EventService eventService;
@@ -51,18 +51,19 @@ public class WorldcookingAdminEventController {
 	/**
 	 * AJAX URL ("/direct" = "no SiteMesh decoration", @see decorators.xml)
 	 */
-	private static final String AJAX_URL_VALIDATED_REGISTRATION = "/direct/admin/event/validated/registrations";
+	private static final String AJAX_URL_VALIDATED_REGISTRATION = "/direct/admin/event/{eventReference}/validated/registrations";
 
 	@RequestMapping(value = AJAX_URL_VALIDATED_REGISTRATION)
-	public ModelAndView showValidatedRegistrationsAjax(@RequestParam Long eventId) throws EntityIdNotFountException {
+	public ModelAndView showValidatedRegistrationsAjax(@PathVariable String eventReference)
+			throws EntityIdNotFountException {
 
 		ModelAndView modelAndView = new ModelAndView("worldcooking/admin/event/worldcooking-admin-event-registrations");
 
-		Event event = eventService.findById(eventId);
+		Event event = eventService.findByReference(eventReference);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> registrations = registrationService.findValidatedRegistrations(eventId);
+		SortedSet<Registration> registrations = registrationService.findValidatedRegistrations(event.getId());
 
 		modelAndView.addObject("registrations", registrationsToModel(registrations));
 
@@ -72,7 +73,7 @@ public class WorldcookingAdminEventController {
 	/**
 	 * AJAX URL ("/direct" = "no SiteMesh decoration", @see decorators.xml)
 	 */
-	private static final String AJAX_URL_UNVALIDATED_REGISTRATION = "/direct/admin/event/unvalidated/registrations";
+	private static final String AJAX_URL_UNVALIDATED_REGISTRATION = "/direct/admin/event/{eventReference}/unvalidated/registrations";
 
 	@RequestMapping(value = AJAX_URL_UNVALIDATED_REGISTRATION)
 	public ModelAndView showUnvalidatedRegistrationsAjax(@RequestParam Long eventId) throws EntityIdNotFountException {
@@ -91,21 +92,19 @@ public class WorldcookingAdminEventController {
 	}
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
-	public ModelAndView handleRequest(@RequestParam Long eventId) throws EntityIdNotFountException {
+	public ModelAndView handleRequest(@PathVariable String eventReference) throws EntityIdNotFountException {
 		ModelAndView modelAndView = new ModelAndView(JSP);
 
-		// TODO manage errors
-		Assert.notNull(eventId);
-
-		Event event = eventService.findById(eventId);
+		Event event = eventService.findByReference(eventReference);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> nonValidatedRegistrations = registrationService.findNonValidatedRegistrations(eventId);
+		SortedSet<Registration> nonValidatedRegistrations = registrationService.findNonValidatedRegistrations(event
+				.getId());
 
 		modelAndView.addObject("nonValidatedRegistrations", registrationsToModel(nonValidatedRegistrations));
 
-		SortedSet<Registration> validatedRegistrations = registrationService.findValidatedRegistrations(eventId);
+		SortedSet<Registration> validatedRegistrations = registrationService.findValidatedRegistrations(event.getId());
 
 		modelAndView.addObject("validatedRegistrations", registrationsToModel(validatedRegistrations));
 
@@ -117,10 +116,10 @@ public class WorldcookingAdminEventController {
 	}
 
 	@ModelAttribute("tasks")
-	public List<Task> populateTasks() {
+	public List<Task> populateTasks(@PathVariable String eventReference) throws EntityIdNotFountException {
 
-		Event lastEvent = eventService.getLastEvent();
-		List<Task> tasks = eventService.findAllTasks(lastEvent.getId());
+		Event event = eventService.findByReference(eventReference);
+		List<Task> tasks = eventService.findAllTasks(event.getId());
 
 		return tasks;
 	}

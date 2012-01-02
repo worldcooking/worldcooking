@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public class WorldcookingAdminEventUpdateTaskController {
 	/**
 	 * JSP URL
 	 */
-	private static final String URL = "/admin/event/update/task";
+	private static final String URL = "/admin/event/{eventReference}/update/task";
 
 	/**
 	 * AJAX URL ("/direct" = "no SiteMesh decoration", @see decorators.xml)
@@ -42,30 +43,26 @@ public class WorldcookingAdminEventUpdateTaskController {
 	@RequestMapping(value = AJAX_URL)
 	public @ResponseBody
 	WorldcookingAdminEventParticipantRegistration handleAjaxRequest(HttpSession session,
-			@RequestParam Long participantId, @RequestParam Long taskId)
+			@PathVariable String eventReference, @RequestParam Long participantId, @RequestParam Long taskId)
 			throws EntityIdNotFountException {
 
-		Participant participant = updateTask(session, participantId, taskId);
+		Participant participant = updateTask(session, eventReference, participantId, taskId);
 
 		WorldcookingAdminEventParticipantRegistration participantRegistrationModel = new WorldcookingAdminEventParticipantRegistration();
 		participantRegistrationModel.setTaskId(participant.getTask().getId());
-		Double amount = registrationService
-				.calculateRegistrationPrice(participant.getRegistration()
-						.getId());
+		Double amount = registrationService.calculateRegistrationPrice(participant.getRegistration().getId());
 		participantRegistrationModel.setNewAmount(amount);
 
 		return participantRegistrationModel;
 	}
 
 	@RequestMapping(value = URL)
-	public String handleRequest(HttpSession session,
-			@RequestParam Long participantId, @RequestParam Long taskId)
-			throws EntityIdNotFountException {
+	public String handleRequest(HttpSession session, @PathVariable String eventReference,
+			@RequestParam Long participantId, @RequestParam Long taskId) throws EntityIdNotFountException {
 
-		Participant participant = updateTask(session, participantId, taskId);
+		Participant participant = updateTask(session, eventReference, participantId, taskId);
 
-		return "redirect:/admin/event?eventId="
-				+ participant.getRegistration().getEvent().getId();
+		return "redirect:/admin/event/" + participant.getRegistration().getEvent().getReference();
 	}
 
 	/**
@@ -77,28 +74,22 @@ public class WorldcookingAdminEventUpdateTaskController {
 	 * @return
 	 * @throws EntityIdNotFountException
 	 */
-	private Participant updateTask(HttpSession session, Long participantId,
-			Long taskId) throws EntityIdNotFountException {
-		Task previousTask = registrationService.updateTask(participantId,
-				taskId);
+	private Participant updateTask(HttpSession session, String eventReference, Long participantId, Long taskId)
+			throws EntityIdNotFountException {
+		Task previousTask = registrationService.updateTask(participantId, taskId);
 
-		Participant participant = registrationService
-				.findParticipantById(participantId);
+		Participant participant = registrationService.findParticipantById(participantId);
 
 		// TODO dynamic undo link
-		String undoLink = "/worldcooking-web-app/admin/event/update/task?participantId="
+		String undoLink = "/worldcooking-web-app/admin/event/" + eventReference + "/update/task?participantId="
 				+ participantId + "&taskId=" + previousTask.getId();
 
 		WorldcookingHistoryEntry historyEntry = new WorldcookingHistoryEntry(undoLink)
 				.addMessageFragment("Updated task from '")
-				.addMessageFragment(previousTask.getName(),
-						FragmentType.IMPORTANT)
-				.addMessageFragment(" ' to '")
-				.addMessageFragment(participant.getTask().getName(),
-						FragmentType.IMPORTANT)
+				.addMessageFragment(previousTask.getName(), FragmentType.IMPORTANT).addMessageFragment(" ' to '")
+				.addMessageFragment(participant.getTask().getName(), FragmentType.IMPORTANT)
 				.addMessageFragment("' for participant '")
-				.addMessageFragment(participant.getName(),
-						FragmentType.IMPORTANT).addMessageFragment("'.");
+				.addMessageFragment(participant.getName(), FragmentType.IMPORTANT).addMessageFragment("'.");
 
 		WorldcookingHistoryController.addToHistory(session, historyEntry);
 		return participant;
