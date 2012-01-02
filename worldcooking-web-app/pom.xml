@@ -285,7 +285,7 @@
 						<executions>
 							<execution>
 								<id>resetDatabase</id>
-								<phase>package</phase>
+								<phase>compile</phase>
 								<goals>
 									<goal>java</goal>
 								</goals>
@@ -293,7 +293,6 @@
 						</executions>
 						<configuration>
 							<mainClass>org.worldcooking.server.services.admin.DatabaseInitializer</mainClass>
-						<classpathScope>compile</classpathScope>
 						</configuration>
 					</plugin>
 				</plugins>

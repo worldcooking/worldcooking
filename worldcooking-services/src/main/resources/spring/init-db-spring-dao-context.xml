@@ -5,8 +5,16 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<context:property-placeholder location="config/dao.properties" />
-	<context:property-placeholder location="config/init-db-dao.properties" />
+	<context:property-placeholder properties-ref="properties" />
 
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:config/init-db-dao.properties</value>
+				<value>classpath:config/dao.properties</value>
+			</list>
+		</property>
+	</bean>
+	
 	<import resource="classpath:/spring/spring-dao-base-context.xml" />
 </beans>
