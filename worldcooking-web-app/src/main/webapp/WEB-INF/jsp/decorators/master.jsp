@@ -1,5 +1,5 @@
 <%@page
-	import="org.oupsasso.mishk.web.security.authentication.MishkUserHolder"%>
+	import="org.oupsasso.mishk.security.authentication.MishkUserHolder"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="decorator"
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
