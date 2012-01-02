@@ -69,9 +69,10 @@ public class WorldcookingRegistrationFormController {
 
 		SecurityUser user = securityUserManagementService.getCurrentUser();
 
-		registration.setSubscriberParticipantName(user.getNickname());
-		registration.setEmailAddress(user.getEmailAddress());
-
+		if (user != null) {
+			registration.setSubscriberParticipantName(user.getNickname());
+			registration.setEmailAddress(user.getEmailAddress());
+		}
 		model.addAttribute("registration", registration);
 
 		return JSP;
