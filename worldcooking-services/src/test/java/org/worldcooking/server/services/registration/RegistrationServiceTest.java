@@ -74,6 +74,7 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		// test initialization
 		Event e = new Event();
 		e.setName("Event 1");
+		e.setReference("e1");
 		dao.saveOrUpdate(e);
 
 		Task t1 = new Task();
