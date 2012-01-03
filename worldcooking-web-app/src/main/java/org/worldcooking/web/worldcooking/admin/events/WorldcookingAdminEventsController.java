@@ -1,8 +1,9 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking.admin.main;
+package org.worldcooking.web.worldcooking.admin.events;
 
+import java.util.List;
 import java.util.SortedSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.services.EventService;
+import org.worldcooking.web.worldcooking.admin.events.model.EventToEdit;
+import org.worldcooking.web.worldcooking.admin.events.model.transform.EventToViewModelTransformer;
 
 /**
  * @author MatthieuG
  * 
  */
 @Controller
-public class WorldcookingAdminMainController {
+public class WorldcookingAdminEventsController {
 
-	private static final String URL = "/admin/event";
-	private static final String JSP = "worldcooking/admin/main/worldcooking-admin-main";
+	private static final String URL = "/admin/events";
+	private static final String JSP = "worldcooking/admin/events/worldcooking-admin-events";
 	@Autowired
 	private EventService eventService;
+
+	@Autowired
+	private EventToViewModelTransformer eventTransformer;
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
@@ -34,8 +40,10 @@ public class WorldcookingAdminMainController {
 	}
 
 	@ModelAttribute("events")
-	public SortedSet<Event> populateEvents() {
+	public List<EventToEdit> populateEvents() {
 		SortedSet<Event> events = eventService.findAllFullEvents();
-		return events;
+
+		return eventTransformer.transform(events);
+
 	}
 }

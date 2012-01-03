@@ -44,7 +44,7 @@ public class RegistrationService {
 
 	public boolean isRegistrationClosed(Long eventId) throws EntityIdNotFountException {
 		Event e = eventDao.findById(eventId);
-		Integer maxParticipantsNb = e.getMaxParticipants();
+		Long maxParticipantsNb = e.getMaxParticipants();
 
 		Long validParticipantsNb = registrationDAOImpl.countValidatedParticipants(eventId);
 
@@ -252,5 +252,13 @@ public class RegistrationService {
 		taskDao.saveOrUpdate(participant);
 
 		return previousTask;
+	}
+
+	public Long countValidatedParticipants(Long eventId) {
+		return registrationDAOImpl.countValidatedParticipants(eventId);
+	}
+
+	public Long countNotValidatedParticipants(Long eventId) {
+		return registrationDAOImpl.countNotValidatedParticipants(eventId);
 	}
 }

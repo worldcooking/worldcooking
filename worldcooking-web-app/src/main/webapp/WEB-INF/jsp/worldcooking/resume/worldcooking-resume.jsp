@@ -46,7 +46,19 @@
 	</template:chapter>
 </c:if>
 <template:chapter title="Informations">
-		<p>${event.information}</p>
+		<p>Up to 38 persons will share a portuguese meal in the restaurant La soupe au Caillou.<br>
+			Our chef will be Nidia Torres.<br>
+			<br>
+			To participate in this event you must book and pay in advance.<br>
+			The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.
+			<br>
+			<br>
+			This year we ask each person to help. When registering you have to choose a task from the following ones:
+			<br>- Cooking with Nidia from 4pm
+			<br>- Set the table
+			<br>- Doing the dishes
+			<br>- Cleaning the room<br>
+		</p>
 		<div class="information">
 			<h3>Menu :</h3>
 			- Causa Rellena<br /> - Lomo Saltado<br /> - Mazamorra Morada<br />

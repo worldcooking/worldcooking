@@ -9,12 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.worldcooking.server.entity.people.Participant;
+import org.worldcooking.server.entity.place.Place;
 
 /**
  * Describes an event.
@@ -31,6 +33,39 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+
+	public enum RegistrationStatus {
+		/**
+		 * Event not visible to public.
+		 */
+		HIDDEN,
+		/**
+		 * Event visible to public, but registration still not open.
+		 */
+		PLANNED,
+		/**
+		 * Event open for registration.
+		 */
+		OPEN,
+		/**
+		 * Registration closed.
+		 */
+		CLOSED;
+	}
+
+	/**
+	 * Registration status (HIDDEN, PLANNED, OPEN, CLOSED).
+	 */
+	@Column(nullable = false)
+	private RegistrationStatus registrationStatus = RegistrationStatus.HIDDEN;
+
+	public RegistrationStatus getRegistrationStatus() {
+		return registrationStatus;
+	}
+
+	public void setRegistrationStatus(RegistrationStatus registrationStatus) {
+		this.registrationStatus = registrationStatus;
+	}
 
 	/**
 	 * Unique reference.
@@ -49,12 +84,6 @@ public class Event {
 	 */
 	@Column
 	private Date dateTime;
-
-	/**
-	 * Text description of the event. Can contain html tags.
-	 */
-	@Column(length = 10000)
-	private String description;
 
 	/**
 	 * List of all the action of registration done by users. Can contain
@@ -76,12 +105,14 @@ public class Event {
 	@OrderBy(value = "name")
 	private Set<Task> availableTasks = new HashSet<Task>();
 
+	@ManyToOne
+	private Place place;
+
 	/**
 	 * Maximum of participants validated for this event.
 	 */
 	@Column
-	// TODO make it Long!
-	private Integer maxParticipants;
+	private Long maxParticipants;
 
 	public Long getId() {
 		return id;
@@ -97,14 +128,6 @@ public class Event {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public Set<Registration> getRegistrations() {
@@ -133,11 +156,11 @@ public class Event {
 		task.setEvent(this);
 	}
 
-	public Integer getMaxParticipants() {
+	public Long getMaxParticipants() {
 		return maxParticipants;
 	}
 
-	public void setMaxParticipants(Integer maxParticipants) {
+	public void setMaxParticipants(Long maxParticipants) {
 		this.maxParticipants = maxParticipants;
 	}
 
@@ -155,5 +178,13 @@ public class Event {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public Place getPlace() {
+		return place;
+	}
+
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 }

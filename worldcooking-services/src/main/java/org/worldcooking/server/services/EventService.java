@@ -16,9 +16,12 @@ import org.springframework.stereotype.Repository;
 import org.worldcooking.server.dao.impl.EventDAOImpl;
 import org.worldcooking.server.dao.impl.TaskDAOImpl;
 import org.worldcooking.server.entity.event.Event;
+import org.worldcooking.server.entity.event.Event.RegistrationStatus;
 import org.worldcooking.server.entity.event.Registration;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
+import org.worldcooking.server.entity.place.Direction;
+import org.worldcooking.server.entity.place.Place;
 
 @Repository
 public class EventService {
@@ -83,15 +86,6 @@ public class EventService {
 		Event e = new Event();
 		e.setReference("2011-01-Portugal");
 		e.setName("Worldcooking Portugal");
-		e.setDescription("Up to 38 persons will share a portuguese meal in the restaurant La soupe au Caillou.<br>"
-				+ "Our chef will be Nidia Torres.<br>"
-				+ "<br>"
-				+ "To participate in this event you must book and pay in advance.<br>"
-				+ "The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.<br>"
-				+ "<br>"
-				+ "This year we ask each person to help. When registering you have to choose a task from the following ones:<br>"
-				+ "- Cooking with Nidia from 4pm" + "<br>- Set the table" + "<br>- Doing the dishes"
-				+ "<br>- Cleaning the room<br>");
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		try {
@@ -99,8 +93,32 @@ public class EventService {
 		} catch (ParseException ex) {
 			logger.error("Error while formatting date.", ex);
 		}
+		e.setRegistrationStatus(RegistrationStatus.OPEN);
 
-		e.setMaxParticipants(36);
+		Place place = new Place();
+		place.setName("La soupe au Caillou");
+
+		Direction direction = new Direction();
+
+		List<String> addresslines = direction.getAddresslines();
+		addresslines.add("15 Rue Charles Gounod");
+
+		direction.setPostalCode("31200");
+		direction.setCity("Toulouse");
+		direction.setCountry("France");
+
+		direction.setLatitude(43.61368640000001d);
+		direction.setLongitude(1.4242076000000452d);
+
+		eventDao.saveOrUpdate(direction);
+
+		place.setDirection(direction);
+
+		eventDao.saveOrUpdate(place);
+
+		e.setPlace(place);
+
+		e.setMaxParticipants(36l);
 		eventDao.saveOrUpdate(e);
 
 		Task t1 = new Task();

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.worldcooking.server.entity.event.Event;
 import org.worldcooking.server.entity.event.Registration;
@@ -76,15 +75,16 @@ public class WorldcookingAdminEventController {
 	private static final String AJAX_URL_UNVALIDATED_REGISTRATION = "/direct/admin/event/{eventReference}/unvalidated/registrations";
 
 	@RequestMapping(value = AJAX_URL_UNVALIDATED_REGISTRATION)
-	public ModelAndView showUnvalidatedRegistrationsAjax(@RequestParam Long eventId) throws EntityIdNotFountException {
+	public ModelAndView showUnvalidatedRegistrationsAjax(@PathVariable String eventReference)
+			throws EntityIdNotFountException {
 
 		ModelAndView modelAndView = new ModelAndView("worldcooking/admin/event/worldcooking-admin-event-registrations");
 
-		Event event = eventService.findById(eventId);
+		Event event = eventService.findByReference(eventReference);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> registrations = registrationService.findNonValidatedRegistrations(eventId);
+		SortedSet<Registration> registrations = registrationService.findNonValidatedRegistrations(event.getId());
 
 		modelAndView.addObject("registrations", registrationsToModel(registrations));
 

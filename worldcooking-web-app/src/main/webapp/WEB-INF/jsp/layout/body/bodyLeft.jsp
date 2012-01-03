@@ -9,7 +9,7 @@
 
 	<template:chapter title="Admin" cssClass="menu">
 		<ul>
-			<c:url 	var="manageEventsUrl" value="/admin/event" />
+			<c:url 	var="manageEventsUrl" value="/admin/events" />
 			<li><a href="${manageEventsUrl}">events</a></li>
 			
 			<sec:authorize access="hasRole('SUPER_ADMIN')">

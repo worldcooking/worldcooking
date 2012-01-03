@@ -27,9 +27,6 @@ public class WorldcookingResumeEvent {
 
 	private String reference;
 
-	/** General information / description. */
-	private String information;
-
 	/** Participants waiting for validation. */
 	private List<String> waitingParticipants = new ArrayList<String>();
 
@@ -58,15 +55,6 @@ public class WorldcookingResumeEvent {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Mapping("description")
-	public String getInformation() {
-		return information;
-	}
-
-	public void setInformation(String information) {
-		this.information = information;
 	}
 
 	public List<String> getWaitingParticipants() {

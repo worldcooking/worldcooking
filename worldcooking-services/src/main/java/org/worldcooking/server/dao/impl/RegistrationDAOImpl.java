@@ -62,11 +62,19 @@ public class RegistrationDAOImpl extends GenericDao<Registration, Long> {
 	}
 
 	public Long countValidatedParticipants(Long eventId) {
+		return countParticipants(eventId, true);
+	}
+
+	public Long countNotValidatedParticipants(Long eventId) {
+		return countParticipants(eventId, false);
+	}
+
+	private Long countParticipants(Long eventId, Boolean validatedRegistration) {
 		@SuppressWarnings("unchecked")
 		List<Long> counts = getHibernateTemplate().findByNamedParam(
 				"select count (p) from Participant p"
-						+ " where p.registration.event.id=:eventId and p.registration.validate=true", "eventId",
-				eventId);
+						+ " where p.registration.event.id=:eventId and p.registration.validate=:validatedRegistration",
+				new String[] { "validatedRegistration", "eventId" }, new Object[] { validatedRegistration, eventId });
 		if (counts != null && counts.size() == 1) {
 			return counts.get(0);
 		}

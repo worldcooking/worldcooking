@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.worldcooking.ApplicationContextAwareTest;
 import org.worldcooking.server.entity.event.Event;
+import org.worldcooking.server.entity.event.Event.RegistrationStatus;
 
 /**
  * 
@@ -25,6 +26,7 @@ public class EventDAOImplTest extends ApplicationContextAwareTest {
 		Event e = new Event();
 		e.setName("Worlcooking Peru");
 		e.setReference("peru");
+		e.setRegistrationStatus(RegistrationStatus.OPEN);
 		dao.saveOrUpdate(e);
 
 		int countAfter = dao.findAll().size();
