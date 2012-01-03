@@ -84,9 +84,9 @@ public class WorldcookingRegistrationFormController {
 
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
 
-		Event lastEvent = eventService.findByReference(eventReference);
-		if (lastEvent != null) {
-			List<Task> availableTasks = eventService.getAvailableTasks(lastEvent.getId());
+		Event event = eventService.findByReference(eventReference);
+		if (event != null) {
+			List<Task> availableTasks = eventService.getAvailableTasks(event.getId());
 
 			for (Task t : availableTasks) {
 				availableTasksIdName.put(t.getId(), t.getName());

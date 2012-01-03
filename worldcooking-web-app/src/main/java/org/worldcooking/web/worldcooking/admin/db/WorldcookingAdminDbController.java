@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.worldcooking.server.services.EventService;
+import org.worldcooking.server.services.DbInitializerService;
 
 /**
  * @author MatthieuG
@@ -19,7 +19,7 @@ public class WorldcookingAdminDbController {
 
 	private static final String JSP = "worldcooking/admin/db/worldcooking-admin-db";
 	@Autowired
-	private EventService eventService;
+	private DbInitializerService dbInitializerService;
 
 	@RequestMapping(value = "/admin/db", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
@@ -31,7 +31,7 @@ public class WorldcookingAdminDbController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit() throws Exception {
 		// reset DB
-		eventService.resetDb();
+		dbInitializerService.resetDb();
 
 		// redirect to main page
 		return "redirect:/";

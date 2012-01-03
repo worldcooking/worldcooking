@@ -1,4 +1,4 @@
-package org.worldcooking.web.worldcooking.admin.event.model;
+package org.worldcooking.web.worldcooking.admin.event.participants.model;
 
 public class WorldcookingAdminEventRegistrer {
 	private WorldcookingAdminEventParticipant participant;

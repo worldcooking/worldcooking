@@ -6,6 +6,7 @@ package org.worldcooking.web.worldcooking.admin.events;
 import java.util.List;
 import java.util.SortedSet;
 
+import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +41,7 @@ public class WorldcookingAdminEventsController {
 	}
 
 	@ModelAttribute("events")
-	public List<EventToEdit> populateEvents() {
+	public List<EventToEdit> populateEvents() throws ServiceException {
 		SortedSet<Event> events = eventService.findAllFullEvents();
 
 		return eventTransformer.transform(events);

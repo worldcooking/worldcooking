@@ -5,7 +5,7 @@
 <%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
 <%@ taglib prefix="jquery-ui" uri="http://www.oups-asso.org/mish-k/tags/jquery-ui" %>
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
-<%@ taglib prefix="worldcooking-admin" tagdir="/WEB-INF/tags/worldcooking/admin/event"  %>
+<%@ taglib prefix="worldcooking-admin" tagdir="/WEB-INF/tags/worldcooking/admin/event/participants"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>

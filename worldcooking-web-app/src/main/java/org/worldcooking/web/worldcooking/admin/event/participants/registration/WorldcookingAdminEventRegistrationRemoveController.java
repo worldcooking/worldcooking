@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking.admin.event.registration;
+package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
 import org.springframework.beans.factory.annotation.Autowired;

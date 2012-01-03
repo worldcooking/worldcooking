@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.worldcooking.server.services.EventService;
+import org.worldcooking.server.services.DbInitializerService;
 
 public class DatabaseInitializer {
 
@@ -17,9 +17,9 @@ public class DatabaseInitializer {
 
 		ApplicationContext springContext = new ClassPathXmlApplicationContext("spring/init-db-spring-dao-context.xml");
 
-		Map<String, EventService> services = springContext.getBeansOfType(EventService.class);
+		Map<String, DbInitializerService> services = springContext.getBeansOfType(DbInitializerService.class);
 
-		EventService service = services.values().iterator().next();
+		DbInitializerService service = services.values().iterator().next();
 
 		service.resetDb();
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking.admin.event.registration;
+package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.worldcooking.server.entity.event.Task;
 import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.registration.RegistrationService;
-import org.worldcooking.web.worldcooking.admin.event.model.WorldcookingAdminEventParticipantRegistration;
+import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventParticipantRegistration;
 import org.worldcooking.web.worldcooking.history.WorldcookingHistoryController;
 import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryEntry;
 import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryMessageFragment.FragmentType;

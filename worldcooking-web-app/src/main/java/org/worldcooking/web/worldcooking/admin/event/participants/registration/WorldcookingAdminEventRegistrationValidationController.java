@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.worldcooking.web.worldcooking.admin.event.registration;
+package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 
 import javax.servlet.http.HttpSession;
 

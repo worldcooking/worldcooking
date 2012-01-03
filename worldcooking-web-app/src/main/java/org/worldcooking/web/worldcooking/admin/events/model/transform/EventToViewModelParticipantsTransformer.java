@@ -1,6 +1,6 @@
 package org.worldcooking.web.worldcooking.admin.events.model.transform;
 
-import org.oupsasso.mishk.core.web.transform.AbstractTransformer;
+import org.oupsasso.mishk.core.transform.AbstractTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.server.entity.event.Event;
