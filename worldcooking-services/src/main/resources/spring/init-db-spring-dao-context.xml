@@ -10,8 +10,8 @@
 	<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
 			<list>
-				<value>classpath:config/init-db-dao.properties</value>
 				<value>classpath:config/dao.properties</value>
+				<value>classpath:config/init-db-dao.properties</value>
 			</list>
 		</property>
 	</bean>
