@@ -26,7 +26,7 @@
 			<jsp:attribute name="content">
 				<c:forEach items="${events}" var="event">
 					<c:url var="eventAdminUrl" value="/admin/event/${event.reference}" />
-					<tr data-href="http://google.com">
+					<tr data-href="${eventAdminUrl}">
 						<td><fmt:formatDate value="${event.dateTime}" pattern="MM/dd/yyyy HH:mm"/></td>
 						<td><a href="${eventAdminUrl}" class="eventAdminLink">${event.name}</a></td>
 						

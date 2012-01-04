@@ -47,6 +47,7 @@ public class WorldcookingAdminEventDescriptionController {
 		modelAndView.addObject("event", event);
 
 		EventDescriptionForm form = initForm(event);
+
 		modelAndView.addObject("eventDescriptionForm", form);
 
 		return modelAndView;
@@ -95,7 +96,12 @@ public class WorldcookingAdminEventDescriptionController {
 
 		eventService.saveOrUpdate(event);
 
-		return "redirect:/admin/event/" + event.getReference() + "/description";
+		return "redirect:/direct/admin/event/" + event.getReference() + "/description";
+	}
+
+	@ModelAttribute("event")
+	public Event getEvent(@PathVariable String eventReference) throws EntityIdNotFountException {
+		return eventService.findByReference(eventReference);
 	}
 
 	@ModelAttribute("places")

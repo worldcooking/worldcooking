@@ -16,6 +16,7 @@
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event.js" />
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event_update-task.js" />
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event_validate.js" />
+	<resources:require-script resourceURI="3rdparty/form/jquery.form.js" locationType="JAR" />
 </head>
 <body>
 

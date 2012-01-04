@@ -7,7 +7,9 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
-<form:form commandName="eventDescriptionForm"   > 
+	
+<c:url var="actionUrl" value="/direct/admin/event/${event.reference}/description" />
+<form:form id="eventDescriptionForm" commandName="eventDescriptionForm" action="${actionUrl}"  > 
 
 <template:chapter >
 	
@@ -39,5 +41,12 @@
 	
 	<br/><input type="submit" value="Update" />
 </template:chapter>
-
+<script type="text/javascript"> 
+        $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#eventDescriptionForm').ajaxForm({ 
+                target: '#Event_description'
+            }); 
+        }); 
+    </script> 
 </form:form>
