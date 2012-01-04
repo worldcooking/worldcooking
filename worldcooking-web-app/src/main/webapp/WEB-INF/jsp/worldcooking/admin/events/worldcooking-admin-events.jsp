@@ -3,11 +3,14 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
 
 <html>
 <head>
-	<resources:require-css resourceURI="worldcooking/admin/worldcooking-admin-main.css"/>
-	<title>Administration</title>
+	<resources:require-css resourceURI="worldcooking/admin/main/worldcooking-admin-main.css"/>
+	<title>Worldcooking - administration</title>
+	<jquery:require-static-resources />
+	<resources:require-script resourceURI="worldcooking/admin/events/worldcooking-admin-events.js" />
 </head>
 <body>
 	<template:chapter title="Select an event to manage">
@@ -23,7 +26,7 @@
 			<jsp:attribute name="content">
 				<c:forEach items="${events}" var="event">
 					<c:url var="eventAdminUrl" value="/admin/event/${event.reference}" />
-					<tr>
+					<tr data-href="http://google.com">
 						<td><fmt:formatDate value="${event.dateTime}" pattern="MM/dd/yyyy HH:mm"/></td>
 						<td><a href="${eventAdminUrl}" class="eventAdminLink">${event.name}</a></td>
 						

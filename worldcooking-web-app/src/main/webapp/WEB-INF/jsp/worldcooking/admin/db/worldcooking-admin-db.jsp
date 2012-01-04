@@ -4,7 +4,7 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <html>
 <head>
-	<title>Administration</title>
+	<title>Worldcooking - administration</title>
 	<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
 </head>
 <body>

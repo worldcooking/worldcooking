@@ -1,4 +1,5 @@
 function updateHistory() {
+	
   actionHistoryElement = $('#actionsHistory');
   // update history
   $.ajax({

@@ -76,7 +76,7 @@ function updateUnvalidatedRegistrations() {
 }
 
 $(document).ready(function() {
- $("#unvalidated_registrations").on("click", ".validateButton", function(event) {
+ 	$("#mishk-template-layout_body-center").on("click", ".validateButton", function(event) {
 	 // prevent form submit
     event.preventDefault();
 
@@ -84,25 +84,26 @@ $(document).ready(function() {
     
   });
  
- $("#validated_registrations").on("click", ".unvalidateButton", function(event) {
+	$("#mishk-template-layout_body-center").on("click", ".unvalidateButton", function(event) {
     // prevent form submit
     event.preventDefault();
 
     unvalidateRegistration($(this));
   });
  
- $("#unvalidated_registrations").on("click", ".removeButton", function(event) {
+ 
+	$("#mishk-template-layout_body-center").on("click", ".removeButton", function(event) {
     var confirmed = confirm("WARNING: THIS ACTION CAN NOT BE UNDONE!\n\nAre you sure do you want to remove permanently this registration?");
     if (!confirmed) {
       event.preventDefault();
     }
   });
 
- 	$("#unvalidated_registrations").on("change", ".tasksSelect", function(event) {
+ 	$("#mishk-template-layout_body-center").on("change", ".tasksSelect", function(event) {
 	    updateTaskAjax( $(this));
 	  });
  
- 	$("#validated_registrations").on("change", ".tasksSelect", function(event) {
+ 	$("#mishk-template-layout_body-center").on("change", ".tasksSelect", function(event) {
 	    updateTaskAjax( $(this));
 	  });
  

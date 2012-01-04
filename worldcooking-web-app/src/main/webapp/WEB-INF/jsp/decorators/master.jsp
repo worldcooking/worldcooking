@@ -18,7 +18,7 @@
 <title><decorator:title default="Worldcooking" /></title>
 
 <%-- ensure that template CSS are loaded first (cause it is overridden by Worldcooking CSS files) --%>
-<template:require-static-resources theme="dynamic-colors" />
+<template:require-static-resources theme="dynamic-colors" jqueryUiTheme="redmond" />
 
 <decorator:head />
 

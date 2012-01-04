@@ -34,7 +34,8 @@ import org.worldcooking.web.worldcooking.history.model.WorldcookingHistory;
 @Controller
 public class WorldcookingAdminEventParticipantsController {
 
-	private static final String URL = "/admin/event/{eventReference}/participants";
+	private static final String REGISTRATION_JSP = "worldcooking/admin/event/participants/worldcooking-admin-event-registrations";
+	private static final String URL = "/direct/admin/event/{eventReference}/participants";
 	private static final String JSP = "worldcooking/admin/event/participants/worldcooking-admin-event-participants";
 	@Autowired
 	private EventService eventService;
@@ -52,7 +53,7 @@ public class WorldcookingAdminEventParticipantsController {
 	@RequestMapping(value = AJAX_URL_VALIDATED_REGISTRATION)
 	public ModelAndView showValidatedRegistrationsAjax(@PathVariable String eventReference) throws ServiceException {
 
-		ModelAndView modelAndView = new ModelAndView("worldcooking/admin/event/worldcooking-admin-event-registrations");
+		ModelAndView modelAndView = new ModelAndView(REGISTRATION_JSP);
 
 		Event event = eventService.findByReference(eventReference);
 
@@ -73,7 +74,7 @@ public class WorldcookingAdminEventParticipantsController {
 	@RequestMapping(value = AJAX_URL_UNVALIDATED_REGISTRATION)
 	public ModelAndView showUnvalidatedRegistrationsAjax(@PathVariable String eventReference) throws ServiceException {
 
-		ModelAndView modelAndView = new ModelAndView("worldcooking/admin/event/worldcooking-admin-event-registrations");
+		ModelAndView modelAndView = new ModelAndView(REGISTRATION_JSP);
 
 		Event event = eventService.findByReference(eventReference);
 
