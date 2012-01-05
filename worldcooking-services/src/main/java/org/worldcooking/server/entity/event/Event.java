@@ -90,7 +90,7 @@ public class Event {
 	 * validated et non-validated registrations.
 	 */
 	@OneToMany(mappedBy = "event")
-	@OrderBy(value = "registrationDate, email")
+	@OrderBy(value = "registrationDate")
 	@Cascade({ CascadeType.DELETE })
 	private Set<Registration> registrations = new HashSet<Registration>();
 

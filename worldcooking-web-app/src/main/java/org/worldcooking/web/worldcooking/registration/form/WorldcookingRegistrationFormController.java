@@ -163,32 +163,32 @@ public class WorldcookingRegistrationFormController {
 		// create registration
 		NewRegistration newRegistration = new NewRegistration();
 		Long eventId = registration.getEventId();
-		String subscriberEmailAddress = registration.getEmailAddress();
 
 		Iterator<Long> participantsTasksIt = registration.getAdditionalParticipantsTasks().iterator();
+		Iterator<String> participantsEmailsIt = registration.getAdditionalParticipantsEmailAddresses().iterator();
 		// add additional participants
 		for (String participantName : registration.getAdditionalParticipantsNames()) {
 			if (participantName != null) {
 				participantName = participantName.trim();
 				if (!participantName.isEmpty()) {
-					newRegistration.addParticipant(participantName, participantsTasksIt.next());
+					newRegistration.addParticipant(participantsEmailsIt.next(), participantName,
+							participantsTasksIt.next());
 				}
 			}
 		}
-		NewParticipant subscriberParticipant = new NewParticipant(registration.getSubscriberParticipantName(),
-				registration.getSubscriberParticipantTask());
+		NewParticipant subscriberParticipant = new NewParticipant(registration.getEmailAddress(),
+				registration.getSubscriberParticipantName(), registration.getSubscriberParticipantTask());
 		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
 			// paypal
 
-			newRegistration.configureWithPaypalPayment(eventId, subscriberEmailAddress, subscriberParticipant);
+			newRegistration.configureWithPaypalPayment(eventId, subscriberParticipant);
 		} else {
 			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
 
 			String paymentTarget = availablePaymentModes.get(registration.getPaymentMode());
 			// TODO meilleure gestion des erreurs
 			Assert.notNull(paymentTarget);
-			newRegistration.configureWithManualPayment(eventId, subscriberEmailAddress, paymentTarget,
-					subscriberParticipant);
+			newRegistration.configureWithManualPayment(eventId, paymentTarget, subscriberParticipant);
 		}
 
 		return newRegistration;

@@ -3,6 +3,7 @@ package org.worldcooking.web.worldcooking.admin.event.participants.model;
 public class WorldcookingAdminEventParticipant {
 	private String name;
 	private Long id;
+	private String email;
 
 	private WorldcookingAdminEventTask task;
 
@@ -12,6 +13,14 @@ public class WorldcookingAdminEventParticipant {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String emailAddress) {
+		this.email = emailAddress;
 	}
 
 	public WorldcookingAdminEventTask getTask() {

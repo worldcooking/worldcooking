@@ -27,6 +27,9 @@ public class Participant {
 	@Column(nullable = false)
 	private String name;
 
+	@Column
+	private String email;
+
 	@ManyToOne
 	private Task task;
 
@@ -87,6 +90,14 @@ public class Participant {
 
 	public void setRegistration(Registration registration) {
 		this.registration = registration;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

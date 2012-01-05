@@ -34,7 +34,7 @@
 				<%-- subscriber --%>
 				<c:set var="rowspan" value="${registration.additionalParticipants.size() + 1}" />
 				
-				<c:set var="participant" value="${registration.registrer.participant}" />
+				<c:set var="participant" value="${registration.registrer}" />
 				
 				<tr class="participant">
 					<%-- subscriber name --%>
@@ -44,7 +44,7 @@
 						<worldcooking-admin:registration-participants-task participant="${participant}" tasks="${tasks}" registrationId="${registration.id}" />
 					</td>
 					<%-- subscriber email --%>
-					<td rowspan="${rowspan}">${registration.registrer.email}</td>
+					<td >${participant.email}</td>
 					<%-- amount --%>
 					<td rowspan="${rowspan}">
 						<span id="amount_${registration.id}" class="amount">${registration.amount}</span> &euro;
@@ -93,6 +93,8 @@
 							<td>
 								<worldcooking-admin:registration-participants-task participant="${participant}" tasks="${tasks}" registrationId="${registration.id}" />
 							</td>
+							<%-- additional participant email --%>
+							<td >${participant.email}</td>
 						</tr>
 					</c:forEach>
 				</c:if>

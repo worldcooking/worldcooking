@@ -14,7 +14,6 @@ import org.worldcooking.server.entity.people.Participant;
 import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventParticipant;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventRegistration;
-import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventRegistrer;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventTask;
 
 @Repository
@@ -28,19 +27,15 @@ public class RegistrationToViewModelTransformer extends
 	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityIdNotFountException {
 		WorldcookingAdminEventRegistration output = new WorldcookingAdminEventRegistration();
 		output.setId(input.getId());
-		WorldcookingAdminEventRegistrer r = new WorldcookingAdminEventRegistrer();
+		WorldcookingAdminEventParticipant r = new WorldcookingAdminEventParticipant();
 
-		WorldcookingAdminEventParticipant pm = new WorldcookingAdminEventParticipant();
+		r.setName(input.getSubscriberParticipant().getName());
+		r.setId(input.getSubscriberParticipant().getId());
 
-		pm.setName(input.getSubscriberParticipant().getName());
-		pm.setId(input.getSubscriberParticipant().getId());
-
-		r.setParticipant(pm);
-
-		r.setEmail(input.getEmail());
+		r.setEmail(input.getSubscriberParticipant().getEmail());
 		Task task = input.getSubscriberParticipant().getTask();
 		WorldcookingAdminEventTask taskModel = new WorldcookingAdminEventTask(task.getName(), task.getId());
-		pm.setTask(taskModel);
+		r.setTask(taskModel);
 		output.setRegistrer(r);
 
 		List<WorldcookingAdminEventParticipant> additionalParticipants = new ArrayList<WorldcookingAdminEventParticipant>();
@@ -49,6 +44,7 @@ public class RegistrationToViewModelTransformer extends
 			if (!p.equals(input.getSubscriberParticipant())) {
 				WorldcookingAdminEventParticipant ap = new WorldcookingAdminEventParticipant();
 				ap.setName(p.getName());
+				ap.setEmail(p.getEmail());
 				ap.setId(p.getId());
 				Task pTask = p.getTask();
 				WorldcookingAdminEventTask pTaskModel = new WorldcookingAdminEventTask(pTask.getName(), pTask.getId());

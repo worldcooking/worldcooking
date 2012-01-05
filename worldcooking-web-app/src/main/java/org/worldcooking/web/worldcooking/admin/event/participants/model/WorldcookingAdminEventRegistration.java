@@ -6,7 +6,7 @@ public class WorldcookingAdminEventRegistration {
 
 	private Long id;
 
-	private WorldcookingAdminEventRegistrer registrer;
+	private WorldcookingAdminEventParticipant registrer;
 
 	private Double amount;
 
@@ -16,11 +16,11 @@ public class WorldcookingAdminEventRegistration {
 
 	private List<WorldcookingAdminEventParticipant> additionalParticipants;
 
-	public WorldcookingAdminEventRegistrer getRegistrer() {
+	public WorldcookingAdminEventParticipant getRegistrer() {
 		return registrer;
 	}
 
-	public void setRegistrer(WorldcookingAdminEventRegistrer registrer) {
+	public void setRegistrer(WorldcookingAdminEventParticipant registrer) {
 		this.registrer = registrer;
 	}
 
@@ -36,8 +36,7 @@ public class WorldcookingAdminEventRegistration {
 		return additionalParticipants;
 	}
 
-	public void setAdditionalParticipants(
-			List<WorldcookingAdminEventParticipant> additionalParticipants) {
+	public void setAdditionalParticipants(List<WorldcookingAdminEventParticipant> additionalParticipants) {
 		this.additionalParticipants = additionalParticipants;
 	}
 

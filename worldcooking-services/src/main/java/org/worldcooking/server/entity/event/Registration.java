@@ -36,10 +36,6 @@ public class Registration {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	/** Email use for the registration. */
-	@Column(nullable = false)
-	private String email;
-
 	@Column(nullable = false)
 	private Date registrationDate;
 
@@ -69,26 +65,10 @@ public class Registration {
 		// nothing to do
 	}
 
-	public Registration(String email, Payment payment, Event event) {
-		this.email = email;
+	public Registration(Payment payment, Event event) {
 		this.payment = payment;
 		this.event = event;
 		this.registrationDate = new Date();
-	}
-
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	/**
-	 * @param email
-	 *            the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	/**
@@ -104,8 +84,7 @@ public class Registration {
 	 */
 	public void setPayment(Payment payment) {
 		this.payment = payment;
-		if (payment.getRegistration() == null
-				|| payment.getRegistration() != this) {
+		if (payment.getRegistration() == null || payment.getRegistration() != this) {
 			payment.setRegistration(this);
 		}
 	}

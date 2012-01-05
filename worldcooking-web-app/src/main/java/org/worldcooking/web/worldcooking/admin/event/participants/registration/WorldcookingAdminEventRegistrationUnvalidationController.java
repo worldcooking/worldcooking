@@ -44,8 +44,8 @@ public class WorldcookingAdminEventRegistrationUnvalidationController {
 
 		// TODO manage errors on client side
 
-		// email is returned for debugging purpose
-		return s.getEmail();
+		// id is returned for debugging purpose
+		return s.getId().toString();
 	}
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)

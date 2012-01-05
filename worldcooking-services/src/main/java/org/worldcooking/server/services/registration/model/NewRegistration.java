@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NewRegistration {
 	private Long eventId;
-	private NewSubscriber subscriber;
+	private NewParticipant subscriber;
 
 	private List<NewParticipant> additionalParticipants;
 
@@ -21,28 +21,24 @@ public class NewRegistration {
 		this.additionalParticipants = new ArrayList<NewParticipant>();
 	}
 
-	public NewRegistration configureWithPaypalPayment(Long eventId,
-			String subscriberEmailAddress, NewParticipant subscriberParticipant) {
+	public NewRegistration configureWithPaypalPayment(Long eventId, NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
-		this.subscriber = new NewSubscriber(subscriberEmailAddress,
-				subscriberParticipant);
+		this.subscriber = subscriberParticipant;
 		paymentMode = NewRegistrationPaymentMode.PAYPAL;
 		return this;
 	}
 
-	public NewRegistration configureWithManualPayment(Long eventId,
-			String subscriberEmailAddress, String paymentTarget,
+	public NewRegistration configureWithManualPayment(Long eventId, String paymentTarget,
 			NewParticipant subscriberParticipant) {
 		this.eventId = eventId;
-		this.subscriber = new NewSubscriber(subscriberEmailAddress,
-				subscriberParticipant);
+		this.subscriber = subscriberParticipant;
 		paymentMode = NewRegistrationPaymentMode.MANUAL;
 		this.paymentTarget = paymentTarget;
 		return this;
 	}
 
-	public NewRegistration addParticipant(String name, Long taskId) {
-		this.additionalParticipants.add(new NewParticipant(name, taskId));
+	public NewRegistration addParticipant(String emailAddress, String name, Long taskId) {
+		this.additionalParticipants.add(new NewParticipant(emailAddress, name, taskId));
 		return this;
 	}
 
@@ -50,7 +46,7 @@ public class NewRegistration {
 		return eventId;
 	}
 
-	public NewSubscriber getSubscriber() {
+	public NewParticipant getSubscriber() {
 		return subscriber;
 	}
 

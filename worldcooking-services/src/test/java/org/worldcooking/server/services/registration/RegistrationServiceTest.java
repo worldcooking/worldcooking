@@ -99,10 +99,12 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 		dao.saveOrUpdate(t3);
 
 		NewRegistration newRegistration = new NewRegistration()
-				.configureWithPaypalPayment(e.getId(), "subscriber@paypal-member.com",
-						new NewParticipant("Tarif eco1 and subscriber", t1.getId())).addParticipant("Chef", t3.getId())
-				.addParticipant("Tarif eco2", t1.getId()).addParticipant("Tarif normal1", t2.getId())
-				.addParticipant("Tarif normal2", t2.getId()).addParticipant("Tarif eco3", t1.getId());
+				.configureWithPaypalPayment(e.getId(),
+						new NewParticipant("subscriber@paypal-member.com", "Tarif eco1 and subscriber", t1.getId()))
+				.addParticipant("chef@paypal-member.com", "Chef", t3.getId())
+				.addParticipant(null, "Tarif eco2", t1.getId())
+				.addParticipant("tn1@paypal-member.com", "Tarif normal1", t2.getId())
+				.addParticipant(null, "Tarif normal2", t2.getId()).addParticipant(null, "Tarif eco3", t1.getId());
 
 		Registration registration = registrationService.subscribe(newRegistration);
 
@@ -126,7 +128,6 @@ public class RegistrationServiceTest extends ApplicationContextAwareTest {
 	public void testValidatePayment() throws EntityIdNotFountException {
 		Registration registration = new Registration();
 
-		registration.setEmail("a@b.c");
 		registration.setRegistrationDate(new Date());
 
 		dao.saveOrUpdate(registration);

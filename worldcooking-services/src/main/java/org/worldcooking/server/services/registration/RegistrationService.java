@@ -94,8 +94,7 @@ public class RegistrationService {
 		try {
 			if (newRegistration.getEventId() != null) {
 				// create subscriber participant
-				Participant subscriberParticipant = createParticipant(newRegistration.getSubscriber()
-						.getSubscriberParticipant());
+				Participant subscriberParticipant = createParticipant(newRegistration.getSubscriber());
 
 				taskDao.saveOrUpdate(subscriberParticipant);
 
@@ -153,6 +152,8 @@ public class RegistrationService {
 		Participant participant = new Participant();
 		participant.setName(newParticipant.getName());
 
+		participant.setEmail(newParticipant.getEmailAddress());
+
 		// retrieve the corresponding task
 		Task task = taskDao.findById(newParticipant.getTaskId());
 		participant.setTask(task);
@@ -168,9 +169,7 @@ public class RegistrationService {
 		registration = new Registration();
 		registration.setRegistrationDate(new Date());
 		registration.setEvent(e);
-		if (newRegistration.getSubscriber() != null) {
-			registration.setEmail(newRegistration.getSubscriber().getEmailAddress());
-		}
+
 		return registration;
 	}
 

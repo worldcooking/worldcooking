@@ -23,7 +23,7 @@ function addGuest()  {
 
 function hideEmptyGuests(){
 	$('.additionalParticipantArea:visible').each(function(index) {
-		if( $(this).find('.additionalParticipantNameInput').val().length === 0 ) {
+		if( $(this).find('.additionalParticipantNameInput input').val().length === 0 ) {
 			$(this).hide();
 		}
 	});
