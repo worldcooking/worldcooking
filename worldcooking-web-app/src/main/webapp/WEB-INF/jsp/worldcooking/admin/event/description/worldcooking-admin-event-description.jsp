@@ -11,7 +11,6 @@
 <c:url var="actionUrl" value="/direct/admin/event/${event.reference}/description" />
 
 <template-form:form id="eventDescriptionForm" commandName="eventDescriptionForm" action="${actionUrl}" >
-
 	<%-- event id --%>
 	<form:hidden id="eventIdHiddenInput" path="eventId" />
 		
@@ -29,7 +28,7 @@
 	
 	<template-form:submit title="Update event description" value="Update" newGroup="true" />
 			
-		<span style="clear:both">.</span>
+		<hr style="clear:both"/>
 			
 </template-form:form>
 
