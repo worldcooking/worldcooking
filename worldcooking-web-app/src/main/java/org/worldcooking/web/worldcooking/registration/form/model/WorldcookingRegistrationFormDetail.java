@@ -43,10 +43,16 @@ public class WorldcookingRegistrationFormDetail {
 	 * List of additional participants names.
 	 */
 	private List<String> additionalParticipantsNames = new ArrayList<String>();
+
 	/**
-	 * List of selected tasks (ordered by participant).
+	 * List of additional participants taks.
 	 */
 	private List<Long> additionalParticipantsTasks = new ArrayList<Long>();
+
+	/**
+	 * List of additional participants adresses.
+	 */
+	private List<String> additionalParticipantsEmailAddresses = new ArrayList<String>();
 
 	public WorldcookingRegistrationFormDetail() {
 	}
@@ -95,8 +101,7 @@ public class WorldcookingRegistrationFormDetail {
 		return additionalParticipantsNames;
 	}
 
-	public void setAdditionalParticipantsNames(
-			List<String> additionalParticipantsNames) {
+	public void setAdditionalParticipantsNames(List<String> additionalParticipantsNames) {
 		this.additionalParticipantsNames = additionalParticipantsNames;
 	}
 
@@ -104,9 +109,16 @@ public class WorldcookingRegistrationFormDetail {
 		return additionalParticipantsTasks;
 	}
 
-	public void setAdditionalParticipantsTasks(
-			List<Long> additionalParticipantsTasks) {
+	public void setAdditionalParticipantsTasks(List<Long> additionalParticipantsTasks) {
 		this.additionalParticipantsTasks = additionalParticipantsTasks;
+	}
+
+	public List<String> getAdditionalParticipantsEmailAddresses() {
+		return additionalParticipantsEmailAddresses;
+	}
+
+	public void setAdditionalParticipantsEmailAddresses(List<String> additionalParticipantsEmailAddresses) {
+		this.additionalParticipantsEmailAddresses = additionalParticipantsEmailAddresses;
 	}
 
 }

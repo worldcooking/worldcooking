@@ -1,5 +1,6 @@
 package org.worldcooking.web.worldcooking.registration.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -86,7 +87,9 @@ public class WorldcookingRegistrationFormController {
 
 		Event event = eventService.findByReference(eventReference);
 		if (event != null) {
-			List<Task> availableTasks = eventService.getAvailableTasks(event.getId());
+			List<Task> availableTasks = new ArrayList<Task>();
+			availableTasks.add(new Task());
+			availableTasks.addAll(eventService.getAvailableTasks(event.getId()));
 
 			for (Task t : availableTasks) {
 				availableTasksIdName.put(t.getId(), t.getName());

@@ -8,65 +8,37 @@
 <%@ taglib prefix="template-form" uri="http://www.oups-asso.org/mish-k/tags/template-form"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
-	
 <c:url var="actionUrl" value="/direct/admin/event/${event.reference}/description" />
 
 <template-form:form id="eventDescriptionForm" commandName="eventDescriptionForm" action="${actionUrl}" >
 
 	<%-- event id --%>
-	<template-form:hidden path="eventName"/>
-	
+	<form:hidden id="eventIdHiddenInput" path="eventId" />
+		
 	<%-- event name --%>
-	<template-form:input id="eventNameInput" path="eventName" label="Name"/>
+	<template-form:input id="eventNameInput" path="eventName" label="Name" required="true" newGroup="true"/>
 	
 	<%-- place --%>
 	<template-form:select id="eventPlaceInput" path="placeId" label="Place" items="${places}" multiple="false"/>
 	
 	<%-- date --%>
-	<template-form:input id="eventDateInput" path="date" label="Date"/>
+	<template-form:input id="eventDateInput" path="date" label="Date" newGroup="true" size="small"/>
 	
 	<%-- time --%>
-	<template-form:input id="eventTimeInput" path="time" label="Time"/>
+	<template-form:input id="eventTimeInput" path="time" label="Time" size="small"/>
 	
-	<div style="clear:left"><input type="submit" value="Update" /></div>
-
+	<template-form:submit title="Update event description" value="Update" newGroup="true" />
+			
+		<span style="clear:both">.</span>
+			
 </template-form:form>
 
-<%-- 
-<form:form id="eventDescriptionForm" commandName="eventDescriptionForm" action="${actionUrl}"  > 
-
-<template:chapter >
-	
-	event id
-	<form:hidden path="eventId"/>
-	
-	event name
-	<label for="eventNameInput">Name :</label> 
-	<form:input id="eventNameInput" path="eventName"  />
-	<form:errors path="eventName"  cssClass="error" />
-	
-	place
-	<br/>
-	<label for="eventPlaceInput">Place :</label> 
-	<form:select id="eventPlaceInput" path="placeId"  />   
-	<form:errors path="placeId"  cssClass="error" />
-	
-	date
-	<br/>
-	<label for="eventDateInput">Date:</label> 
-	<form:input id="eventDateInput" path="date"  />
-	<form:errors path="date"  cssClass="error" />
-	
-	time
-	<br/>
-	<label for="eventTimeInput">Time:</label> 
-	<form:input id="eventTimeInput" path="time"  />
-	<form:errors path="time"  cssClass="error" />
-	
-	<br/><input type="submit" value="Update" />
-</template:chapter> 
-</form:form>--%>
-
+<script>
+	 $(function() {
+		$( "#eventDateInput" ).datepicker({ minDate: 0, dateFormat: "yy-mm-dd" });
+		$( "#eventTimeInput" ).timepicker({timeFormat: 'hh:mm'});
+	}); 
+	</script>
 
 
 <script type="text/javascript"> 
@@ -75,5 +47,5 @@
             $('#eventDescriptionForm').ajaxForm({ 
                 target: '#Event_description'
             }); 
-        }); 
+        });  
     </script> 

@@ -4,8 +4,8 @@
   *
 **/
 function removeGuest(guestContainer)  {
-	guestContainer.find('.guest_name_input').val('');
-	guestContainer.slideUp();
+	guestContainer.find('.additionalParticipantNameInput').val('');
+	guestContainer.hide("fade", {}, 500);
 }
 
 /**
@@ -13,17 +13,17 @@ function removeGuest(guestContainer)  {
  *
 **/
 function addGuest()  {
-	var nbVisibleGuests = $('.supp:visible').size();
+	var nbVisibleGuests = $('.additionalParticipantArea:visible').size();
 	if (nbVisibleGuests == 2){
 		alert('You can register only for 3 persons.');
 	}else{
-		$('.supp:hidden').first().slideDown();
+		$('.additionalParticipantArea:hidden').first().show("fade", {}, 500);
 	}
 }
 
 function hideEmptyGuests(){
-	$('.supp:visible').each(function(index) {
-		if( $(this).find('.guest_name_input').val().length === 0 ) {
+	$('.additionalParticipantArea:visible').each(function(index) {
+		if( $(this).find('.additionalParticipantNameInput').val().length === 0 ) {
 			$(this).hide();
 		}
 	});
@@ -32,10 +32,18 @@ function hideEmptyGuests(){
 $(document).ready(function() {
 	hideEmptyGuests();
 	
-	$(".remove_guest_button").on('click', function(event) {
-		removeGuest($(this).parents(".supp"));
+	$(".removeParticipantLink").on('click', function(event) {
+		removeGuest($(this).parents(".additionalParticipantArea"));
 	});
-	$("#add_guest_button").on('click', function(event) {
-		addGuest($(this).parents(".supp"));
+	$("#addParticipantLink").on('click', function(event) {
+		addGuest($(this).parents(".additionalParticipantArea"));
+	});
+	$("#paypalSubmitButton").on('click', function(event) {
+		$("#paymentModeHiddenInput").val($("#paymentModePaypalHiddenInput").val());
+		$(this).parents("form").submit();
+	});
+	$("#manualSubmitButton").on('click', function(event) {
+		$("#paymentModeHiddenInput").val($("#paymentModeManualHiddenInput").val());
+		$(this).parents("form").submit();
 	});
 });

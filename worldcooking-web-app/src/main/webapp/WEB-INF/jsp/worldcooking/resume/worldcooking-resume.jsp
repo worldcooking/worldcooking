@@ -4,6 +4,7 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
 <%@ taglib prefix="jquery-ui" uri="http://www.oups-asso.org/mish-k/tags/jquery-ui" %>
 <%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
+<%@ taglib prefix="template-form" uri="http://www.oups-asso.org/mish-k/tags/template-form"  %>
 
 <html>
 <head>
@@ -38,7 +39,8 @@
 		<center>
 			<c:url var="joinEventUrl" value="/event/${event.reference}/registration"/>
 			<form action="${joinEventUrl}">
-				<input type="submit" value="JOIN ${event.name}!" class="join"/>
+				<template-form:submit title="JOIN us now!" value="JOIN ${event.name}!" cssClass="centered" />
+			
 			</form>
 		</center>
 		<br/> 
