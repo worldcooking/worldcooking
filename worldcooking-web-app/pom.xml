@@ -63,7 +63,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -71,10 +70,7 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.worldcooking</groupId>
-			<artifactId>worldcooking-services</artifactId>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.worldcooking</groupId> <artifactId>worldcooking-services</artifactId> </dependency> -->
 		<dependency>
 			<groupId>org.oups-asso.mish-k.framework.business</groupId>
 			<artifactId>mish-k-framework-business-events</artifactId>
@@ -319,6 +315,21 @@
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+						<version>${javax.servlet.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</dependency>
+			</dependencies>
 			<build>
 				<plugins>
 					<plugin>
