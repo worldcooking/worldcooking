@@ -3,8 +3,7 @@
  */
 package org.worldcooking.server.entity.event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.worldcooking.server.entity.people.Participant;
 
 /**
- * A task is use to describe a role on an event.
+ * Role task.
  * 
  * @author MatthieuG
  * 
@@ -40,28 +36,29 @@ public class Task {
 	@Column
 	private String description;
 
-	/** Event associated to this task. */
+	@Column
+	private String startTimeDescription;
+
+	@Column
+	private String endTimeDescription;
+
+	@Column
+	private Date minStartTime;
+
+	@Column
+	private Date maxEndDateTime;
+
 	@ManyToOne
-	private Event event;
-
-	@Column
-	private Integer nbMax;
-
-	@Column
-	private Double pricePerParticipant;
-
-	@OneToMany(mappedBy = "task")
-	private List<Participant> participants = new ArrayList<Participant>();
+	private Role role;
 
 	public Task() {
 		// nothing to do
 	}
 
-	public Task(String name, String description, Integer nbMax) {
+	public Task(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.nbMax = nbMax;
 	}
 
 	/**
@@ -109,44 +106,44 @@ public class Task {
 		this.id = id;
 	}
 
-	public Event getEvent() {
-		return event;
+	public String getStartTimeDescription() {
+		return startTimeDescription;
 	}
 
-	public void setEvent(Event event) {
-		this.event = event;
+	public void setStartTimeDescription(String startTimeDescription) {
+		this.startTimeDescription = startTimeDescription;
 	}
 
-	public Integer getNbMax() {
-		return nbMax;
+	public String getEndTimeDescription() {
+		return endTimeDescription;
 	}
 
-	public void setNbMax(Integer nbMax) {
-		this.nbMax = nbMax;
+	public void setEndTimeDescription(String endTimeDescription) {
+		this.endTimeDescription = endTimeDescription;
 	}
 
-	public List<Participant> getParticipants() {
-		return participants;
+	public Date getMinStartTime() {
+		return minStartTime;
 	}
 
-	/**
-	 * @use addParticipant instead
-	 * @param participants
-	 */
-	protected void setParticipants(List<Participant> participants) {
-		this.participants = participants;
+	public void setMinStartTime(Date minStartTime) {
+		this.minStartTime = minStartTime;
 	}
 
-	public void addParticipant(Participant participant) {
-		this.participants.add(participant);
-		participant.setTask(this);
+	public Date getMaxEndDateTime() {
+		return maxEndDateTime;
 	}
 
-	public Double getPricePerParticipant() {
-		return pricePerParticipant;
+	public void setMaxEndDateTime(Date maxEndDateTime) {
+		this.maxEndDateTime = maxEndDateTime;
 	}
 
-	public void setPricePerParticipant(Double participantPrice) {
-		this.pricePerParticipant = participantPrice;
+	public Role getRole() {
+		return role;
 	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 }

@@ -34,38 +34,11 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	public enum RegistrationStatus {
-		/**
-		 * Event not visible to public.
-		 */
-		HIDDEN,
-		/**
-		 * Event visible to public, but registration still not open.
-		 */
-		PLANNED,
-		/**
-		 * Event open for registration.
-		 */
-		OPEN,
-		/**
-		 * Registration closed.
-		 */
-		CLOSED;
-	}
-
 	/**
 	 * Registration status (HIDDEN, PLANNED, OPEN, CLOSED).
 	 */
 	@Column(nullable = false)
 	private RegistrationStatus registrationStatus = RegistrationStatus.HIDDEN;
-
-	public RegistrationStatus getRegistrationStatus() {
-		return registrationStatus;
-	}
-
-	public void setRegistrationStatus(RegistrationStatus registrationStatus) {
-		this.registrationStatus = registrationStatus;
-	}
 
 	/**
 	 * Unique reference.
@@ -103,9 +76,10 @@ public class Event {
 	@OneToMany(mappedBy = "event")
 	@Cascade({ CascadeType.DELETE })
 	@OrderBy(value = "name")
-	private Set<Task> availableTasks = new HashSet<Task>();
+	private Set<EventRole> availableEventRoles = new HashSet<EventRole>();
 
 	@ManyToOne
+	@Cascade({ CascadeType.DELETE })
 	private Place place;
 
 	/**
@@ -143,19 +117,6 @@ public class Event {
 		registration.setEvent(this);
 	}
 
-	public Set<Task> getAvailableTasks() {
-		return availableTasks;
-	}
-
-	protected void setAvailableTasks(Set<Task> availableTasks) {
-		this.availableTasks = availableTasks;
-	}
-
-	public void addAvailableTask(Task task) {
-		this.availableTasks.add(task);
-		task.setEvent(this);
-	}
-
 	public Long getMaxParticipants() {
 		return maxParticipants;
 	}
@@ -186,5 +147,13 @@ public class Event {
 
 	public void setPlace(Place place) {
 		this.place = place;
+	}
+
+	public RegistrationStatus getRegistrationStatus() {
+		return registrationStatus;
+	}
+
+	public void setRegistrationStatus(RegistrationStatus registrationStatus) {
+		this.registrationStatus = registrationStatus;
 	}
 }

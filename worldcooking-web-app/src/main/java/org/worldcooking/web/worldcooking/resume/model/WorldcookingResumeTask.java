@@ -15,15 +15,15 @@ public class WorldcookingResumeTask {
 
 	private String name;
 
-	private int totalRegister = 0;
+	private long totalRegister = 0;
 
-	private int totalMax = 0;
+	private long totalMax = 0;
 
 	public WorldcookingResumeTask() {
 
 	}
 
-	public WorldcookingResumeTask(Long id, String name, int totalRegister, int totalMax) {
+	public WorldcookingResumeTask(Long id, String name, long totalRegister, long totalMax) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,20 +49,20 @@ public class WorldcookingResumeTask {
 		this.name = name;
 	}
 
-	public int getTotalRegister() {
+	public long getTotalRegister() {
 		return totalRegister;
 	}
 
-	public void setTotalRegister(int totalRegister) {
+	public void setTotalRegister(long totalRegister) {
 		this.totalRegister = totalRegister;
 	}
 
 	@Mapping("nbMax")
-	public int getTotalMax() {
+	public long getTotalMax() {
 		return totalMax;
 	}
 
-	public void setTotalMax(int totalMax) {
+	public void setTotalMax(long totalMax) {
 		this.totalMax = totalMax;
 	}
 

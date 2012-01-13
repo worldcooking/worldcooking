@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +41,11 @@ public class EventService {
 		return eventDao.findFullEventById(id);
 	}
 
-	public Event findById(Long id) throws EntityIdNotFountException {
+	public Event findById(Long id) throws EntityIdNotFoundException {
 		return eventDao.findById(id);
 	}
 
-	public Event findByReference(String reference) throws EntityIdNotFountException {
+	public Event findByReference(String reference) throws EntityIdNotFoundException {
 		return eventDao.findByReference(reference);
 	}
 

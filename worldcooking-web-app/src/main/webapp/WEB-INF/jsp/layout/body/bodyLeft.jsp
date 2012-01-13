@@ -1,9 +1,6 @@
 <%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="web-security" uri="http://www.oups-asso.org/mish-k/tags/web-security"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<web-security:login-area />
 
 <sec:authorize access="hasAnyRole('ADMIN','SUPER_ADMIN')">
 

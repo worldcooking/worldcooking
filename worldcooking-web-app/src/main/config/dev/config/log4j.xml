@@ -19,12 +19,18 @@
 	</appender>
 
 	<logger name="org.worldcooking">
-		<level value="info" />
+		<level value="debug" />
+	</logger>
+	<logger name="org.mishk">
+		<level value="debug" />
+	</logger>
+	<logger name="org.oupsasso.mishk">
+		<level value="debug" />
 	</logger>
 
 	<!-- set to debug to show SQL queries -->
 	<logger name="org.hibernate.SQL">
-		<level value="warn" />
+		<level value="info" />
 	</logger>
 	
 	<!-- set to debug to show HBM2DLL queries -->

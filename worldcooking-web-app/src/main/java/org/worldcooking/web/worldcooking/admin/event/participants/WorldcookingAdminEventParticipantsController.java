@@ -4,11 +4,16 @@
 package org.worldcooking.web.worldcooking.admin.event.participants;
 
 import java.util.List;
-import java.util.SortedSet;
 
 import javax.servlet.http.HttpSession;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.EventRole;
+import org.mishk.business.event.entity.Registration;
+import org.mishk.business.event.entity.RegistrationStatus;
+import org.mishk.business.event.service.EventService;
+import org.mishk.business.event.service.RegistrationService;
+import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.entity.event.Task;
-import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventTaskForm;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.transform.RegistrationToViewModelTransformer;
 import org.worldcooking.web.worldcooking.history.WorldcookingHistoryController;
@@ -55,11 +55,12 @@ public class WorldcookingAdminEventParticipantsController {
 
 		ModelAndView modelAndView = new ModelAndView(REGISTRATION_JSP);
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> registrations = registrationService.findValidatedRegistrations(event.getId());
+		List<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
+				RegistrationStatus.VALIDATED, true);
 
 		modelAndView.addObject("registrations", registrationToViewModelTransformer.transform(registrations));
 
@@ -76,11 +77,12 @@ public class WorldcookingAdminEventParticipantsController {
 
 		ModelAndView modelAndView = new ModelAndView(REGISTRATION_JSP);
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> registrations = registrationService.findNonValidatedRegistrations(event.getId());
+		List<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
+				RegistrationStatus.PENDING, true);
 
 		modelAndView.addObject("registrations", registrationToViewModelTransformer.transform(registrations));
 
@@ -91,17 +93,18 @@ public class WorldcookingAdminEventParticipantsController {
 	public ModelAndView handleRequest(@PathVariable String eventReference) throws ServiceException {
 		ModelAndView modelAndView = new ModelAndView(JSP);
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, true);
 
 		modelAndView.addObject("event", event);
 
-		SortedSet<Registration> nonValidatedRegistrations = registrationService.findNonValidatedRegistrations(event
-				.getId());
+		List<Registration> nonValidatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
+				RegistrationStatus.PENDING, true);
 
 		modelAndView.addObject("nonValidatedRegistrations",
 				registrationToViewModelTransformer.transform(nonValidatedRegistrations));
 
-		SortedSet<Registration> validatedRegistrations = registrationService.findValidatedRegistrations(event.getId());
+		List<Registration> validatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
+				RegistrationStatus.VALIDATED, false);
 
 		modelAndView.addObject("validatedRegistrations",
 				registrationToViewModelTransformer.transform(validatedRegistrations));
@@ -113,13 +116,13 @@ public class WorldcookingAdminEventParticipantsController {
 		return modelAndView;
 	}
 
-	@ModelAttribute("tasks")
-	public List<Task> populateTasks(@PathVariable String eventReference) throws EntityIdNotFountException {
+	@ModelAttribute("eventRoles")
+	public List<EventRole> populateTasks(@PathVariable String eventReference) throws EntityReferenceNotFoundException {
 
-		Event event = eventService.findByReference(eventReference);
-		List<Task> tasks = eventService.findAllTasks(event.getId());
+		Event event = eventService.findEventByReference(eventReference, false);
+		List<EventRole> eventRoles = eventService.findAllEventRoles(event.getId(), false);
 
-		return tasks;
+		return eventRoles;
 	}
 
 	@ModelAttribute("history")

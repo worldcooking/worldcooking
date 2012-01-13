@@ -21,6 +21,12 @@
 	<logger name="org.worldcooking">
 		<level value="info" />
 	</logger>
+	<logger name="org.mishk">
+		<level value="info" />
+	</logger>
+	<logger name="org.oupsasso.mishk">
+		<level value="info" />
+	</logger>
 
 	<!-- set to debug to show SQL queries -->
 	<logger name="org.hibernate.SQL">

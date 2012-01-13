@@ -10,7 +10,13 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.mishk.business.event.entity.Direction;
+import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.EventRegistrationStatus;
+import org.mishk.business.event.entity.Place;
+import org.mishk.business.event.service.EventService;
+import org.mishk.business.event.service.PlaceService;
+import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.place.Direction;
-import org.worldcooking.server.entity.place.Place;
-import org.worldcooking.server.services.EventService;
 import org.worldcooking.web.worldcooking.admin.event.description.model.EventDescriptionForm;
 
 /**
@@ -35,14 +37,18 @@ public class WorldcookingAdminEventDescriptionController {
 
 	private static final String URL = "/direct/admin/event/{eventReference}/description";
 	private static final String JSP = "worldcooking/admin/event/description/worldcooking-admin-event-description";
+
 	@Autowired
 	private EventService eventService;
+
+	@Autowired
+	private PlaceService placeService;
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
 	public ModelAndView handleRequest(@PathVariable String eventReference) throws ServiceException {
 		ModelAndView modelAndView = new ModelAndView(JSP);
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
 		modelAndView.addObject("event", event);
 
@@ -76,6 +82,8 @@ public class WorldcookingAdminEventDescriptionController {
 		form.setDate(event.getDateTime());
 		form.setTime(event.getDateTime());
 
+		form.setEventRegistrationStatus(event.getEventRegistrationStatus().toString());
+
 		return form;
 	}
 
@@ -88,11 +96,13 @@ public class WorldcookingAdminEventDescriptionController {
 			return JSP;
 		}
 
-		Event event = eventService.findById(form.getEventId());
+		Event event = eventService.findEventById(form.getEventId(), false);
 
 		event.setName(form.getEventName());
 		Date newDateTime = new Date(form.getDate().getTime() + form.getTime().getTime());
 		event.setDateTime(newDateTime);
+
+		event.setEventRegistrationStatus(EventRegistrationStatus.valueOf(form.getEventRegistrationStatus()));
 
 		eventService.saveOrUpdate(event);
 
@@ -100,19 +110,19 @@ public class WorldcookingAdminEventDescriptionController {
 	}
 
 	@ModelAttribute("event")
-	public Event getEvent(@PathVariable String eventReference) throws EntityIdNotFountException {
-		return eventService.findByReference(eventReference);
+	public Event getEvent(@PathVariable String eventReference) throws EntityReferenceNotFoundException {
+		return eventService.findEventByReference(eventReference, false);
 	}
 
 	@ModelAttribute("places")
-	public Map<Long, String> getPlaces(@PathVariable String eventReference) throws EntityIdNotFountException {
+	public Map<Long, String> getPlaces(@PathVariable String eventReference) throws EntityReferenceNotFoundException {
 
 		Map<Long, String> placesIdDescription = new LinkedHashMap<Long, String>();
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 		if (event != null) {
 
-			List<Place> places = eventService.findAllPlacesOrderByName(event.getId());
+			List<Place> places = placeService.findAllPlaces();
 
 			for (Place p : places) {
 
@@ -138,6 +148,19 @@ public class WorldcookingAdminEventDescriptionController {
 		}
 
 		return placesIdDescription;
+	}
+
+	@ModelAttribute("availableEventRegistrationStatus")
+	public Map<String, String> getAvailableRegistrationStatus() throws EntityReferenceNotFoundException {
+
+		Map<String, String> availableEventRegistrationStatus = new LinkedHashMap<String, String>();
+
+		for (EventRegistrationStatus status : EventRegistrationStatus.values()) {
+
+			availableEventRegistrationStatus.put(status.toString(), status.toString());
+		}
+
+		return availableEventRegistrationStatus;
 	}
 
 }

@@ -20,6 +20,9 @@
 	<%-- place --%>
 	<template-form:select id="eventPlaceInput" path="placeId" label="Place" items="${places}" multiple="false"/>
 	
+	<%-- registration status --%>
+	<template-form:select id="eventRegistrationStatusInput" path="eventRegistrationStatus" label="Registration status" items="${availableEventRegistrationStatus}" multiple="false"/>
+	
 	<%-- date --%>
 	<template-form:input id="eventDateInput" path="date" label="Date" newGroup="true" size="small"/>
 	

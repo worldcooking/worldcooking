@@ -39,9 +39,9 @@
 				<tr class="participant">
 					<%-- subscriber name --%>
 					<td>${participant.name}</td>
-					<%-- subscriber task --%>
+					<%-- subscriber role --%>
 					<td>
-						<worldcooking-admin:registration-participants-task participant="${participant}" tasks="${tasks}" registrationId="${registration.id}" />
+						<worldcooking-admin:registration-participants-task participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
 					</td>
 					<%-- subscriber email --%>
 					<td >${participant.email}</td>
@@ -89,9 +89,9 @@
 						<tr class="participant">
 							<%-- additional participant name --%>
 							<td>${participant.name}</td>
-							<%-- additional participant task --%>
+							<%-- additional participant role --%>
 							<td>
-								<worldcooking-admin:registration-participants-task participant="${participant}" tasks="${tasks}" registrationId="${registration.id}" />
+								<worldcooking-admin:registration-participants-task participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
 							</td>
 							<%-- additional participant email --%>
 							<td >${participant.email}</td>

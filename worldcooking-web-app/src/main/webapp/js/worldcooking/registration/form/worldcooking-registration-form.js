@@ -4,8 +4,9 @@
   *
 **/
 function removeGuest(guestContainer)  {
-	guestContainer.find('.additionalParticipantNameInput').val('');
 	guestContainer.hide("fade", {}, 500);
+	guestContainer.find('input').val('');
+	guestContainer.find('option').removeAttr("selected");
 }
 
 /**

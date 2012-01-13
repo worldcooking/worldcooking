@@ -33,6 +33,8 @@ public class EventDescriptionForm {
 	 */
 	private Long placeId;
 
+	private String eventRegistrationStatus;
+
 	public Long getEventId() {
 		return eventId;
 	}
@@ -71,6 +73,14 @@ public class EventDescriptionForm {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	public String getEventRegistrationStatus() {
+		return eventRegistrationStatus;
+	}
+
+	public void setEventRegistrationStatus(String registrationStatus) {
+		this.eventRegistrationStatus = registrationStatus;
 	}
 
 }

@@ -9,7 +9,15 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.EventRole;
+import org.mishk.business.event.entity.Registration;
+import org.mishk.business.event.service.EventService;
+import org.mishk.business.event.service.model.NewParticipant;
+import org.mishk.business.event.service.model.NewRegistration;
+import org.mishk.business.event.service.model.NewRegistrationPaymentMode;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.oupsasso.mishk.security.entity.SecurityUser;
 import org.oupsasso.mishk.security.service.SecurityUserManagementService;
 import org.slf4j.Logger;
@@ -23,14 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.entity.event.Task;
-import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.registration.RegistrationService;
-import org.worldcooking.server.services.registration.model.NewParticipant;
-import org.worldcooking.server.services.registration.model.NewRegistration;
-import org.worldcooking.server.services.registration.model.NewRegistrationPaymentMode;
+import org.worldcooking.service.admin.WorldcookingService;
 import org.worldcooking.web.worldcooking.registration.form.model.WorldcookingRegistrationFormDetail;
 
 @Controller
@@ -40,7 +41,7 @@ public class WorldcookingRegistrationFormController {
 	private static final String JSP = "worldcooking/registration/form/worldcooking-registration-form";
 
 	@Autowired
-	private RegistrationService registrationService;
+	private WorldcookingService worldcookingService;
 
 	@Autowired
 	private EventService eventService;
@@ -51,17 +52,19 @@ public class WorldcookingRegistrationFormController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(@PathVariable String eventReference, ModelMap model) throws EntityIdNotFountException {
+	public String initializeForm(@PathVariable String eventReference, ModelMap model) throws EntityIdNotFoundException,
+			EntityReferenceNotFoundException {
 
 		WorldcookingRegistrationFormDetail registration = new WorldcookingRegistrationFormDetail();
 
-		Event lastEvent = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
-		if (lastEvent != null) {
-			registration.setEventId(lastEvent.getId());
+		if (event != null) {
+			registration.setEventId(event.getId());
 
-			if (registrationService.isRegistrationClosed(lastEvent.getId())) {
-				logger.warn("Attempt to access to closed registration of event '{}'.", lastEvent.getName());
+			if (!eventService.isEventOpen(event)) {
+				logger.warn("Attempt to access to {} event '{}'.", new Object[] { event.getEventRegistrationStatus(),
+						event.getName() });
 				return "redirect:/";
 			}
 
@@ -75,24 +78,26 @@ public class WorldcookingRegistrationFormController {
 			registration.setEmailAddress(user.getEmailAddress());
 		}
 		model.addAttribute("registration", registration);
+		model.addAttribute("event", event);
 
 		return JSP;
 	}
 
 	@ModelAttribute("availableTasks")
 	public Map<Long, String> populateAvailableTasks(@PathVariable String eventReference)
-			throws EntityIdNotFountException {
+			throws EntityIdNotFoundException, EntityReferenceNotFoundException {
 
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
 
-		Event event = eventService.findByReference(eventReference);
-		if (event != null) {
-			List<Task> availableTasks = new ArrayList<Task>();
-			availableTasks.add(new Task());
-			availableTasks.addAll(eventService.getAvailableTasks(event.getId()));
+		availableTasksIdName.put(-1l, "");
 
-			for (Task t : availableTasks) {
-				availableTasksIdName.put(t.getId(), t.getName());
+		Event event = eventService.findEventByReference(eventReference, false);
+		if (event != null) {
+			List<EventRole> availableRoles = new ArrayList<EventRole>();
+			availableRoles.addAll(eventService.getAvailableEventRoles(event.getId(), false));
+
+			for (EventRole t : availableRoles) {
+				availableTasksIdName.put(t.getId(), t.getRole().getName());
 			}
 		}
 
@@ -112,13 +117,12 @@ public class WorldcookingRegistrationFormController {
 	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
 			BindingResult result) throws Exception {
 
-		Event event = eventService.findById(registrationModel.getEventId());
+		Event event = eventService.findEventById(registrationModel.getEventId(), false);
 
-		if (event != null) {
-			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
-				return "redirect:/";
-			}
+		if (!eventService.isEventOpen(event)) {
+			// event is not open for registration
+			logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
+			return "redirect:/";
 		}
 
 		// check parameters (TODO manage errors)
@@ -136,8 +140,8 @@ public class WorldcookingRegistrationFormController {
 		// create new registration
 		NewRegistration newRegistration = createNewRegistration(registrationModel);
 
-		// persiste new registration
-		Registration registration = registrationService.subscribe(newRegistration);
+		// persist registration
+		Registration registration = worldcookingService.register(newRegistration);
 
 		String returnView;
 		if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {
@@ -156,10 +160,11 @@ public class WorldcookingRegistrationFormController {
 	 * Create the new registration.
 	 * 
 	 * @param registration
-	 * @throws EntityIdNotFountException
+	 * @throws EntityIdNotFoundException
 	 */
 	private NewRegistration createNewRegistration(WorldcookingRegistrationFormDetail registration)
-			throws EntityIdNotFountException {
+			throws EntityIdNotFoundException {
+
 		// create registration
 		NewRegistration newRegistration = new NewRegistration();
 		Long eventId = registration.getEventId();

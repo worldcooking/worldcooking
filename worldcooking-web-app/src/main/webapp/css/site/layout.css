@@ -20,7 +20,7 @@
 #header_title h1 {
 	height: 150px;
 	margin: 10px auto 0 25%;
-	background: url(../../img/peruflag-50px.png) no-repeat;
+	background: url(../../img/3rdparty/wikimedia/flags/portugal/Flag_of_Portugal_50px.png) no-repeat;
 	padding-top: 15;
 	background-size: 50;
 	text-align: left;
@@ -32,4 +32,13 @@
 
 .mishk-template-layout_body-area {
 	background: white;
+}
+
+#mishk-template-layout_header-right{
+	background:none;
+	border:none;
+	-moz-box-shadow: 0 0 0px transparent;
+	-webkit-box-shadow: 0 0 0px transparent;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
 }

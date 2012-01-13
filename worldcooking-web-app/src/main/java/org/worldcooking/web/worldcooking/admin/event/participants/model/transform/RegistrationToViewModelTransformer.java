@@ -3,15 +3,15 @@ package org.worldcooking.web.worldcooking.admin.event.participants.model.transfo
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.mishk.business.event.entity.EventRole;
+import org.mishk.business.event.entity.Participant;
+import org.mishk.business.event.entity.Registration;
+import org.mishk.business.event.entity.RegistrationStatus;
+import org.mishk.business.event.service.RegistrationService;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.transform.AbstractTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.entity.event.Task;
-import org.worldcooking.server.entity.payment.PaymentMode;
-import org.worldcooking.server.entity.people.Participant;
-import org.worldcooking.server.services.registration.RegistrationService;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventParticipant;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventRegistration;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventTask;
@@ -24,7 +24,7 @@ public class RegistrationToViewModelTransformer extends
 	private RegistrationService registrationService;
 
 	@Override
-	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityIdNotFountException {
+	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityIdNotFoundException {
 		WorldcookingAdminEventRegistration output = new WorldcookingAdminEventRegistration();
 		output.setId(input.getId());
 		WorldcookingAdminEventParticipant r = new WorldcookingAdminEventParticipant();
@@ -33,8 +33,9 @@ public class RegistrationToViewModelTransformer extends
 		r.setId(input.getSubscriberParticipant().getId());
 
 		r.setEmail(input.getSubscriberParticipant().getEmail());
-		Task task = input.getSubscriberParticipant().getTask();
-		WorldcookingAdminEventTask taskModel = new WorldcookingAdminEventTask(task.getName(), task.getId());
+		EventRole eventRole = input.getSubscriberParticipant().getEventRole();
+		WorldcookingAdminEventTask taskModel = new WorldcookingAdminEventTask(eventRole.getRole().getName(),
+				eventRole.getId());
 		r.setTask(taskModel);
 		output.setRegistrer(r);
 
@@ -46,22 +47,25 @@ public class RegistrationToViewModelTransformer extends
 				ap.setName(p.getName());
 				ap.setEmail(p.getEmail());
 				ap.setId(p.getId());
-				Task pTask = p.getTask();
-				WorldcookingAdminEventTask pTaskModel = new WorldcookingAdminEventTask(pTask.getName(), pTask.getId());
+				EventRole pEventRole = p.getEventRole();
+				WorldcookingAdminEventTask pTaskModel = new WorldcookingAdminEventTask(pEventRole.getRole().getName(),
+						pEventRole.getId());
 				ap.setTask(pTaskModel);
 				additionalParticipants.add(ap);
 			}
 		}
 
-		if (input.getPayment().getMode() == PaymentMode.PAYPAL) {
-			output.setPaymentDescription("paypal");
-		} else {
-			output.setPaymentDescription(input.getPayment().getReference());
-		}
+		// if (input.getPayment().getMode() == PaymentMode.PAYPAL) {
+		// output.setPaymentDescription("paypal");
+		// } else {
+		// output.setPaymentDescription(input.getPayment().getReference());
+		// }
 
-		output.setValidated(input.getValidate());
+		output.setValidated(input.getRegistrationStatus() == RegistrationStatus.VALIDATED);
 
-		Double amount = registrationService.calculateRegistrationPrice(input.getParticipants());
+		// TODO Double amount =
+		// registrationService.calculateRegistrationPrice(input.getParticipants());
+		Double amount = 15d;
 		output.setAmount(amount);
 
 		output.setAdditionalParticipants(additionalParticipants);

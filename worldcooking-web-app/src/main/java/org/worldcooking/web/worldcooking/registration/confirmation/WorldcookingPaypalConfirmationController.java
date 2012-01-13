@@ -2,22 +2,23 @@ package org.worldcooking.web.worldcooking.registration.confirmation;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.Registration;
+import org.mishk.business.event.entity.RegistrationStatus;
+import org.mishk.business.event.service.EventService;
+import org.mishk.business.event.service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.registration.RegistrationService;
+import org.worldcooking.service.admin.WorldcookingService;
 
 @Controller
 @RequestMapping(value = "/event/{eventReference}/registration/confirmation/paypal")
@@ -27,6 +28,9 @@ public class WorldcookingPaypalConfirmationController {
 
 	@Autowired
 	private RegistrationService registrationService;
+
+	@Autowired
+	private WorldcookingService worldcookingService;
 
 	@Autowired
 	private EventService eventService;
@@ -79,23 +83,16 @@ public class WorldcookingPaypalConfirmationController {
 	public String initializeForm(@PathVariable String eventReference, @RequestParam Long registrationId, ModelMap model)
 			throws Exception {
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
-		if (event != null) {
-			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
-				return "redirect:/";
-			}
+		if (!eventService.isEventOpen(event)) {
+			logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
+			return "redirect:/";
 		}
 
-		// TODO do not throw exception: manage errors!
+		Registration registration = registrationService.findRegistrationById(registrationId, false);
 
-		// TODO manage errors
-		Assert.notNull(registrationId);
-
-		Registration registration = registrationService.findFullRegistrationById(registrationId);
-
-		if (registration.getValidate() != null && registration.getValidate().booleanValue()) {
+		if (registration.getRegistrationStatus() == RegistrationStatus.VALIDATED) {
 			// registration already validated: redirect to welcome page
 			return "redirect:/";
 		}
@@ -103,7 +100,7 @@ public class WorldcookingPaypalConfirmationController {
 		model.addAttribute("event", registration.getEvent());
 
 		// calculate amount
-		Double paypalAmount = registrationService.calculateRegistrationPrice(registration.getParticipants());
+		Double paypalAmount = worldcookingService.calculateRegistrationPrice(registrationId);
 
 		// Paypal form 'amount' field.
 		model.addAttribute("paypalAmount", paypalAmount);

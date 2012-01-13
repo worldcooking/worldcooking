@@ -71,9 +71,17 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.worldcooking</groupId>
 			<artifactId>worldcooking-services</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>org.oups-asso.mish-k.framework.business</groupId>
+			<artifactId>mish-k-framework-business-events</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.oups-asso.mish-k.framework.business</groupId>
+			<artifactId>mish-k-framework-business-shop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
@@ -112,7 +120,41 @@
 			<artifactId>tomcat-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<classifier>jdbc4</classifier>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.oups-asso.mish-k.framework.core</groupId>
+			<artifactId>mish-k-framework-core-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.oups-asso.mish-k.framework.core</groupId>
+			<artifactId>mish-k-framework-core-dao-tests</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

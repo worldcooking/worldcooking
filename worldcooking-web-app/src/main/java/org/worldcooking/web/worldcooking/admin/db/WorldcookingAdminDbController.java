@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.worldcooking.server.services.DbInitializerService;
+import org.worldcooking.service.admin.DbInitializerService;
 
 /**
  * @author MatthieuG
@@ -32,6 +32,7 @@ public class WorldcookingAdminDbController {
 	public String onSubmit() throws Exception {
 		// reset DB
 		dbInitializerService.resetDb();
+		dbInitializerService.initData();
 
 		// redirect to main page
 		return "redirect:/";

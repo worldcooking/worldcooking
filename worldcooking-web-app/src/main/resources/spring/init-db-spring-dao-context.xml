@@ -5,7 +5,20 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<context:property-placeholder location="test-dao.properties" />
+	<context:property-placeholder properties-ref="properties" />
 
-	<import resource="classpath:spring/spring-dao-base-context.xml" />
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:config/packages.properties</value>
+				<value>classpath:config/dao.properties</value>
+				<value>classpath:config/init-db-dao.properties</value>
+				<value>classpath:config/application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<import resource="classpath:spring/default-spring-dao-context.xml" />
+
+	<context:component-scan base-package="org.mishk,org.oupsasso.mishk,org.worldcooking" />
 </beans>

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class RegistrationService {
 	@Autowired
 	private ParticipantDAOImpl participantDAO;
 
-	public boolean isRegistrationClosed(Long eventId) throws EntityIdNotFountException {
+	public boolean isRegistrationClosed(Long eventId) throws EntityIdNotFoundException {
 		Event e = eventDao.findById(eventId);
 		Long maxParticipantsNb = e.getMaxParticipants();
 
@@ -60,20 +60,20 @@ public class RegistrationService {
 
 	}
 
-	public double calculateRegistrationPrice(Long registrationId) throws EntityIdNotFountException {
+	public double calculateRegistrationPrice(Long registrationId) throws EntityIdNotFoundException {
 		Registration registration = registrationDAOImpl.findFullRegistrationById(registrationId);
 
 		return calculateRegistrationPrice(registration.getParticipants());
 
 	}
 
-	public double calculateRegistrationPrice(Collection<Participant> participants) throws EntityIdNotFountException {
+	public double calculateRegistrationPrice(Collection<Participant> participants) throws EntityIdNotFoundException {
 		// initial amount is zero
 		double amount = 0;
 		for (Participant participant : participants) {
 
 			// add the price of participant to registration amount
-			amount += participant.getTask().getPricePerParticipant();
+			// TODO amount += participant.getTask().getPricePerParticipant();
 		}
 		return amount;
 	}
@@ -84,10 +84,10 @@ public class RegistrationService {
 	 * @param newRegistration
 	 *            the registration parameters
 	 * @return the persisted registration
-	 * @throws EntityIdNotFountException
+	 * @throws EntityIdNotFoundException
 	 *             a required entity id was not fount in database.
 	 */
-	public Registration subscribe(NewRegistration newRegistration) throws EntityIdNotFountException {
+	public Registration subscribe(NewRegistration newRegistration) throws EntityIdNotFoundException {
 		// TODO make services transactionnals
 		// TODO registration or registration?
 		Registration registration = null;
@@ -124,7 +124,7 @@ public class RegistrationService {
 			}
 			logger.info("Successfully created registration of '{}' with {} participants.", newRegistration
 					.getSubscriber().getEmailAddress(), newRegistration.getAdditionalParticipants().size());
-		} catch (EntityIdNotFountException e) {
+		} catch (EntityIdNotFoundException e) {
 			logger.error("Unable to register registration because " + e.getErrorMessage() + ".", e);
 			throw e;
 		}
@@ -132,7 +132,7 @@ public class RegistrationService {
 	}
 
 	private Payment createPayment(NewRegistration newRegistration, Collection<Participant> participants)
-			throws EntityIdNotFountException {
+			throws EntityIdNotFoundException {
 		// TODO Payment or Facturation ?
 		Payment payment = new Payment();
 		payment.setAmount(calculateRegistrationPrice(participants));
@@ -148,7 +148,7 @@ public class RegistrationService {
 		return payment;
 	}
 
-	private Participant createParticipant(NewParticipant newParticipant) throws EntityIdNotFountException {
+	private Participant createParticipant(NewParticipant newParticipant) throws EntityIdNotFoundException {
 		Participant participant = new Participant();
 		participant.setName(newParticipant.getName());
 
@@ -156,12 +156,12 @@ public class RegistrationService {
 
 		// retrieve the corresponding task
 		Task task = taskDao.findById(newParticipant.getTaskId());
-		participant.setTask(task);
+		// TODO participant.setTask(task);
 
 		return participant;
 	}
 
-	private Registration createRegistration(NewRegistration newRegistration) throws EntityIdNotFountException {
+	private Registration createRegistration(NewRegistration newRegistration) throws EntityIdNotFoundException {
 		Event e = eventDao.findById(newRegistration.getEventId());
 
 		Registration registration;
@@ -173,7 +173,7 @@ public class RegistrationService {
 		return registration;
 	}
 
-	public Registration validatePayment(Long registrationId) throws EntityIdNotFountException {
+	public Registration validatePayment(Long registrationId) throws EntityIdNotFoundException {
 		try {
 			Registration registration = registrationDAOImpl.findById(registrationId);
 
@@ -181,7 +181,7 @@ public class RegistrationService {
 			taskDao.saveOrUpdate(registration);
 
 			return registration;
-		} catch (EntityIdNotFountException e) {
+		} catch (EntityIdNotFoundException e) {
 			logger.error(
 					"Unable to validate payment of registration '" + registrationId + "' because "
 							+ e.getErrorMessage() + ".", e);
@@ -189,7 +189,7 @@ public class RegistrationService {
 		}
 	}
 
-	public Registration unvalidatePayment(Long registrationId) throws EntityIdNotFountException {
+	public Registration unvalidatePayment(Long registrationId) throws EntityIdNotFoundException {
 		try {
 			Registration registration = registrationDAOImpl.findById(registrationId);
 
@@ -197,7 +197,7 @@ public class RegistrationService {
 			taskDao.saveOrUpdate(registration);
 
 			return registration;
-		} catch (EntityIdNotFountException e) {
+		} catch (EntityIdNotFoundException e) {
 			logger.error(
 					"Unable to unvalidate payment of registration '" + registrationId + "' because "
 							+ e.getErrorMessage() + ".", e);
@@ -205,7 +205,7 @@ public class RegistrationService {
 		}
 	}
 
-	public Registration removeRegistration(Long registrationId) throws EntityIdNotFountException {
+	public Registration removeRegistration(Long registrationId) throws EntityIdNotFoundException {
 		try {
 			Registration registration = registrationDAOImpl.findById(registrationId);
 
@@ -216,14 +216,14 @@ public class RegistrationService {
 			registrationDAOImpl.delete(registration);
 
 			return registration;
-		} catch (EntityIdNotFountException e) {
+		} catch (EntityIdNotFoundException e) {
 			logger.error("Unable to remove registration '" + registrationId + "' because " + e.getErrorMessage() + ".",
 					e);
 			throw e;
 		}
 	}
 
-	public Registration findFullRegistrationById(Long id) throws EntityIdNotFountException {
+	public Registration findFullRegistrationById(Long id) throws EntityIdNotFoundException {
 		return registrationDAOImpl.findFullRegistrationById(id);
 	}
 
@@ -235,22 +235,22 @@ public class RegistrationService {
 		return registrationDAOImpl.findValidatedRegistrations(eventId);
 	}
 
-	public Participant findParticipantById(Long participantId) throws EntityIdNotFountException {
+	public Participant findParticipantById(Long participantId) throws EntityIdNotFoundException {
 		return participantDAO.findById(participantId);
 	}
 
-	public Task updateTask(Long participantId, Long taskId) throws EntityIdNotFountException {
+	public Task updateTask(Long participantId, Long taskId) throws EntityIdNotFoundException {
 		Participant participant = participantDAO.findById(participantId);
 
-		Task previousTask = participant.getTask();
+		// TODO Task previousTask = participant.getTask();
 
 		Task task = taskDao.findById(taskId);
 
-		participant.setTask(task);
+		// TODO participant.setTask(task);
 
 		taskDao.saveOrUpdate(participant);
 
-		return previousTask;
+		return null; // TODO previousTask;
 	}
 
 	public Long countValidatedParticipants(Long eventId) {

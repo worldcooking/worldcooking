@@ -10,8 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.worldcooking.server.entity.event.EventRole;
 import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.entity.event.Task;
 
 /**
  * @author MatthieuG
@@ -24,14 +24,14 @@ public class Participant {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column
 	private String name;
 
 	@Column
 	private String email;
 
 	@ManyToOne
-	private Task task;
+	private EventRole eventRole;
 
 	@ManyToOne
 	private Registration registration;
@@ -40,10 +40,10 @@ public class Participant {
 		// nothing to do
 	}
 
-	public Participant(String name, Task task) {
+	public Participant(String name, EventRole eventRole) {
 		super();
 		this.name = name;
-		this.task = task;
+		this.eventRole = eventRole;
 	}
 
 	/**
@@ -59,21 +59,6 @@ public class Participant {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the task
-	 */
-	public Task getTask() {
-		return task;
-	}
-
-	/**
-	 * @param task
-	 *            the task to set
-	 */
-	public void setTask(Task task) {
-		this.task = task;
 	}
 
 	public Long getId() {
@@ -98,6 +83,14 @@ public class Participant {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public EventRole getEventRole() {
+		return eventRole;
+	}
+
+	public void setEventRole(EventRole eventRole) {
+		this.eventRole = eventRole;
 	}
 
 }

@@ -1,6 +1,11 @@
 package org.worldcooking.web.worldcooking.registration.confirmation;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.Registration;
+import org.mishk.business.event.entity.RegistrationStatus;
+import org.mishk.business.event.service.EventService;
+import org.mishk.business.event.service.RegistrationService;
+import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.worldcooking.server.entity.event.Event;
-import org.worldcooking.server.entity.event.Registration;
-import org.worldcooking.server.services.EventService;
-import org.worldcooking.server.services.registration.RegistrationService;
+import org.worldcooking.service.admin.WorldcookingService;
 
 @Controller
 public class WorldcookingManualPaymentConfirmationController {
@@ -27,26 +29,27 @@ public class WorldcookingManualPaymentConfirmationController {
 	@Autowired
 	private EventService eventService;
 
+	@Autowired
+	private WorldcookingService worldcookingService;
+
 	@RequestMapping(value = "/event/{eventReference}/registration/confirmation", method = RequestMethod.GET)
 	public String handleRequest(@PathVariable String eventReference, @RequestParam Long registrationId, ModelMap model)
-			throws EntityIdNotFountException {
+			throws EntityNotFoundException {
 		// TODO do not throw exception: manage errors!
 
 		// TODO manage errors
 		Assert.notNull(registrationId);
 
-		Event event = eventService.findByReference(eventReference);
+		Event event = eventService.findEventByReference(eventReference, false);
 
-		if (event != null) {
-			if (registrationService.isRegistrationClosed(event.getId())) {
-				logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
-				return "redirect:/";
-			}
+		if (!eventService.isEventOpen(event)) {
+			logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
+			return "redirect:/";
 		}
 
-		Registration registration = registrationService.findFullRegistrationById(registrationId);
+		Registration registration = registrationService.findRegistrationById(registrationId, true);
 
-		if (registration.getValidate() != null && registration.getValidate().booleanValue()) {
+		if (isRegistrationValidated(registration)) {
 			// registration already validated: redirect to welcome page
 			return "redirect:/";
 		}
@@ -54,12 +57,16 @@ public class WorldcookingManualPaymentConfirmationController {
 		model.addAttribute("event", registration.getEvent());
 
 		// calculate amount
-		Double paypalAmount = registrationService.calculateRegistrationPrice(registration.getParticipants());
+		// TODO Double paypalAmount =
+		// worldcookingService.calculateRegistrationPrice(registrationId);
 
 		// TODO display pre-registration details and price to pay
 
-		model.addAttribute("event", null);
 		return "worldcooking/registration/confirmation/worldcooking-manual-payment-confirmation";
+	}
+
+	private boolean isRegistrationValidated(Registration registration) {
+		return registration != null && registration.getRegistrationStatus() == RegistrationStatus.VALIDATED;
 	}
 
 }

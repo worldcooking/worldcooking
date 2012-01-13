@@ -30,6 +30,7 @@
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<org.slf4j.version>1.6.4</org.slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
+		<junit.version>4.8.1</junit.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -149,7 +150,23 @@
 			</dependency>
 			<dependency>
 				<groupId>org.oups-asso.mish-k.framework.core</groupId>
+				<artifactId>mish-k-framework-core-dao-tests</artifactId>
+				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.framework.core</groupId>
 				<artifactId>mish-k-framework-core-web</artifactId>
+				<version>${org.oups-asso.mish-k.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.framework.business</groupId>
+				<artifactId>mish-k-framework-business-events</artifactId>
+				<version>${org.oups-asso.mish-k.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.oups-asso.mish-k.framework.business</groupId>
+				<artifactId>mish-k-framework-business-shop</artifactId>
 				<version>${org.oups-asso.mish-k.framework.version}</version>
 			</dependency>
 			<!-- Logging dependencies -->
@@ -260,7 +277,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
+				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 

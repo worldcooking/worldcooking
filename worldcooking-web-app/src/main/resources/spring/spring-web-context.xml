@@ -15,6 +15,6 @@
 	<import resource="classpath:spring/default-spring-web-context.xml" />
 	<import resource="classpath:spring/default-spring-web-security-context.xml" />
 
-	<context:component-scan base-package="org.worldcooking" />
+	<context:component-scan base-package="org.mishk,org.worldcooking" />
 
 </beans>

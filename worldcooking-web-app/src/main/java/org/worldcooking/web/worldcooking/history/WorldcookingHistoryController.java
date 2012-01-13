@@ -5,7 +5,7 @@ package org.worldcooking.web.worldcooking.history;
 
 import javax.servlet.http.HttpSession;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFountException;
+import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +25,7 @@ public class WorldcookingHistoryController {
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)
 	public ModelAndView handleRequest(HttpSession session)
-			throws EntityIdNotFountException {
+			throws EntityIdNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView(JSP);
 

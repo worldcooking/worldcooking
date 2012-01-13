@@ -36,7 +36,7 @@ public class WorldcookingResumeEvent {
 	/** List of task with their ids. */
 	private List<WorldcookingResumeTask> tasks = new ArrayList<WorldcookingResumeTask>();
 
-	private int nbParticipantsMax = 0;
+	private long nbParticipantsMax = 0;
 
 	private Boolean registrationClosed;
 
@@ -87,7 +87,6 @@ public class WorldcookingResumeEvent {
 		validatedParticipantsTask.add(new WorldcookingResumeParticipantTask(taskId, name, id));
 	}
 
-	@Mapping("availableTasks")
 	public List<WorldcookingResumeTask> getTasks() {
 		Collections.sort(tasks, TaskComparator.getInstance());
 		return tasks;
@@ -113,12 +112,11 @@ public class WorldcookingResumeEvent {
 		this.tasks = tasks;
 	}
 
-	@Mapping("maxParticipants")
-	public int getNbParticipantsMax() {
+	public long getNbParticipantsMax() {
 		return nbParticipantsMax;
 	}
 
-	public void setNbParticipantsMax(int nbParticipantsMax) {
+	public void setNbParticipantsMax(long nbParticipantsMax) {
 		this.nbParticipantsMax = nbParticipantsMax;
 	}
 

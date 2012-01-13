@@ -1,9 +1,9 @@
 package org.worldcooking.web.worldcooking.admin.events.model.transform;
 
+import org.mishk.business.event.entity.Direction;
+import org.mishk.business.event.entity.Place;
 import org.oupsasso.mishk.core.transform.AbstractTransformer;
 import org.springframework.stereotype.Repository;
-import org.worldcooking.server.entity.place.Direction;
-import org.worldcooking.server.entity.place.Place;
 import org.worldcooking.web.worldcooking.admin.events.model.EventToEditPlace;
 
 @Repository
