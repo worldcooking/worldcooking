@@ -27,10 +27,9 @@ public class WorldcookingAdminEventRegistrationRemoveController {
 	public String handleRequest(@PathVariable String eventReference, @RequestParam Long registrationId)
 			throws EntityIdNotFoundException {
 
-		Registration s = null; // TODO
-								// registrationService.removeRegistration(registrationId);
+		Registration r = registrationService.removeRegistration(registrationId);
 
-		return "redirect:/admin/event/" + s.getEvent().getReference();
+		return "redirect:/admin/event/" + r.getEvent().getReference();
 	}
 
 }

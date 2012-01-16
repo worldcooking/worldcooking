@@ -9,8 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- AJAX URLS -->
-<c:url var="updateTaskUrl" value="/direct/admin/event/${event.reference}/update/task"/>
-<input  id="updateTaskAjaxUrl" type="hidden" name="updateTaskUrl" value="${updateTaskUrl}" />
+<c:url var="updateRoleUrl" value="/direct/admin/event/${event.reference}/update/role"/>
+<input  id="updateRoleAjaxUrl" type="hidden" name="updateRoleUrl" value="${updateRoleUrl}" />
 
 <c:url var="showValidatedRegistrationsUrl" value="/direct/admin/event/${event.reference}/validated/registrations"/>
 <input  id="showAdminValidatedRegistrationsAjaxUrl" type="hidden" name="showAdminValidatedRegistrationsAjaxUrl" value="${showValidatedRegistrationsUrl}" />

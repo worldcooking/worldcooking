@@ -16,7 +16,9 @@ import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.model.NewParticipant;
 import org.mishk.business.event.service.model.NewRegistration;
 import org.mishk.business.event.service.model.NewRegistrationPaymentMode;
+import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.oupsasso.mishk.security.entity.SecurityUser;
 import org.oupsasso.mishk.security.service.SecurityUserManagementService;
@@ -115,7 +117,7 @@ public class WorldcookingRegistrationFormController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
-			BindingResult result) throws Exception {
+			BindingResult result) throws EntityNotFoundException {
 
 		Event event = eventService.findEventById(registrationModel.getEventId(), false);
 
@@ -141,7 +143,13 @@ public class WorldcookingRegistrationFormController {
 		NewRegistration newRegistration = createNewRegistration(registrationModel);
 
 		// persist registration
-		Registration registration = worldcookingService.register(newRegistration);
+		Registration registration;
+		try {
+			registration = worldcookingService.register(newRegistration);
+		} catch (InsufficientStockException e) {
+			// TODO display error
+			return JSP;
+		}
 
 		String returnView;
 		if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {

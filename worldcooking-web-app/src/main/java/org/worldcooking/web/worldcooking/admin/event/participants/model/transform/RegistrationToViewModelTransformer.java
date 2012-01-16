@@ -7,11 +7,15 @@ import org.mishk.business.event.entity.EventRole;
 import org.mishk.business.event.entity.Participant;
 import org.mishk.business.event.entity.Registration;
 import org.mishk.business.event.entity.RegistrationStatus;
-import org.mishk.business.event.service.RegistrationService;
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
+import org.mishk.business.shop.entity.Payment;
+import org.mishk.business.shop.entity.PaymentMode;
+import org.mishk.business.shop.entity.Shopping;
+import org.mishk.business.shop.service.ShoppingService;
+import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.transform.AbstractTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.worldcooking.service.admin.WorldcookingService;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventParticipant;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventRegistration;
 import org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventTask;
@@ -21,10 +25,13 @@ public class RegistrationToViewModelTransformer extends
 		AbstractTransformer<Registration, WorldcookingAdminEventRegistration> {
 
 	@Autowired
-	private RegistrationService registrationService;
+	private ShoppingService shoppingService;
+
+	@Autowired
+	private WorldcookingService worldcookingService;
 
 	@Override
-	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityIdNotFoundException {
+	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityNotFoundException {
 		WorldcookingAdminEventRegistration output = new WorldcookingAdminEventRegistration();
 		output.setId(input.getId());
 		WorldcookingAdminEventParticipant r = new WorldcookingAdminEventParticipant();
@@ -55,17 +62,22 @@ public class RegistrationToViewModelTransformer extends
 			}
 		}
 
-		// if (input.getPayment().getMode() == PaymentMode.PAYPAL) {
-		// output.setPaymentDescription("paypal");
-		// } else {
-		// output.setPaymentDescription(input.getPayment().getReference());
-		// }
+		Shopping shopping = shoppingService.findShoppingByReference(input.getShoppingReference());
+
+		Payment payment = shopping.getPayment();
+		if (payment != null) {
+			if (payment.getPaymentMode() == PaymentMode.PAYPAL) {
+				// paypal payment
+				output.setPaymentDescription("paypal");
+			} else {
+				// manual payment
+				output.setPaymentDescription(payment.getReference());
+			}
+		}
 
 		output.setValidated(input.getRegistrationStatus() == RegistrationStatus.VALIDATED);
 
-		// TODO Double amount =
-		// registrationService.calculateRegistrationPrice(input.getParticipants());
-		Double amount = 15d;
+		Double amount = worldcookingService.calculateRegistrationPrice(input.getId());
 		output.setAmount(amount);
 
 		output.setAdditionalParticipants(additionalParticipants);

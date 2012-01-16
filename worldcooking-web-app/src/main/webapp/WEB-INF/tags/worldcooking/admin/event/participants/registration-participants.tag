@@ -23,7 +23,7 @@
 	<template:table cssClass="table participants">
 		<jsp:attribute name="header">
 			<th>name</th>
-			<th>task</th>
+			<th>role</th>
 			<th>email</th>
 			<th>amount</th>
 			<th>payment method</th>
@@ -41,7 +41,7 @@
 					<td>${participant.name}</td>
 					<%-- subscriber role --%>
 					<td>
-						<worldcooking-admin:registration-participants-task participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
+						<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
 					</td>
 					<%-- subscriber email --%>
 					<td >${participant.email}</td>
@@ -91,7 +91,7 @@
 							<td>${participant.name}</td>
 							<%-- additional participant role --%>
 							<td>
-								<worldcooking-admin:registration-participants-task participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
+								<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
 							</td>
 							<%-- additional participant email --%>
 							<td >${participant.email}</td>

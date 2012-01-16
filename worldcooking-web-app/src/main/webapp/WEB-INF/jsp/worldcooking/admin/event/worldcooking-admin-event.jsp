@@ -15,7 +15,7 @@
 	<resources:require-css resourceURI="worldcooking/admin/event/worldcooking-admin-event.css"/>
 	<resources:require-script resourceURI="worldcooking/history/worldcooking-history.js" />
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event.js" />
-	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event_update-task.js" />
+	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event_update-role.js" />
 	<resources:require-script resourceURI="worldcooking/admin/event/worldcooking-admin-event_validate.js" />
 </head>
 <body>

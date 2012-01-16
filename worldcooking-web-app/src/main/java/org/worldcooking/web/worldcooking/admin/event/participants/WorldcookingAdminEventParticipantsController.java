@@ -4,6 +4,7 @@
 package org.worldcooking.web.worldcooking.admin.event.participants;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,7 +60,7 @@ public class WorldcookingAdminEventParticipantsController {
 
 		modelAndView.addObject("event", event);
 
-		List<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
+		Set<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
 				RegistrationStatus.VALIDATED, true);
 
 		modelAndView.addObject("registrations", registrationToViewModelTransformer.transform(registrations));
@@ -81,7 +82,7 @@ public class WorldcookingAdminEventParticipantsController {
 
 		modelAndView.addObject("event", event);
 
-		List<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
+		Set<Registration> registrations = registrationService.findRegistrationsByStatus(event.getId(),
 				RegistrationStatus.PENDING, true);
 
 		modelAndView.addObject("registrations", registrationToViewModelTransformer.transform(registrations));
@@ -97,14 +98,14 @@ public class WorldcookingAdminEventParticipantsController {
 
 		modelAndView.addObject("event", event);
 
-		List<Registration> nonValidatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
+		Set<Registration> nonValidatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
 				RegistrationStatus.PENDING, true);
 
 		modelAndView.addObject("nonValidatedRegistrations",
 				registrationToViewModelTransformer.transform(nonValidatedRegistrations));
 
-		List<Registration> validatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
-				RegistrationStatus.VALIDATED, false);
+		Set<Registration> validatedRegistrations = registrationService.findRegistrationsByStatus(event.getId(),
+				RegistrationStatus.VALIDATED, true);
 
 		modelAndView.addObject("validatedRegistrations",
 				registrationToViewModelTransformer.transform(validatedRegistrations));

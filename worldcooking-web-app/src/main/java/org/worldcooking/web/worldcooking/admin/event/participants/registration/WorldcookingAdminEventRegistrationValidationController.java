@@ -42,12 +42,12 @@ public class WorldcookingAdminEventRegistrationValidationController {
 	String handleAjaxRequest(HttpSession session, @PathVariable String eventReference, @RequestParam Long registrationId)
 			throws EntityIdNotFoundException, EntityReferenceNotFoundException {
 
-		Registration s = worldcookingService.validatePayment(registrationId);
+		Registration registration = worldcookingService.validatePayment(registrationId);
 
 		// TODO manage errors on client side
 
 		// id is returned for debugging purpose
-		return s.getId().toString();
+		return registration.getId().toString();
 	}
 
 	@RequestMapping(value = URL, method = RequestMethod.GET)

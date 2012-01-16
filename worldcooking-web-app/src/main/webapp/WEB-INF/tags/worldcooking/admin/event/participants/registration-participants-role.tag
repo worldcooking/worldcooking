@@ -5,10 +5,10 @@
 <%@ attribute name="registrationId" required="true" type="java.lang.Long" %>
 
 
-<form action="${pageContext.request.contextPath}/direct/admin/event/update/task">
+<form action="${pageContext.request.contextPath}/direct/admin/event/update/role">
 	<input class="participantId" type="hidden" name="participantId" value="${participant.id}" />
 	<input class="amountHtmlId" type="hidden" name="amountHtmlId" value="amount_${registrationId}" />
-	<select class="tasksSelect" name="taskId">
+	<select class="tasksSelect" name="eventRoleId">
 		<c:forEach items="${eventRoles}" var="eventRole">
 			<c:if test="${participant.task.id == eventRole.id}">
 				<option value="${eventRole.id}" selected="selected">${eventRole.role.name}</option>

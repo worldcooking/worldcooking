@@ -15,10 +15,10 @@ function getParticipantElement(participantChild){
 	  return participantElement;
 	}  
 
-	function getUpdateTaskAjaxUrl(){
-	  var updateTaskAjaxUrlElement = $("#updateTaskAjaxUrl");
-	  assertNotNull("updateTaskAjaxUrlElement", updateTaskAjaxUrlElement);
-	  return updateTaskAjaxUrlElement.val();
+	function getUpdateRoleAjaxUrl(){
+	  var updateRoleAjaxUrlElement = $("#updateRoleAjaxUrl");
+	  assertNotNull("updateRoleAjaxUrlElement", updateRoleAjaxUrlElement);
+	  return updateRoleAjaxUrlElement.val();
 	}
 
 	function getParticipantId(participantChild){
@@ -100,11 +100,11 @@ $(document).ready(function() {
   });
 
  	$("#mishk-template-layout_body-center").on("change", ".tasksSelect", function(event) {
-	    updateTaskAjax( $(this));
+	    updateRoleAjax( $(this));
 	  });
  
  	$("#mishk-template-layout_body-center").on("change", ".tasksSelect", function(event) {
-	    updateTaskAjax( $(this));
+	    updateRoleAjax( $(this));
 	  });
  
 });

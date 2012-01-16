@@ -3,9 +3,12 @@ package org.worldcooking.service.admin;
 import java.util.List;
 
 import org.mishk.business.event.entity.Event;
+import org.mishk.business.event.entity.EventRole;
+import org.mishk.business.event.entity.Participant;
 import org.mishk.business.event.entity.Registration;
 import org.mishk.business.event.entity.Role;
 import org.mishk.business.event.entity.Task;
+import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.RegistrationService;
 import org.mishk.business.event.service.TaskService;
 import org.mishk.business.event.service.model.NewRegistration;
@@ -20,6 +23,7 @@ import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +31,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = ServiceException.class)
 public class WorldcookingService {
 
 	private static final String SHOPPING_REF_PREFIX = "wk";
@@ -50,6 +54,9 @@ public class WorldcookingService {
 
 	@Autowired
 	private RegistrationService registrationService;
+
+	@Autowired
+	private EventService eventService;
 
 	public Registration register(NewRegistration newRegistration) throws EntityNotFoundException,
 			InsufficientStockException {
@@ -135,5 +142,44 @@ public class WorldcookingService {
 
 		// validate registration
 		return registrationService.validateRegistration(registrationId);
+	}
+
+	public Registration unvalidatePayment(Long registrationId) throws EntityIdNotFoundException,
+			EntityReferenceNotFoundException {
+		// find registration
+		Registration registration = registrationService.findRegistrationById(registrationId, false);
+
+		// validate shopping payment
+		paymentService.unvalidatePayment(registration.getShoppingReference());
+
+		// validate registration
+		return registrationService.unvalidateRegistration(registrationId);
+	}
+
+	public EventRole updateParticipantEventRole(Long participantId, Long eventRoleId) throws EntityNotFoundException,
+			InsufficientStockException {
+		// retrieve participant
+		Participant participant = registrationService.findParticipantById(participantId);
+
+		// retrieve event role
+		EventRole eventRole = eventService.findEventRoleById(eventRoleId);
+
+		String shoppingReference = participant.getRegistration().getShoppingReference();
+		// update shopping bag
+
+		String productReference = eventRole.getProductReference();
+
+		// retrieve shopping
+		Shopping shopping = shoppingService.findShoppingByReference(shoppingReference);
+
+		// remove old product from shopping bag
+		shoppingService.removeFromShoppingBag(shopping.getShoppingBag().getId(), participant.getEventRole()
+				.getProductReference());
+
+		// add new product to shopping bag
+		shoppingService.addToShoppingBag(shopping.getShoppingBag().getId(), STOCK_REF, productReference);
+
+		// update registration
+		return registrationService.updateParticipantEventRole(participantId, eventRoleId);
 	}
 }

@@ -239,7 +239,7 @@ public class RegistrationService {
 		return participantDAO.findById(participantId);
 	}
 
-	public Task updateTask(Long participantId, Long taskId) throws EntityIdNotFoundException {
+	public Task updateRole(Long participantId, Long taskId) throws EntityIdNotFoundException {
 		Participant participant = participantDAO.findById(participantId);
 
 		// TODO Task previousTask = participant.getTask();

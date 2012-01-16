@@ -1,15 +1,15 @@
 package org.worldcooking.web.worldcooking.admin.event.participants.model;
 
 public class WorldcookingAdminEventParticipantRegistration {
-	private Long taskId;
+	private Long eventRoleId;
 	private Double newAmount;
 
-	public Long getTaskId() {
-		return taskId;
+	public Long getEventRoleId() {
+		return eventRoleId;
 	}
 
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
+	public void setEventRoleId(Long taskId) {
+		this.eventRoleId = taskId;
 	}
 
 	public Double getNewAmount() {

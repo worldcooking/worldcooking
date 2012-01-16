@@ -1,10 +1,10 @@
 
-function updateTask(taskIdElement, newTaskId){
-  if (taskIdElement.val() != newTaskId) {
+function updateRole(eventRoleIdElement, newEventRoleId){
+  if (eventRoleIdElement.val() != newEventRoleId) {
     // set new value (in case of error)
-    taskIdElement.val(newTaskId);
+	  eventRoleIdElement.val(newEventRoleId);
     // highlight field
-    taskIdElement.effect("highlight", {}, 1000);
+	  eventRoleIdElement.effect("highlight", {}, 1000);
   }
 }
 
@@ -25,22 +25,22 @@ function updateAmount(amountElement, newAmount){
   }
 }
 
-function updateTaskAjax(taskIdElement){
-	assertNotNull("taskIdElement", taskIdElement);
+function updateRoleAjax(eventRoleIdElement){
+	assertNotNull("eventRoleIdElement", eventRoleIdElement);
 
-    var updateTaskAjaxUrl = getUpdateTaskAjaxUrl();
+    var updateRoleAjaxUrl = getUpdateRoleAjaxUrl();
 
-    var participantId = getParticipantId(taskIdElement);
+    var participantId = getParticipantId(eventRoleIdElement);
     
-    var amountElement = getAmountElement(taskIdElement);
+    var amountElement = getAmountElement(eventRoleIdElement);
 
      // Ajax call to task update service
-    jQuery.getJSON(updateTaskAjaxUrl, {
+    jQuery.getJSON(updateRoleAjaxUrl, {
       participantId : participantId,
-      taskId : taskIdElement.val()
+      eventRoleId : eventRoleIdElement.val()
     }, function(data, status) {
     //TODO manage errors
-      updateTask(taskIdElement, data.taskId);
+      updateRole(eventRoleIdElement, data.eventRoleId);
       updateAmount(amountElement, data.newAmount);
       updateHistory();
     });

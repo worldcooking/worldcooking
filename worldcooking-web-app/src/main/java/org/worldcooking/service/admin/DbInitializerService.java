@@ -15,6 +15,7 @@ import org.mishk.business.event.service.TaskService;
 import org.mishk.business.shop.service.CatalogService;
 import org.mishk.business.shop.service.ShoppingService;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = ServiceException.class)
 public class DbInitializerService {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
