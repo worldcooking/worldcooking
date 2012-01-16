@@ -48,6 +48,9 @@ public class Registration {
 	@Cascade({ CascadeType.DELETE })
 	private Payment payment;
 
+	@Column
+	private String userLogin;
+
 	@OneToOne
 	private Participant subscriberParticipant;
 
@@ -154,6 +157,14 @@ public class Registration {
 
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
+	}
+
+	public String getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
 	}
 
 }

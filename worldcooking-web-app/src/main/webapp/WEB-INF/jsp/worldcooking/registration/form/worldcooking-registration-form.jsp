@@ -59,10 +59,10 @@
 				
 				<%-- guest 1 name --%>
 				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipantsNames[0]" 
-										label="Guest 1 name" size="small-medium" cssClass="additionalParticipantNameInput" />
+										label="Guest 1 name" required="true" size="small-medium" cssClass="additionalParticipantNameInput" />
 				<%-- guest 1 task --%>
 				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipantsTasks[0]" 
-										label="Guest 1 task" items="${availableTasks}" multiple="false" size="small-medium"/>
+										label="Guest 1 task" required="true" items="${availableTasks}" multiple="false" size="small-medium"/>
 				<%-- guest 1 email --%>
 				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipantsEmailAddresses[0]" 
 										label="Guest 1 e-mail address" size="small-medium" />
@@ -76,14 +76,14 @@
 				</template-form:button>
 				<%-- guest 2 name --%>
 				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipantsNames[1]" 
-										label="Guest 2 name" size="small-medium" cssClass="additionalParticipantNameInput" />
+										label="Guest 2 name" required="true" size="small-medium" cssClass="additionalParticipantNameInput" />
 				<%-- guest 2 task --%>
 				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipantsTasks[1]" 
-										label="Guest 2 task" items="${availableTasks}" multiple="false" size="small-medium"/>
+										label="Guest 2 task" required="true" items="${availableTasks}" multiple="false" size="small-medium"/>
 				<%-- guest 2 email --%>
 				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipantsEmailAddresses[1]" 
 										label="Guest 2 e-mail address" size="small-medium" />
-			</div>	
+			</div>
 		</fieldset>
 		
 		<%-- payment mode --%>

@@ -56,6 +56,7 @@ public class DbInitializerService {
 		catalogService.deleteAllCatalogs();
 		catalogService.deleteAllStocks();
 		shoppingService.deleteAllShoppingBagProduct();
+		shoppingService.deleteAllShoppingBags();
 		catalogService.deleteAllProducts();
 
 		taskService.deleteAllRoles();

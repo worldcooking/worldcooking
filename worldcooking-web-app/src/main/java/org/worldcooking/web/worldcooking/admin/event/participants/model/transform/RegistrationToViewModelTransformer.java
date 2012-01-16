@@ -13,6 +13,8 @@ import org.mishk.business.shop.entity.Shopping;
 import org.mishk.business.shop.service.ShoppingService;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.transform.AbstractTransformer;
+import org.oupsasso.mishk.security.entity.SecurityUser;
+import org.oupsasso.mishk.security.service.SecurityUserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.service.admin.WorldcookingService;
@@ -30,6 +32,9 @@ public class RegistrationToViewModelTransformer extends
 	@Autowired
 	private WorldcookingService worldcookingService;
 
+	@Autowired
+	private SecurityUserManagementService securityUserManagementService;
+
 	@Override
 	public WorldcookingAdminEventRegistration transform(Registration input) throws EntityNotFoundException {
 		WorldcookingAdminEventRegistration output = new WorldcookingAdminEventRegistration();
@@ -45,6 +50,12 @@ public class RegistrationToViewModelTransformer extends
 				eventRole.getId());
 		r.setTask(taskModel);
 		output.setRegistrer(r);
+
+		// if user was connected, retrieve its nickname
+		SecurityUser securityUser = securityUserManagementService.findUserByUsername(input.getUsername());
+		if (securityUser != null) {
+			output.setSubscriberFullName(securityUser.getNickname());
+		}
 
 		List<WorldcookingAdminEventParticipant> additionalParticipants = new ArrayList<WorldcookingAdminEventParticipant>();
 

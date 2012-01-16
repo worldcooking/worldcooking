@@ -14,6 +14,8 @@ public class WorldcookingAdminEventRegistration {
 
 	private Boolean validated = false;
 
+	private String subscriberFullName;
+
 	private List<WorldcookingAdminEventParticipant> additionalParticipants;
 
 	public WorldcookingAdminEventParticipant getRegistrer() {
@@ -62,5 +64,13 @@ public class WorldcookingAdminEventRegistration {
 
 	public void setValidated(Boolean validated) {
 		this.validated = validated;
+	}
+
+	public String getSubscriberFullName() {
+		return subscriberFullName;
+	}
+
+	public void setSubscriberFullName(String subscriberFullName) {
+		this.subscriberFullName = subscriberFullName;
 	}
 }

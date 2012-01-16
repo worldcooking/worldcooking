@@ -103,8 +103,4 @@ $(document).ready(function() {
 	    updateRoleAjax( $(this));
 	  });
  
- 	$("#mishk-template-layout_body-center").on("change", ".tasksSelect", function(event) {
-	    updateRoleAjax( $(this));
-	  });
- 
 });

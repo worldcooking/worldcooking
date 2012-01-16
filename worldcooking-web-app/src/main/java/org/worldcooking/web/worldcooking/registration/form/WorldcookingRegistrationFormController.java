@@ -116,10 +116,10 @@ public class WorldcookingRegistrationFormController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail registrationModel,
+	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail form,
 			BindingResult result) throws EntityNotFoundException {
 
-		Event event = eventService.findEventById(registrationModel.getEventId(), false);
+		Event event = eventService.findEventById(form.getEventId(), false);
 
 		if (!eventService.isEventOpen(event)) {
 			// event is not open for registration
@@ -129,25 +129,31 @@ public class WorldcookingRegistrationFormController {
 
 		// check parameters (TODO manage errors)
 		// TODO add a custom constraint (using group constraints?)
-		int participantsNb = registrationModel.getAdditionalParticipantsNames().size();
-		int tasksNb = registrationModel.getAdditionalParticipantsTasks().size();
+		int participantsNb = form.getAdditionalParticipantsNames().size();
+		int tasksNb = form.getAdditionalParticipantsTasks().size();
 		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks (" + tasksNb
 				+ ") should be as large as participants names (" + participantsNb + ").");
+
+		// create new registration
+		NewRegistration newRegistration = createNewRegistration(form);
+
+		if (newRegistration == null) {
+			// TODO replace with multi-fields form validation
+
+			return JSP;
+		}
 
 		if (result.hasErrors()) {
 
 			return JSP;
 		}
 
-		// create new registration
-		NewRegistration newRegistration = createNewRegistration(registrationModel);
-
 		// persist registration
 		Registration registration;
 		try {
 			registration = worldcookingService.register(newRegistration);
 		} catch (InsufficientStockException e) {
-			// TODO display error
+
 			return JSP;
 		}
 
@@ -184,8 +190,11 @@ public class WorldcookingRegistrationFormController {
 			if (participantName != null) {
 				participantName = participantName.trim();
 				if (!participantName.isEmpty()) {
-					newRegistration.addParticipant(participantsEmailsIt.next(), participantName,
-							participantsTasksIt.next());
+					Long taskId = participantsTasksIt.next();
+					if (taskId == -1) {
+						return null;
+					}
+					newRegistration.addParticipant(participantsEmailsIt.next(), participantName, taskId);
 				}
 			}
 		}

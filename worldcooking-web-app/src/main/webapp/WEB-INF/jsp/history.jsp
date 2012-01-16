@@ -16,8 +16,9 @@
 				${messageFragment.message}
 			</c:if>
 		</c:forEach>
-		<c:if test="${loopStatus.isFirst()}">
-			[<a href="${historyEntry.undoLink}">undo</a>]
+		<c:if test="${loopStatus.isFirst() and not empty historyEntry.undoLink}">
+			<c:url var="undoLink" value="${historyEntry.undoLink}" />
+			[<a href="${undoLink}">undo</a>]
 		</c:if>
 		<br/>	
 	</c:forEach>

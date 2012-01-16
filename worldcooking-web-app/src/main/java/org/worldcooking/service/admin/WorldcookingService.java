@@ -1,6 +1,6 @@
 package org.worldcooking.service.admin;
 
-import java.util.List;
+import java.util.Set;
 
 import org.mishk.business.event.entity.Event;
 import org.mishk.business.event.entity.EventRole;
@@ -24,6 +24,7 @@ import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.ServiceException;
+import org.oupsasso.mishk.security.authentication.MishkUserHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,16 +66,20 @@ public class WorldcookingService {
 		Shopping shopping = shoppingService.createShoppingWithShoppingBag(SHOPPING_REF_PREFIX);
 
 		// persist registration
-		Registration registration = registrationService.register(newRegistration, shopping.getReference());
+		Registration registration = registrationService.register(newRegistration, shopping.getReference(),
+				MishkUserHolder.getUsername());
 
 		// add participants
 		registrationService.addParticipants(registration, newRegistration.getSubscriber(),
 				newRegistration.getAdditionalParticipants());
 
-		List<RegistrationProduct> registrationProducts = registrationService.findRegistrationProducts(registration
+		Set<RegistrationProduct> registrationProducts = registrationService.findRegistrationProducts(registration
 				.getId());
 		// add all products
 		for (RegistrationProduct registrationProduct : registrationProducts) {
+			logger.debug("Adding {} products ({}) to shopping bag ({}).",
+					new Object[] { registrationProduct.getQuantity(), registrationProduct.getProductReference(),
+							shopping.getReference() });
 			shoppingService.addToShoppingBag(shopping.getShoppingBag().getId(), STOCK_REF,
 					registrationProduct.getProductReference(), registrationProduct.getQuantity());
 		}
@@ -131,8 +136,11 @@ public class WorldcookingService {
 		return "worldcooking-role-" + name.toLowerCase().replaceAll(" ", "_");
 	}
 
-	public Registration validatePayment(Long registrationId) throws EntityIdNotFoundException,
-			EntityReferenceNotFoundException {
+	/**
+	 * Method synchronized to avoir conflicts.
+	 */
+	public synchronized Registration validatePayment(Long registrationId) throws EntityNotFoundException,
+			InsufficientStockException {
 
 		// find registration
 		Registration registration = registrationService.findRegistrationById(registrationId, false);
@@ -140,46 +148,70 @@ public class WorldcookingService {
 		// validate shopping payment
 		paymentService.validatePayment(registration.getShoppingReference());
 
+		// retrieve from stock
+		catalogService.retrieveShoppingBagFromStock(STOCK_REF, registration.getShoppingReference());
+
 		// validate registration
 		return registrationService.validateRegistration(registrationId);
 	}
 
-	public Registration unvalidatePayment(Long registrationId) throws EntityIdNotFoundException,
-			EntityReferenceNotFoundException {
+	public Registration unvalidatePayment(Long registrationId) throws EntityNotFoundException {
 		// find registration
 		Registration registration = registrationService.findRegistrationById(registrationId, false);
 
 		// validate shopping payment
 		paymentService.unvalidatePayment(registration.getShoppingReference());
 
-		// validate registration
+		// add to stock
+		catalogService.addShoppingBagToStock(STOCK_REF, registration.getShoppingReference());
+
+		// unvalidate registration
 		return registrationService.unvalidateRegistration(registrationId);
 	}
 
-	public EventRole updateParticipantEventRole(Long participantId, Long eventRoleId) throws EntityNotFoundException,
+	public Participant updateParticipantEventRole(Long participantId, Long eventRoleId) throws EntityNotFoundException,
 			InsufficientStockException {
 		// retrieve participant
 		Participant participant = registrationService.findParticipantById(participantId);
+		EventRole oldEventRole = participant.getEventRole();
 
 		// retrieve event role
-		EventRole eventRole = eventService.findEventRoleById(eventRoleId);
+		EventRole newEventRole = eventService.findEventRoleById(eventRoleId);
+
+		if (oldEventRole.getId() == newEventRole.getId()) {
+			logger.warn("Try to updating role of participant {} with the actual role '{}'.",
+					new Object[] { participant.getName(), newEventRole.getRole().getName() });
+			return participant;
+		}
 
 		String shoppingReference = participant.getRegistration().getShoppingReference();
 		// update shopping bag
 
-		String productReference = eventRole.getProductReference();
+		String productReference = newEventRole.getProductReference();
 
 		// retrieve shopping
 		Shopping shopping = shoppingService.findShoppingByReference(shoppingReference);
 
 		// remove old product from shopping bag
-		shoppingService.removeFromShoppingBag(shopping.getShoppingBag().getId(), participant.getEventRole()
-				.getProductReference());
+		shoppingService.removeFromShoppingBag(shopping.getShoppingBag().getId(), oldEventRole.getProductReference());
 
 		// add new product to shopping bag
 		shoppingService.addToShoppingBag(shopping.getShoppingBag().getId(), STOCK_REF, productReference);
 
 		// update registration
-		return registrationService.updateParticipantEventRole(participantId, eventRoleId);
+		registrationService.updateParticipantEventRole(participantId, eventRoleId);
+
+		return participant;
 	}
+
+	public Registration removeRegistration(Long registrationId) throws EntityIdNotFoundException,
+			EntityReferenceNotFoundException {
+		// remove registration
+		Registration registration = registrationService.removeRegistration(registrationId);
+
+		shoppingService.removeShopping(registration.getShoppingReference());
+
+		return registration;
+	}
+
 }

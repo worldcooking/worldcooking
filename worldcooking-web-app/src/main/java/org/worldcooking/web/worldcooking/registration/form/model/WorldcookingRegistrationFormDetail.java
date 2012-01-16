@@ -3,6 +3,7 @@ package org.worldcooking.web.worldcooking.registration.form.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -37,6 +38,7 @@ public class WorldcookingRegistrationFormDetail {
 	 * Register task
 	 */
 	@NotNull(message = "Please specify your task")
+	@Min(value = 0, message = "Please specify your task")
 	private Long subscriberParticipantTask;
 
 	/**

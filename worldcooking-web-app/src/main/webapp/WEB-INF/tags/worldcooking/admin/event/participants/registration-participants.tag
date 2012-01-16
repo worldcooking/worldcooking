@@ -38,10 +38,14 @@
 				
 				<tr class="participant">
 					<%-- subscriber name --%>
-					<td>${participant.name}</td>
+					<td>${participant.name}
+						<c:if test="${not empty registration.subscriberFullName}">
+							<br/>(${registration.subscriberFullName})
+						</c:if>
+					</td>
 					<%-- subscriber role --%>
 					<td>
-						<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
+						<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" registrationValidated="${registration.validated}" />
 					</td>
 					<%-- subscriber email --%>
 					<td >${participant.email}</td>
@@ -91,7 +95,7 @@
 							<td>${participant.name}</td>
 							<%-- additional participant role --%>
 							<td>
-								<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" />
+								<worldcooking-admin:registration-participants-role participant="${participant}" eventRoles="${eventRoles}" registrationId="${registration.id}" registrationValidated="${registration.validated}" />
 							</td>
 							<%-- additional participant email --%>
 							<td >${participant.email}</td>

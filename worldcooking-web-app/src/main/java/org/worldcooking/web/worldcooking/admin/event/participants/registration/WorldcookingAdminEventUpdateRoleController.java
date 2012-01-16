@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mishk.business.event.entity.EventRole;
 import org.mishk.business.event.entity.Participant;
+import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.RegistrationService;
 import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
@@ -45,6 +46,9 @@ public class WorldcookingAdminEventUpdateRoleController {
 	@Autowired
 	private WorldcookingService worldcookingService;
 
+	@Autowired
+	private EventService eventService;
+
 	@RequestMapping(value = AJAX_URL)
 	public @ResponseBody
 	WorldcookingAdminEventParticipantRegistration handleAjaxRequest(HttpSession session,
@@ -82,24 +86,40 @@ public class WorldcookingAdminEventUpdateRoleController {
 	 * @throws EntityNotFoundException
 	 */
 	private Participant updateRole(HttpSession session, String eventReference, Long participantId, Long eventRoleId)
-			throws EntityNotFoundException, InsufficientStockException {
-		EventRole previousEventRole = worldcookingService.updateParticipantEventRole(participantId, eventRoleId);
-
+			throws EntityNotFoundException {
 		Participant participant = registrationService.findParticipantById(participantId);
 
-		// TODO dynamic undo link
-		String undoLink = "/worldcooking-web-app/admin/event/" + eventReference + "/update/role?participantId="
-				+ participantId + "&taskId=" + previousEventRole.getId();
+		EventRole previousEventRole = participant.getEventRole();
+		EventRole newEventRole = eventService.findEventRoleById(eventRoleId);
+		try {
+			participant = worldcookingService.updateParticipantEventRole(participantId, eventRoleId);
 
-		WorldcookingHistoryEntry historyEntry = new WorldcookingHistoryEntry(undoLink)
-				.addMessageFragment("Updated role from '")
-				.addMessageFragment(previousEventRole.getRole().getName(), FragmentType.IMPORTANT)
-				.addMessageFragment(" ' to '")
-				.addMessageFragment(participant.getEventRole().getRole().getName(), FragmentType.IMPORTANT)
-				.addMessageFragment("' for participant '")
-				.addMessageFragment(participant.getName(), FragmentType.IMPORTANT).addMessageFragment("'.");
+			String undoLink = "/admin/event/" + eventReference + "/update/role?participantId=" + participantId
+					+ "&eventRoleId=" + previousEventRole.getId();
 
-		WorldcookingHistoryController.addToHistory(session, historyEntry);
+			WorldcookingHistoryEntry historyEntry = new WorldcookingHistoryEntry(undoLink)
+					.addMessageFragment("Updated role from '")
+					.addMessageFragment(previousEventRole.getRole().getName(), FragmentType.IMPORTANT)
+					.addMessageFragment(" ' to '")
+					.addMessageFragment(newEventRole.getRole().getName(), FragmentType.IMPORTANT)
+					.addMessageFragment("' for participant '")
+					.addMessageFragment(participant.getName(), FragmentType.IMPORTANT).addMessageFragment("'.");
+
+			WorldcookingHistoryController.addToHistory(session, historyEntry);
+		} catch (InsufficientStockException e) {
+
+			WorldcookingHistoryEntry historyEntry = new WorldcookingHistoryEntry(null)
+					.addMessageFragment("Not able to update role from '")
+					.addMessageFragment(previousEventRole.getRole().getName(), FragmentType.IMPORTANT)
+					.addMessageFragment(" ' to '")
+					.addMessageFragment(newEventRole.getRole().getName(), FragmentType.IMPORTANT)
+					.addMessageFragment("' for participant '")
+					.addMessageFragment(participant.getName(), FragmentType.IMPORTANT)
+					.addMessageFragment("' because there is no available place.");
+
+			WorldcookingHistoryController.addToHistory(session, historyEntry);
+		}
+
 		return participant;
 	}
 

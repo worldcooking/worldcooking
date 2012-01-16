@@ -57,6 +57,8 @@ public class WorldcookingResumeController {
 					task.setTotalMax(eRole.getParticipantsMax());
 					task.setTotalRegister(registrationService.countParticipantsByRegistrationStatus(eRole.getId(),
 							RegistrationStatus.VALIDATED));
+
+					tasks.add(task);
 				}
 
 				wcEvent.setTasks(tasks);
@@ -75,7 +77,7 @@ public class WorldcookingResumeController {
 						Set<Participant> partList = registration.getParticipants();
 						for (Participant participant : partList) {
 							wcEvent.addValidatedParticipantTask(participant.getName(), participant.getEventRole()
-									.getRole().getId(), participant.getId());
+									.getId(), participant.getId());
 							parcoursTasks: for (WorldcookingResumeTask t : wcEvent.getTasks()) {
 								if (t.getId().equals(participant.getEventRole().getRole().getId())) {
 									t.setTotalRegister(t.getTotalRegister() + 1);

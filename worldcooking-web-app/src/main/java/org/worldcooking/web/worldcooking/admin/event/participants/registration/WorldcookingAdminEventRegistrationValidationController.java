@@ -6,8 +6,9 @@ package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 import javax.servlet.http.HttpSession;
 
 import org.mishk.business.event.entity.Registration;
+import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
-import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class WorldcookingAdminEventRegistrationValidationController {
 	@RequestMapping(value = AJAX_URL)
 	public @ResponseBody
 	String handleAjaxRequest(HttpSession session, @PathVariable String eventReference, @RequestParam Long registrationId)
-			throws EntityIdNotFoundException, EntityReferenceNotFoundException {
+			throws EntityNotFoundException, InsufficientStockException {
 
 		Registration registration = worldcookingService.validatePayment(registrationId);
 
