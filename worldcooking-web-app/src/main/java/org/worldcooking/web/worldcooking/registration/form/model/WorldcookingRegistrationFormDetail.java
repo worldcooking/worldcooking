@@ -1,8 +1,5 @@
 package org.worldcooking.web.worldcooking.registration.form.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -37,24 +34,88 @@ public class WorldcookingRegistrationFormDetail {
 	/**
 	 * Register task
 	 */
-	@NotNull(message = "Please specify your task")
 	@Min(value = 0, message = "Please specify your task")
 	private Long subscriberParticipantTask;
 
 	/**
-	 * List of additional participants names.
+	 * Name of additional participant 1.
 	 */
-	private List<String> additionalParticipantsNames = new ArrayList<String>();
+	private String additionalParticipant1Name;
 
 	/**
-	 * List of additional participants taks.
+	 * Task of additional participant 1.
 	 */
-	private List<Long> additionalParticipantsTasks = new ArrayList<Long>();
+	private Long additionalParticipant1Task;
 
 	/**
-	 * List of additional participants adresses.
+	 * Email address of additional participant 1.
 	 */
-	private List<String> additionalParticipantsEmailAddresses = new ArrayList<String>();
+	private String additionalParticipant1EmailAddress;
+
+	public String getAdditionalParticipant1EmailAddress() {
+		return additionalParticipant1EmailAddress;
+	}
+
+	public void setAdditionalParticipant1EmailAddress(
+			String additionalParticipant1EmailAddress) {
+		this.additionalParticipant1EmailAddress = additionalParticipant1EmailAddress;
+	}
+
+	public String getAdditionalParticipant2EmailAddress() {
+		return additionalParticipant2EmailAddress;
+	}
+
+	public void setAdditionalParticipant2EmailAddress(
+			String additionalParticipant2EmailAddress) {
+		this.additionalParticipant2EmailAddress = additionalParticipant2EmailAddress;
+	}
+
+	/**
+	 * Name of additional participant 2.
+	 */
+	private String additionalParticipant2Name;
+
+	/**
+	 * Task of additional participant 2.
+	 */
+	private Long additionalParticipant2Task;
+
+	/**
+	 * Email address of additional participant 2.
+	 */
+	private String additionalParticipant2EmailAddress;
+
+	public String getAdditionalParticipant1Name() {
+		return additionalParticipant1Name;
+	}
+
+	public void setAdditionalParticipant1Name(String additionalParticipant1Name) {
+		this.additionalParticipant1Name = additionalParticipant1Name;
+	}
+
+	public Long getAdditionalParticipant1Task() {
+		return additionalParticipant1Task;
+	}
+
+	public void setAdditionalParticipant1Task(Long additionalParticipant1Task) {
+		this.additionalParticipant1Task = additionalParticipant1Task;
+	}
+
+	public String getAdditionalParticipant2Name() {
+		return additionalParticipant2Name;
+	}
+
+	public void setAdditionalParticipant2Name(String additionalParticipant2Name) {
+		this.additionalParticipant2Name = additionalParticipant2Name;
+	}
+
+	public Long getAdditionalParticipant2Task() {
+		return additionalParticipant2Task;
+	}
+
+	public void setAdditionalParticipant2Task(Long additionalParticipant2Task) {
+		this.additionalParticipant2Task = additionalParticipant2Task;
+	}
 
 	public WorldcookingRegistrationFormDetail() {
 	}
@@ -97,30 +158,6 @@ public class WorldcookingRegistrationFormDetail {
 
 	public void setSubscriberParticipantTask(Long subscriberParticipantTask) {
 		this.subscriberParticipantTask = subscriberParticipantTask;
-	}
-
-	public List<String> getAdditionalParticipantsNames() {
-		return additionalParticipantsNames;
-	}
-
-	public void setAdditionalParticipantsNames(List<String> additionalParticipantsNames) {
-		this.additionalParticipantsNames = additionalParticipantsNames;
-	}
-
-	public List<Long> getAdditionalParticipantsTasks() {
-		return additionalParticipantsTasks;
-	}
-
-	public void setAdditionalParticipantsTasks(List<Long> additionalParticipantsTasks) {
-		this.additionalParticipantsTasks = additionalParticipantsTasks;
-	}
-
-	public List<String> getAdditionalParticipantsEmailAddresses() {
-		return additionalParticipantsEmailAddresses;
-	}
-
-	public void setAdditionalParticipantsEmailAddresses(List<String> additionalParticipantsEmailAddresses) {
-		this.additionalParticipantsEmailAddresses = additionalParticipantsEmailAddresses;
 	}
 
 }

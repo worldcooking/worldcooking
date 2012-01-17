@@ -58,13 +58,13 @@
 				</template-form:button>
 				
 				<%-- guest 1 name --%>
-				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipantsNames[0]" 
+				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipant1Name" 
 										label="Guest 1 name" required="true" size="small-medium" cssClass="additionalParticipantNameInput" />
 				<%-- guest 1 task --%>
-				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipantsTasks[0]" 
+				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipant1Task" 
 										label="Guest 1 task" required="true" items="${availableTasks}" multiple="false" size="small-medium"/>
 				<%-- guest 1 email --%>
-				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipantsEmailAddresses[0]" 
+				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipant1EmailAddress" 
 										label="Guest 1 e-mail address" size="small-medium" />
 			</div>
 			
@@ -75,15 +75,17 @@
 					<img src="${removeParticipantImgUrl}" />
 				</template-form:button>
 				<%-- guest 2 name --%>
-				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipantsNames[1]" 
+				<template-form:input 	id="additionalParticipant1NameInput" path="additionalParticipant2Name" 
 										label="Guest 2 name" required="true" size="small-medium" cssClass="additionalParticipantNameInput" />
 				<%-- guest 2 task --%>
-				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipantsTasks[1]" 
+				<template-form:select 	id="additionalParticipant1TaskInput" path="additionalParticipant2Task" 
 										label="Guest 2 task" required="true" items="${availableTasks}" multiple="false" size="small-medium"/>
 				<%-- guest 2 email --%>
-				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipantsEmailAddresses[1]" 
+				<template-form:input 	id="additionalParticipant1EmailAddressInput" path="additionalParticipant2EmailAddress" 
 										label="Guest 2 e-mail address" size="small-medium" />
 			</div>
+			
+			<form:errors cssClass="general_error error" />
 		</fieldset>
 		
 		<%-- payment mode --%>

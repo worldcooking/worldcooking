@@ -40,15 +40,8 @@
 		<template:chapter title="Join us!">
 			<p>
 			The price for this meal is <b>15&euro; per person. This meal will not generate any profit,</b>
-			<br/> 
-			This amount goes to pay for the location, all the drinks and the food.
-			<br/> To pay you can :
-			<ul>
-				<li>use paypal or CB: in this way the registration is immediate.</li>
-				<li>pay directly to Matthieu if you have the opportunity to see him very soon. Your registration
-					will be validated only when you give them the money.</li>
-			</ul>
-			<br/><br/>
+			<br/>
+			<br/>
 			<center>
 				<c:url var="joinEventUrl" value="/event/${event.reference}/registration"/>
 				<form action="${joinEventUrl}">
@@ -62,26 +55,32 @@
 	</c:if>
 	<template:chapter title="Informations">
 			<p>Up to 38 persons will share a portuguese meal in the restaurant La soupe au Caillou.<br>
-				Our chef will be Nidia Torres.<br>
+				Our chef will be Tiago Silva.<br>
 				<br>
 				To participate in this event you must book and pay in advance.<br>
 				The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.
 				<br>
 				<br>
-				This year we ask each person to help. When registering you have to choose a task from the following ones:
-				<br>- Cooking with Nidia from 4pm
-				<br>- Set the table
-				<br>- Doing the dishes
-				<br>- Cleaning the room<br>
+				When registering you have to choose a task from the following ones:
+				<ul>
+					<li><b>cooking with Tiago</b> from 4pm</li>
+					<li><b>prepare the room and settings the table</b> from 6:30pm</li>
+					<li><b>cleaning the room</b> after the dinner</li>
+					<li><b>doing the dishes</b> after the dinner</li>
+				</ul>
 			</p>
 			<div class="information">
 				<h3>Menu :</h3>
-				- Causa Rellena<br /> - Lomo Saltado<br /> - Mazamorra Morada<br />
+				<ul>
+					<li><b>Caldo Verde</b>: Soup with potatoes, carrots, cabbage and chorizo.</li>
+					<li><b>Bacalhau à Bráz</b>: Codfish (bacalhau), potatoes and eggs.</li>
+					<li><b>Arroz Doce</b>: Rice, Milk and sugar</li>
+				</ul>
 			</div>
 			<div class="information">
 				<h3>Date and Time :</h3>
 				Friday January 27th 2011, 7pm (4pm if you're cooking)<br /> <a
-					href="http://www.google.com/calendar/event?action=TEMPLATE&text=Worldcooking%20Portugal&dates=20120127T190000Z/20120128T010000Z&details=Portuguese%20meal%20shared%20%40%20La%20soupe%20au%20Caillou.%0A%0AWarning%20%3A%20be%20sure%20you%20registered!!!%0AWarning%202%20%3A%20if%20you're%20cooking%20be%20there%20at%204p.m.&location=La%20soupe%20au%20Caillou&trp=false&sprop=&sprop=name:"
+					href="http://www.google.com/calendar/event?action=TEMPLATE&text=Worldcooking%20Portugal&dates=20120127T180000Z/20120128T000000Z&details=Portuguese%20meal%20shared%20%40%20La%20soupe%20au%20Caillou.%0A%0AWarning%20%3A%20be%20sure%20you%20registered!!!%0AWarning%202%20%3A%20if%20you're%20cooking%20be%20there%20at%204p.m.&location=La%20soupe%20au%20Caillou&trp=false&sprop=&sprop=name:"
 					target="_blank"> Add to google Agenda</a>
 			</div>
 			<div class="information">

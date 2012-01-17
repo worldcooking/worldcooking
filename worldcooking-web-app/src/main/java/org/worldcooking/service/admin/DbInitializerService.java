@@ -90,11 +90,12 @@ public class DbInitializerService {
 		// create roles
 		worldcookingService.createNewRole(e, "Chef", "diner chef", 1l, 0d, taskCook);
 		worldcookingService.createNewRole(e, "Cook", "cooking with the chef from 4pm", 7l, 15d, taskCook);
-		worldcookingService.createNewRole(e, "Prepare", "prepare the room and settings the table from 6:30pm", 4l, 15d,
+		worldcookingService.createNewRole(e, "Prepare the room", "prepare the room and settings the table from 6:30pm", 8l, 15d,
 				taskPrepareTheRoom, taskSettingTheTable);
-		worldcookingService.createNewRole(e, "Cleanning", "doing the dishes after the dinner (until 1am maxi)", 16l,
-				15d, taskDoingTheDishes, taskCleaningTheRoom);
-
+		worldcookingService.createNewRole(e, "Cleaning the room", "cleaning the room after the dinner", 8l,
+				15d, taskDoingTheDishes);
+		worldcookingService.createNewRole(e, "Doing the dishes", "doing the dishes after the dinner", 12l,
+				15d, taskCleaningTheRoom);
 	}
 
 	private Place initPlace() {

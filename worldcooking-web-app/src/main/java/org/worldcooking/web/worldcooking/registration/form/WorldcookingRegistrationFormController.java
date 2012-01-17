@@ -1,8 +1,6 @@
 package org.worldcooking.web.worldcooking.registration.form;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,8 @@ import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
+import org.oupsasso.mishk.core.dao.exception.I18NServiceException;
+import org.oupsasso.mishk.core.dao.exception.ServiceException;
 import org.oupsasso.mishk.security.entity.SecurityUser;
 import org.oupsasso.mishk.security.service.SecurityUserManagementService;
 import org.slf4j.Logger;
@@ -29,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,8 @@ public class WorldcookingRegistrationFormController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(@PathVariable String eventReference, ModelMap model) throws EntityIdNotFoundException,
+	public String initializeForm(@PathVariable String eventReference,
+			ModelMap model) throws EntityIdNotFoundException,
 			EntityReferenceNotFoundException {
 
 		WorldcookingRegistrationFormDetail registration = new WorldcookingRegistrationFormDetail();
@@ -65,13 +67,13 @@ public class WorldcookingRegistrationFormController {
 			registration.setEventId(event.getId());
 
 			if (!eventService.isEventOpen(event)) {
-				logger.warn("Attempt to access to {} event '{}'.", new Object[] { event.getEventRegistrationStatus(),
-						event.getName() });
+				logger.warn("Attempt to access to {} event '{}'.",
+						new Object[] { event.getEventRegistrationStatus(),
+								event.getName() });
 				return "redirect:/";
 			}
 
 		}
-		registration.setAdditionalParticipantsTasks(Arrays.asList(0l, 0l));
 
 		SecurityUser user = securityUserManagementService.getCurrentUser();
 
@@ -80,13 +82,19 @@ public class WorldcookingRegistrationFormController {
 			registration.setEmailAddress(user.getEmailAddress());
 		}
 		model.addAttribute("registration", registration);
-		model.addAttribute("event", event);
 
 		return JSP;
 	}
 
+	@ModelAttribute("event")
+	public Event populateEvent(@PathVariable String eventReference)
+			throws EntityReferenceNotFoundException {
+		return eventService.findEventByReference(eventReference, false);
+	}
+
 	@ModelAttribute("availableTasks")
-	public Map<Long, String> populateAvailableTasks(@PathVariable String eventReference)
+	public Map<Long, String> populateAvailableTasks(
+			@PathVariable String eventReference)
 			throws EntityIdNotFoundException, EntityReferenceNotFoundException {
 
 		Map<Long, String> availableTasksIdName = new LinkedHashMap<Long, String>();
@@ -96,7 +104,8 @@ public class WorldcookingRegistrationFormController {
 		Event event = eventService.findEventByReference(eventReference, false);
 		if (event != null) {
 			List<EventRole> availableRoles = new ArrayList<EventRole>();
-			availableRoles.addAll(eventService.getAvailableEventRoles(event.getId(), false));
+			availableRoles.addAll(eventService.getAvailableEventRoles(
+					event.getId(), false));
 
 			for (EventRole t : availableRoles) {
 				availableTasksIdName.put(t.getId(), t.getRole().getName());
@@ -116,55 +125,50 @@ public class WorldcookingRegistrationFormController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail form,
+	public String onSubmit(
+			@Valid @ModelAttribute("registration") WorldcookingRegistrationFormDetail form,
 			BindingResult result) throws EntityNotFoundException {
+		String returnView = JSP;
 
 		Event event = eventService.findEventById(form.getEventId(), false);
 
 		if (!eventService.isEventOpen(event)) {
 			// event is not open for registration
-			logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
+			logger.warn(
+					"Attempt to access to closed registration of event '{}'.",
+					event.getName());
 			return "redirect:/";
 		}
 
-		// check parameters (TODO manage errors)
-		// TODO add a custom constraint (using group constraints?)
-		int participantsNb = form.getAdditionalParticipantsNames().size();
-		int tasksNb = form.getAdditionalParticipantsTasks().size();
-		Assert.isTrue(participantsNb <= tasksNb, "Participants tasks (" + tasksNb
-				+ ") should be as large as participants names (" + participantsNb + ").");
-
-		// create new registration
-		NewRegistration newRegistration = createNewRegistration(form);
-
-		if (newRegistration == null) {
-			// TODO replace with multi-fields form validation
-
-			return JSP;
-		}
-
-		if (result.hasErrors()) {
-
-			return JSP;
-		}
-
-		// persist registration
-		Registration registration;
 		try {
+			// create new registration
+			NewRegistration newRegistration = createNewRegistration(form);
+
+			// persist registration
+			Registration registration;
 			registration = worldcookingService.register(newRegistration);
+
+			if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {
+				// redirect to paypal
+				returnView = "redirect:/event/" + event.getReference()
+						+ "/registration/confirmation/paypal?registrationId="
+						+ registration.getId();
+			} else {
+				returnView = "redirect:/event/" + event.getReference()
+						+ "/registration/confirmation?registrationId="
+						+ registration.getId();
+			}
+
+		} catch (I18NServiceException e) {
+			result.addError(new ObjectError(result.getObjectName(), e
+					.getErrorMessage()));
 		} catch (InsufficientStockException e) {
-
-			return JSP;
+			result.addError(new ObjectError(result.getObjectName(), e
+					.getErrorMessage()));
 		}
-
-		String returnView;
-		if (newRegistration.getPaymentMode() == NewRegistrationPaymentMode.PAYPAL) {
-			// redirect to paypal
-			returnView = "redirect:/event/" + event.getReference()
-					+ "/registration/confirmation/paypal?registrationId=" + registration.getId();
-		} else {
-			returnView = "redirect:/event/" + event.getReference() + "/registration/confirmation?registrationId="
-					+ registration.getId();
+		if (result.hasErrors()) {
+			// back to form
+			returnView = JSP;
 		}
 		// redirect to main page
 		return returnView;
@@ -175,42 +179,59 @@ public class WorldcookingRegistrationFormController {
 	 * 
 	 * @param registration
 	 * @throws EntityIdNotFoundException
+	 * @throws ServiceException
 	 */
-	private NewRegistration createNewRegistration(WorldcookingRegistrationFormDetail registration)
-			throws EntityIdNotFoundException {
+	private NewRegistration createNewRegistration(
+			WorldcookingRegistrationFormDetail registration)
+			throws EntityIdNotFoundException, I18NServiceException {
 
 		// create registration
 		NewRegistration newRegistration = new NewRegistration();
 		Long eventId = registration.getEventId();
 
-		Iterator<Long> participantsTasksIt = registration.getAdditionalParticipantsTasks().iterator();
-		Iterator<String> participantsEmailsIt = registration.getAdditionalParticipantsEmailAddresses().iterator();
 		// add additional participants
-		for (String participantName : registration.getAdditionalParticipantsNames()) {
-			if (participantName != null) {
-				participantName = participantName.trim();
-				if (!participantName.isEmpty()) {
-					Long taskId = participantsTasksIt.next();
-					if (taskId == -1) {
-						return null;
-					}
-					newRegistration.addParticipant(participantsEmailsIt.next(), participantName, taskId);
-				}
+		String name1 = registration.getAdditionalParticipant1Name();
+		Long task1 = registration.getAdditionalParticipant1Task();
+
+		if (name1 != null && !name1.trim().isEmpty()) {
+			if (task1 == null || task1 == -1) {
+				throw new I18NServiceException(
+						"Please specify the task for additionnal participant 1.");
 			}
+			newRegistration.addParticipant(
+					registration.getAdditionalParticipant1EmailAddress(),
+					name1, task1);
 		}
-		NewParticipant subscriberParticipant = new NewParticipant(registration.getEmailAddress(),
-				registration.getSubscriberParticipantName(), registration.getSubscriberParticipantTask());
+		String name2 = registration.getAdditionalParticipant2Name();
+		Long task2 = registration.getAdditionalParticipant2Task();
+		if (name2 != null && !name2.trim().isEmpty()) {
+			if (task2 == null || task2 == -1) {
+				throw new I18NServiceException(
+						"Please specify the task for additionnal participant 2.");
+			}
+			newRegistration.addParticipant(
+					registration.getAdditionalParticipant2EmailAddress(),
+					name2, task2);
+		}
+
+		NewParticipant subscriberParticipant = new NewParticipant(
+				registration.getEmailAddress(),
+				registration.getSubscriberParticipantName(),
+				registration.getSubscriberParticipantTask());
 		if (PAYPAL_MODE_KEY.equals(registration.getPaymentMode())) {
 			// paypal
 
-			newRegistration.configureWithPaypalPayment(eventId, subscriberParticipant);
+			newRegistration.configureWithPaypalPayment(eventId,
+					subscriberParticipant);
 		} else {
 			Map<String, String> availablePaymentModes = populateAvailablePaymentModes();
 
-			String paymentTarget = availablePaymentModes.get(registration.getPaymentMode());
+			String paymentTarget = availablePaymentModes.get(registration
+					.getPaymentMode());
 			// TODO meilleure gestion des erreurs
 			Assert.notNull(paymentTarget);
-			newRegistration.configureWithManualPayment(eventId, paymentTarget, subscriberParticipant);
+			newRegistration.configureWithManualPayment(eventId, paymentTarget,
+					subscriberParticipant);
 		}
 
 		return newRegistration;

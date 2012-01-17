@@ -5,18 +5,17 @@ package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 
 import javax.servlet.http.HttpSession;
 
-import org.mishk.business.event.entity.Registration;
 import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.worldcooking.service.admin.WorldcookingService;
+import org.worldcooking.web.worldcooking.history.WorldcookingHistoryController;
+import org.worldcooking.web.worldcooking.history.model.WorldcookingHistoryEntry;
 
 /**
  * @author MatthieuG
@@ -40,25 +39,18 @@ public class WorldcookingAdminEventRegistrationValidationController {
 
 	@RequestMapping(value = AJAX_URL)
 	public @ResponseBody
-	String handleAjaxRequest(HttpSession session, @PathVariable String eventReference, @RequestParam Long registrationId)
-			throws EntityNotFoundException, InsufficientStockException {
+	void handleAjaxRequest(HttpSession session,
+			@PathVariable String eventReference,
+			@RequestParam Long registrationId) throws EntityNotFoundException {
 
-		Registration registration = worldcookingService.validatePayment(registrationId);
+		try {
+			worldcookingService.validatePayment(registrationId);
+		} catch (InsufficientStockException e) {
+			WorldcookingHistoryEntry historyEntry = new WorldcookingHistoryEntry(
+					null).addMessageFragment(e.getErrorMessage());
 
-		// TODO manage errors on client side
-
-		// id is returned for debugging purpose
-		return registration.getId().toString();
-	}
-
-	@RequestMapping(value = URL, method = RequestMethod.GET)
-	public String handleRequest(@PathVariable String eventReference, @RequestParam Long registrationId)
-			throws EntityIdNotFoundException {
-
-		Registration s = null;
-		// TODO registrationService.validatePayment(registrationId);
-
-		return "redirect:/admin/event/" + s.getEvent().getReference();
+			WorldcookingHistoryController.addToHistory(session, historyEntry);
+		}
 	}
 
 }
