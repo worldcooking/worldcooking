@@ -35,18 +35,21 @@ public class WorldcookingResumeController {
 	@Autowired
 	private RegistrationService registrationService;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(WorldcookingResumeController.class);
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(WorldcookingResumeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
-		ModelAndView modelAndView = new ModelAndView("worldcooking/resume/worldcooking-resume");
+		ModelAndView modelAndView = new ModelAndView(
+				"worldcooking/resume/worldcooking-resume");
 
 		try {
 			// retrieve the last visible event (OPEN or PLANNED)
 			Event e = eventService.findLastVisibleEvent(true);
 
 			if (e != null) {
-				WorldcookingResumeEvent wcEvent = ModelViewMapper.getInstance().map(e, WorldcookingResumeEvent.class);
+				WorldcookingResumeEvent wcEvent = ModelViewMapper.getInstance()
+						.map(e, WorldcookingResumeEvent.class);
 
 				List<WorldcookingResumeTask> tasks = new ArrayList<WorldcookingResumeTask>();
 
@@ -55,15 +58,16 @@ public class WorldcookingResumeController {
 					task.setId(eRole.getId());
 					task.setName(eRole.getRole().getName());
 					task.setTotalMax(eRole.getParticipantsMax());
-					task.setTotalRegister(registrationService.countParticipantsByRegistrationStatus(eRole.getId(),
-							RegistrationStatus.VALIDATED));
+					task.setTotalRegister(registrationService.countEventRoleParticipantsByRegistrationStatus(
+							eRole.getId(), RegistrationStatus.VALIDATED));
 
 					tasks.add(task);
 				}
 
 				wcEvent.setTasks(tasks);
 
-				wcEvent.setNbParticipantsMax(eventService.countMaxParticipants(e.getId()));
+				wcEvent.setNbParticipantsMax(eventService
+						.countMaxParticipants(e.getId()));
 
 				List<String> waitingParticipants = new ArrayList<String>();
 				Set<Registration> registrations = e.getRegistrations();
@@ -74,12 +78,17 @@ public class WorldcookingResumeController {
 						// if a registration is validated, all its participants
 						// are
 						// confirmed
-						Set<Participant> partList = registration.getParticipants();
+						Set<Participant> partList = registration
+								.getParticipants();
 						for (Participant participant : partList) {
-							wcEvent.addValidatedParticipantTask(participant.getName(), participant.getEventRole()
+							wcEvent.addValidatedParticipantTask(participant
+									.getName(), participant.getEventRole()
 									.getId(), participant.getId());
-							parcoursTasks: for (WorldcookingResumeTask t : wcEvent.getTasks()) {
-								if (t.getId().equals(participant.getEventRole().getRole().getId())) {
+							parcoursTasks: for (WorldcookingResumeTask t : wcEvent
+									.getTasks()) {
+								if (t.getId().equals(
+										participant.getEventRole().getRole()
+												.getId())) {
 									t.setTotalRegister(t.getTotalRegister() + 1);
 									break parcoursTasks;
 								}
@@ -89,7 +98,8 @@ public class WorldcookingResumeController {
 						// if a registration is not validated, all its
 						// partcipants
 						// are waiting for confirmation
-						Set<Participant> partList = registration.getParticipants();
+						Set<Participant> partList = registration
+								.getParticipants();
 						for (Participant participant : partList) {
 							waitingParticipants.add(participant.getName());
 
@@ -98,7 +108,8 @@ public class WorldcookingResumeController {
 				}
 				modelAndView.addObject("event", wcEvent);
 				wcEvent.addWaitingParticipants(waitingParticipants);
-				if (wcEvent.getNbParticipants() >= wcEvent.getNbParticipantsMax()) {
+				if (wcEvent.getNbParticipants() >= wcEvent
+						.getNbParticipantsMax()) {
 					wcEvent.setRegistrationClosed(true);
 				} else {
 					wcEvent.setRegistrationClosed(false);

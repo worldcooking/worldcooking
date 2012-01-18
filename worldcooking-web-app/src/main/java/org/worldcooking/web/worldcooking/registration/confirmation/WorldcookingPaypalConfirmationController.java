@@ -55,12 +55,6 @@ public class WorldcookingPaypalConfirmationController {
 	private String paypalReturnUrl;
 
 	/**
-	 * Paypal form 'item-name' field.
-	 */
-	@Value("${registration.paypal.item.name}")
-	private String paypalItemName;
-
-	/**
 	 * Paypal form 'business' field.
 	 */
 	@Value("${registration.paypal.business.email.address}")
@@ -80,17 +74,20 @@ public class WorldcookingPaypalConfirmationController {
 	 * @throws Exception
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String initializeForm(@PathVariable String eventReference, @RequestParam Long registrationId, ModelMap model)
-			throws Exception {
+	public String initializeForm(@PathVariable String eventReference,
+			@RequestParam Long registrationId, ModelMap model) throws Exception {
 
 		Event event = eventService.findEventByReference(eventReference, false);
 
 		if (!eventService.isEventOpen(event)) {
-			logger.warn("Attempt to access to closed registration of event '{}'.", event.getName());
+			logger.warn(
+					"Attempt to access to closed registration of event '{}'.",
+					event.getName());
 			return "redirect:/";
 		}
 
-		Registration registration = registrationService.findRegistrationById(registrationId, false);
+		Registration registration = registrationService.findRegistrationById(
+				registrationId, false);
 
 		if (registration.getRegistrationStatus() == RegistrationStatus.VALIDATED) {
 			// registration already validated: redirect to welcome page
@@ -100,7 +97,8 @@ public class WorldcookingPaypalConfirmationController {
 		model.addAttribute("event", registration.getEvent());
 
 		// calculate amount
-		Double paypalAmount = worldcookingService.calculateRegistrationPrice(registrationId);
+		Double paypalAmount = worldcookingService
+				.calculateRegistrationPrice(registrationId);
 
 		// Paypal form 'amount' field.
 		model.addAttribute("paypalAmount", paypalAmount);
@@ -132,8 +130,8 @@ public class WorldcookingPaypalConfirmationController {
 	 * @return
 	 */
 	@ModelAttribute("paypalItemName")
-	public String populatePaypalItemName() {
-		return paypalItemName;
+	public String populatePaypalItemName(@PathVariable String eventReference) {
+		return eventReference;
 	}
 
 	/**
@@ -168,8 +166,8 @@ public class WorldcookingPaypalConfirmationController {
 	}
 
 	private String buildAppUrl(HttpServletRequest request) {
-		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-				+ request.getContextPath();
+		return request.getScheme() + "://" + request.getServerName() + ":"
+				+ request.getServerPort() + request.getContextPath();
 	}
 
 	public EventService getEventService() {
