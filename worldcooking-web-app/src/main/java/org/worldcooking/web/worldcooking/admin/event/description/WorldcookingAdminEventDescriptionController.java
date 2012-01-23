@@ -36,7 +36,7 @@ import org.worldcooking.web.worldcooking.admin.event.description.model.EventDesc
 public class WorldcookingAdminEventDescriptionController {
 
 	private static final String URL = "/direct/admin/event/{eventReference}/description";
-	private static final String JSP = "worldcooking/admin/event/description/worldcooking-admin-event-description";
+	private static final String JSP = "site/admin/event/description/worldcooking-admin-event-description";
 
 	@Autowired
 	private EventService eventService;

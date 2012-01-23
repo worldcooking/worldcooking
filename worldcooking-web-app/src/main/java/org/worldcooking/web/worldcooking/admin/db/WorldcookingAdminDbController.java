@@ -17,7 +17,7 @@ import org.worldcooking.service.admin.DbInitializerService;
 @Controller
 public class WorldcookingAdminDbController {
 
-	private static final String JSP = "worldcooking/admin/db/worldcooking-admin-db";
+	private static final String JSP = "site/admin/db/worldcooking-admin-db";
 	@Autowired
 	private DbInitializerService dbInitializerService;
 

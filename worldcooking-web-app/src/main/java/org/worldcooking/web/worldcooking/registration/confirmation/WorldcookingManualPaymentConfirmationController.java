@@ -62,7 +62,7 @@ public class WorldcookingManualPaymentConfirmationController {
 
 		// TODO display pre-registration details and price to pay
 
-		return "worldcooking/registration/confirmation/worldcooking-manual-payment-confirmation";
+		return "site/registration/confirmation/worldcooking-manual-payment-confirmation";
 	}
 
 	private boolean isRegistrationValidated(Registration registration) {

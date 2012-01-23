@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class WorldcookingAdminEventTasksController {
 
 	private static final String URL = "/direct/admin/event/{eventReference}/tasks";
-	private static final String JSP = "worldcooking/admin/event/tasks/worldcooking-admin-event-tasks";
+	private static final String JSP = "site/admin/event/tasks/worldcooking-admin-event-tasks";
 	@Autowired
 	private EventService eventService;
 

@@ -35,9 +35,9 @@ import org.worldcooking.web.worldcooking.history.model.WorldcookingHistory;
 @Controller
 public class WorldcookingAdminEventParticipantsController {
 
-	private static final String REGISTRATION_JSP = "worldcooking/admin/event/participants/worldcooking-admin-event-registrations";
+	private static final String REGISTRATION_JSP = "site/admin/event/participants/worldcooking-admin-event-registrations";
 	private static final String URL = "/direct/admin/event/{eventReference}/participants";
-	private static final String JSP = "worldcooking/admin/event/participants/worldcooking-admin-event-participants";
+	private static final String JSP = "site/admin/event/participants/worldcooking-admin-event-participants";
 	@Autowired
 	private EventService eventService;
 

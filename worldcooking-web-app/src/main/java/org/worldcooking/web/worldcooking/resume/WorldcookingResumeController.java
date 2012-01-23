@@ -41,7 +41,7 @@ public class WorldcookingResumeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView handleRequest() {
 		ModelAndView modelAndView = new ModelAndView(
-				"worldcooking/resume/worldcooking-resume");
+				"site/resume/worldcooking-resume");
 
 		try {
 			// retrieve the last visible event (OPEN or PLANNED)

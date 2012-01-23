@@ -25,7 +25,7 @@ import org.worldcooking.web.worldcooking.admin.events.model.transform.EventToVie
 public class WorldcookingAdminEventsController {
 
 	private static final String URL = "/admin/events";
-	private static final String JSP = "worldcooking/admin/events/worldcooking-admin-events";
+	private static final String JSP = "site/admin/events/worldcooking-admin-events";
 	@Autowired
 	private EventService eventService;
 

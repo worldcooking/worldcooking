@@ -3,6 +3,7 @@
 	<!--if some pages to be excluded from decoration -->
 	<excludes>
 		<pattern>/direct/*</pattern>
+		<pattern>/dynamic/css/*</pattern>
 	</excludes>
 
 	<decorator name="master" page="master.jsp">

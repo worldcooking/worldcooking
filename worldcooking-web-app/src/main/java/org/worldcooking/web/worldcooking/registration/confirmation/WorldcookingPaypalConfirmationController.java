@@ -24,7 +24,7 @@ import org.worldcooking.service.admin.WorldcookingService;
 @RequestMapping(value = "/event/{eventReference}/registration/confirmation/paypal")
 public class WorldcookingPaypalConfirmationController {
 
-	private static final String JSP = "worldcooking/registration/confirmation/worldcooking-paypal-confirmation";
+	private static final String JSP = "site/registration/confirmation/worldcooking-paypal-confirmation";
 
 	@Autowired
 	private RegistrationService registrationService;

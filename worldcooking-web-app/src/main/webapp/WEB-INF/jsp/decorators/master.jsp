@@ -38,7 +38,7 @@
 	<template:layout>
 
 		<jsp:attribute name="headerLeft">
-			<jsp:include page="../layout/header/headerLeft.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/header/headerLeft.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="headerCenter">
@@ -47,30 +47,30 @@
 					<decorator:title />
 				</h1>
 			</div>
-<%-- 			<jsp:include page="../layout/header/headerCenter.jsp"/>
+<%-- 			<jsp:include page="/WEB-INF/jsp/layout/header/headerCenter.jsp"/>
  --%>		</jsp:attribute>
 		<jsp:attribute name="headerRight">
-			<jsp:include page="../layout/header/headerRight.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/header/headerRight.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="bodyLeft">
-			<jsp:include page="../layout/body/bodyLeft.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/body/bodyLeft.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="bodyRight">
-			<jsp:include page="../layout/body/bodyRight.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/body/bodyRight.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="footerLeft">
-			<jsp:include page="../layout/footer/footerLeft.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/footer/footerLeft.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="footerCenter">
-			<jsp:include page="../layout/footer/footerCenter.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/footer/footerCenter.jsp" />
 		</jsp:attribute>
 
 		<jsp:attribute name="footerRight">
-			<jsp:include page="../layout/footer/footerRight.jsp" />
+			<jsp:include page="/WEB-INF/jsp/layout/footer/footerRight.jsp" />
 		</jsp:attribute>
 
 		<jsp:body>

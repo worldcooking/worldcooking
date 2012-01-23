@@ -14,7 +14,7 @@ import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.model.NewParticipant;
 import org.mishk.business.event.service.model.NewRegistration;
 import org.mishk.business.event.service.model.NewRegistrationPaymentMode;
-import org.oupsasso.mishk.business.shop.exception.InsufficientStockException;
+import org.mishk.business.shop.exception.InsufficientStockException;
 import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
 import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
@@ -41,7 +41,7 @@ import org.worldcooking.web.worldcooking.registration.form.model.WorldcookingReg
 @RequestMapping(value = "/event/{eventReference}/registration")
 public class WorldcookingRegistrationFormController {
 	private static final String PAYPAL_MODE_KEY = "paypal";
-	private static final String JSP = "worldcooking/registration/form/worldcooking-registration-form";
+	private static final String JSP = "site/registration/form/worldcooking-registration-form";
 
 	@Autowired
 	private WorldcookingService worldcookingService;
