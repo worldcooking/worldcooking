@@ -20,5 +20,5 @@
 
 	<import resource="classpath:spring/default-spring-dao-context.xml" />
 
-	<context:component-scan base-package="org.mishk,org.oupsasso.mishk,org.worldcooking" />
+	<context:component-scan base-package="org.mishk,org.worldcooking" />
 </beans>

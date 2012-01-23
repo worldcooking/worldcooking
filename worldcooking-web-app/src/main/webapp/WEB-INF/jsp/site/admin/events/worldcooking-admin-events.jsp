@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
-<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
+<%@ taglib prefix="template" uri="http://www.mishk.org/tags/template"  %>
+<%@ taglib prefix="resources" uri="http://www.mishk.org/tags/resources"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
+<%@ taglib prefix="jquery" uri="http://www.mishk.org/tags/jquery" %>
 
 <html>
 <head>

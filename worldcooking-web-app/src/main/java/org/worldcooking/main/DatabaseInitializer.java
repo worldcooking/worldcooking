@@ -2,7 +2,7 @@ package org.worldcooking.main;
 
 import java.util.Map;
 
-import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
+import org.mishk.core.dao.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

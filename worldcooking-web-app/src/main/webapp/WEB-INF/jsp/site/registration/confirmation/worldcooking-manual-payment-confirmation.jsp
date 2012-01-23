@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
-<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
-<%@ taglib prefix="template-form" uri="http://www.oups-asso.org/mish-k/tags/template-form"  %>
+<%@ taglib prefix="resources" uri="http://www.mishk.org/tags/resources"  %>
+<%@ taglib prefix="template" uri="http://www.mishk.org/tags/template"  %>
+<%@ taglib prefix="template-form" uri="http://www.mishk.org/tags/template-form"  %>
 <html>
 <head>
 	<title>${event.name} - Pre-registration confirmation</title>

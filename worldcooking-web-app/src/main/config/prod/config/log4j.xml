@@ -24,9 +24,6 @@
 	<logger name="org.mishk">
 		<level value="warn" />
 	</logger>
-	<logger name="org.oupsasso.mishk">
-		<level value="warn" />
-	</logger>
 
 	<!-- set to debug to show SQL queries -->
 	<logger name="org.hibernate.SQL">

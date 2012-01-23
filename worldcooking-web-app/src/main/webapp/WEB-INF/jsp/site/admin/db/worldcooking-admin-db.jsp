@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
-<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
+<%@ taglib prefix="resources" uri="http://www.mishk.org/tags/resources"  %>
+<%@ taglib prefix="template" uri="http://www.mishk.org/tags/template"  %>
 <html>
 <head>
 	<title>Worldcooking - administration</title>
-	<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
+	<%@ taglib prefix="resources" uri="http://www.mishk.org/tags/resources"  %>
 </head>
 <body>
 <template:chapter title="Reset database">

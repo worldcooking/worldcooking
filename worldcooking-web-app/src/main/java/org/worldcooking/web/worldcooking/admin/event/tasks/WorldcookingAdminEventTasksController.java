@@ -5,7 +5,7 @@ package org.worldcooking.web.worldcooking.admin.event.tasks;
 
 import org.mishk.business.event.entity.Event;
 import org.mishk.business.event.service.EventService;
-import org.oupsasso.mishk.core.dao.exception.ServiceException;
+import org.mishk.core.dao.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

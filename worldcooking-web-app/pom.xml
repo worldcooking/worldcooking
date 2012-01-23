@@ -20,7 +20,7 @@
 		<maven-jetty-plugin.version>6.1.24</maven-jetty-plugin.version>
 		<postgresql.version>9.1-901</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.oups-asso.mish-k.framework.version>0.3-SNAPSHOT</org.oups-asso.mish-k.framework.version>
+		<mishk.framework.version>0.3-SNAPSHOT</mishk.framework.version>
 		<java.version>1.6</java.version>
 		<tomcat.version>7.0.23</tomcat.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
@@ -79,30 +79,30 @@
 		</repository>
 
 		<repository>
-			<id>oups-asso-thirdparty</id>
-			<url>http://oups-asso.no-ip.org/nexus/content/repositories/thirdparty/</url>
+			<id>mishk-thirdparty</id>
+			<url>http://tools.mishk.org/nexus/content/repositories/thirdparty/</url>
 		</repository>
 		<repository>
-			<id>oups-asso-mish-k</id>
-			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k/</url>
+			<id>mishk-releases</id>
+			<url>http://tools.mishk.org/nexus/content/repositories/mishk/</url>
 		</repository>
 		<repository>
-			<id>oups-asso-mish-k-snapshots</id>
-			<url>http://oups-asso.no-ip.org/nexus/content/repositories/mish-k-snapshots/</url>
+			<id>mishk-snapshots</id>
+			<url>http://tools.mishk.org/nexus/content/repositories/mishk-snapshots/</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-jquery-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-jquery-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-jquery-ui-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-jquery-ui-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.core</groupId>
-			<artifactId>mish-k-framework-core-web</artifactId>
+			<groupId>org.mishk.framework.core</groupId>
+			<artifactId>mishk-framework-core-web</artifactId>
 		</dependency>
 		<!-- Spring dependencies -->
 		<dependency>
@@ -154,28 +154,28 @@
 		<!-- <dependency> <groupId>org.worldcooking</groupId> <artifactId>worldcooking-services</artifactId> 
 			</dependency> -->
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.business</groupId>
-			<artifactId>mish-k-framework-business-events</artifactId>
+			<groupId>org.mishk.framework.business</groupId>
+			<artifactId>mishk-framework-business-events</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.business</groupId>
-			<artifactId>mish-k-framework-business-shop</artifactId>
+			<groupId>org.mishk.framework.business</groupId>
+			<artifactId>mishk-framework-business-shop</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-localization-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-localization-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-web-security-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-web-security-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-resources-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-resources-taglib</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-			<artifactId>mish-k-framework-template-taglib</artifactId>
+			<groupId>org.mishk.framework.taglib</groupId>
+			<artifactId>mishk-framework-template-taglib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
@@ -225,12 +225,12 @@
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.core</groupId>
-			<artifactId>mish-k-framework-core-dao</artifactId>
+			<groupId>org.mishk.framework.core</groupId>
+			<artifactId>mishk-framework-core-dao</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oups-asso.mish-k.framework.core</groupId>
-			<artifactId>mish-k-framework-core-dao-tests</artifactId>
+			<groupId>org.mishk.framework.core</groupId>
+			<artifactId>mishk-framework-core-dao-tests</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -264,45 +264,45 @@
 		<dependencies>
 			<!-- Javascript dependencies -->
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-jquery-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-jquery-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-web-security-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-web-security-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-jquery-ui-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-jquery-ui-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.core</groupId>
-				<artifactId>mish-k-framework-core-dao</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.core</groupId>
+				<artifactId>mishk-framework-core-dao</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.core</groupId>
-				<artifactId>mish-k-framework-core-dao-tests</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.core</groupId>
+				<artifactId>mishk-framework-core-dao-tests</artifactId>
+				<version>${mishk.framework.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.core</groupId>
-				<artifactId>mish-k-framework-core-web</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.core</groupId>
+				<artifactId>mishk-framework-core-web</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.business</groupId>
-				<artifactId>mish-k-framework-business-events</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.business</groupId>
+				<artifactId>mishk-framework-business-events</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.business</groupId>
-				<artifactId>mish-k-framework-business-shop</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.business</groupId>
+				<artifactId>mishk-framework-business-shop</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<!-- Logging dependencies -->
 			<dependency>
@@ -442,19 +442,19 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-localization-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-localization-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-resources-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-resources-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oups-asso.mish-k.framework.taglib</groupId>
-				<artifactId>mish-k-framework-template-taglib</artifactId>
-				<version>${org.oups-asso.mish-k.framework.version}</version>
+				<groupId>org.mishk.framework.taglib</groupId>
+				<artifactId>mishk-framework-template-taglib</artifactId>
+				<version>${mishk.framework.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

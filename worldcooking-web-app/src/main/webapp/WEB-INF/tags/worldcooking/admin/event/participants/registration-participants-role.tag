@@ -1,4 +1,4 @@
-<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"%>
+<%@ taglib prefix="template" uri="http://www.mishk.org/tags/template"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="eventRoles" required="true" type="java.util.List" %>
 <%@ attribute name="participant" required="true" type="org.worldcooking.web.worldcooking.admin.event.participants.model.WorldcookingAdminEventParticipant" %>

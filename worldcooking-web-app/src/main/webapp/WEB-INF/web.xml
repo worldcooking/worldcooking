@@ -40,7 +40,7 @@
 	</filter>
 	<filter>
 		<filter-name>staticContentFilter</filter-name>
-		<filter-class>org.oupsasso.mishk.core.web.filter.StaticContentFilter</filter-class>
+		<filter-class>org.mishk.core.web.filter.StaticContentFilter</filter-class>
 	</filter>
 
 	<filter-mapping>

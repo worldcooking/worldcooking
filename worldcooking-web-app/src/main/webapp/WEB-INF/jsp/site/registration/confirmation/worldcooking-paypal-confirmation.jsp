@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="resources" uri="http://www.oups-asso.org/mish-k/tags/resources"  %>
-<%@ taglib prefix="jquery" uri="http://www.oups-asso.org/mish-k/tags/jquery" %>
-<%@ taglib prefix="template" uri="http://www.oups-asso.org/mish-k/tags/template"  %>
+<%@ taglib prefix="resources" uri="http://www.mishk.org/tags/resources"  %>
+<%@ taglib prefix="jquery" uri="http://www.mishk.org/tags/jquery" %>
+<%@ taglib prefix="template" uri="http://www.mishk.org/tags/template"  %>
 <html>
 <head>
 	<jquery:require-static-resources />

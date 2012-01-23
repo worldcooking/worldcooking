@@ -5,7 +5,7 @@ import org.mishk.business.event.entity.Registration;
 import org.mishk.business.event.entity.RegistrationStatus;
 import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.RegistrationService;
-import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
+import org.mishk.core.dao.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

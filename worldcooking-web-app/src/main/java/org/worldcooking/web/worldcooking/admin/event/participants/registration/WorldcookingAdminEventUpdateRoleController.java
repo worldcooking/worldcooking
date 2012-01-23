@@ -10,7 +10,7 @@ import org.mishk.business.event.entity.Participant;
 import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.RegistrationService;
 import org.mishk.business.shop.exception.InsufficientStockException;
-import org.oupsasso.mishk.core.dao.exception.EntityNotFoundException;
+import org.mishk.core.dao.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

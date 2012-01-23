@@ -1,5 +1,5 @@
 <%@ taglib prefix="web-security"
-	uri="http://www.oups-asso.org/mish-k/tags/web-security"%>
+	uri="http://www.mishk.org/tags/web-security"%>
 <html>
 <head>
 	<title>Authentication</title>

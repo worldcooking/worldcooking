@@ -3,7 +3,7 @@ package org.worldcooking.web.worldcooking.admin.events.model.transform;
 import java.util.Arrays;
 
 import org.mishk.business.event.entity.Event;
-import org.oupsasso.mishk.core.transform.AbstractTransformer;
+import org.mishk.core.transform.AbstractTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.worldcooking.web.worldcooking.admin.events.model.EventToEdit;

@@ -5,7 +5,7 @@ package org.worldcooking.web.worldcooking.history;
 
 import javax.servlet.http.HttpSession;
 
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
+import org.mishk.core.dao.exception.EntityIdNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

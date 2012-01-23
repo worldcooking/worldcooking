@@ -1,5 +1,5 @@
 <%@ taglib prefix="mishk-theme"
-	uri="http://www.oups-asso.org/mish-k/tags/template-mishk-theme"%>
+	uri="http://www.mishk.org/tags/template-mishk-theme"%>
 
 <mishk-theme:dynamic-theme
 	theme="${theme}"

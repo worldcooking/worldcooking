@@ -4,8 +4,8 @@
 package org.worldcooking.web.worldcooking.admin.event.participants.registration;
 
 import org.mishk.business.event.entity.Registration;
-import org.oupsasso.mishk.core.dao.exception.EntityIdNotFoundException;
-import org.oupsasso.mishk.core.dao.exception.EntityReferenceNotFoundException;
+import org.mishk.core.dao.exception.EntityIdNotFoundException;
+import org.mishk.core.dao.exception.EntityReferenceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

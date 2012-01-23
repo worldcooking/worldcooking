@@ -1,17 +1,17 @@
 <%@page
-	import="org.oupsasso.mishk.security.authentication.MishkUserHolder"%>
+	import="org.mishk.security.authentication.MishkUserHolder"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="decorator"
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
 <%@ taglib prefix="resources"
-	uri="http://www.oups-asso.org/mish-k/tags/resources"%>
+	uri="http://www.mishk.org/tags/resources"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="web-security"
-	uri="http://www.oups-asso.org/mish-k/tags/web-security"%>
+	uri="http://www.mishk.org/tags/web-security"%>
 <%@ taglib prefix="template"
-	uri="http://www.oups-asso.org/mish-k/tags/template"%>
+	uri="http://www.mishk.org/tags/template"%>
 <decorator:usePage id="myPage" />
 <html>
 <head>
