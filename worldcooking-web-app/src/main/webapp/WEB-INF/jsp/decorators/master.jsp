@@ -9,7 +9,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="web-security"
-	uri="http://www.mishk.org/tags/web-security"%>
+	uri="http://www.mishk.org/tags/security"%>
 <%@ taglib prefix="template"
 	uri="http://www.mishk.org/tags/template"%>
 <decorator:usePage id="myPage" />

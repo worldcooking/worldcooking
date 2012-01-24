@@ -1,4 +1,4 @@
-<%@ taglib prefix="web-security" uri="http://www.mishk.org/tags/web-security" %>
+<%@ taglib prefix="web-security" uri="http://www.mishk.org/tags/security" %>
 <html>
 <head>
 	<title>Worldcooking - administration</title>

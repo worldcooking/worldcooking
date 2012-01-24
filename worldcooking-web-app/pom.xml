@@ -20,7 +20,7 @@
 		<maven-jetty-plugin.version>6.1.24</maven-jetty-plugin.version>
 		<postgresql.version>9.1-901</postgresql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mishk.framework.version>0.3-SNAPSHOT</mishk.framework.version>
+		<mishk.framework.version>0.4-SNAPSHOT</mishk.framework.version>
 		<java.version>1.6</java.version>
 		<tomcat.version>7.0.23</tomcat.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
@@ -93,16 +93,41 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-jquery-taglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-jquery-ui-taglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.core</groupId>
+			<groupId>org.mishk.framework</groupId>
 			<artifactId>mishk-framework-core-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-core-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-core-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-core-dao-tests</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-core-3rdparty</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-core-template</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-modules-map</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-modules-shop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mishk.framework</groupId>
+			<artifactId>mishk-framework-modules-events</artifactId>
 		</dependency>
 		<!-- Spring dependencies -->
 		<dependency>
@@ -154,30 +179,6 @@
 		<!-- <dependency> <groupId>org.worldcooking</groupId> <artifactId>worldcooking-services</artifactId> 
 			</dependency> -->
 		<dependency>
-			<groupId>org.mishk.framework.business</groupId>
-			<artifactId>mishk-framework-business-events</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.business</groupId>
-			<artifactId>mishk-framework-business-shop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-localization-taglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-web-security-taglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-resources-taglib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.taglib</groupId>
-			<artifactId>mishk-framework-template-taglib</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
 			<version>5.3.2</version>
@@ -225,15 +226,6 @@
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mishk.framework.core</groupId>
-			<artifactId>mishk-framework-core-dao</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mishk.framework.core</groupId>
-			<artifactId>mishk-framework-core-dao-tests</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
@@ -264,44 +256,49 @@
 		<dependencies>
 			<!-- Javascript dependencies -->
 			<dependency>
-				<groupId>org.mishk.framework.taglib</groupId>
-				<artifactId>mishk-framework-jquery-taglib</artifactId>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-core-web</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.taglib</groupId>
-				<artifactId>mishk-framework-web-security-taglib</artifactId>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-core-security</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.taglib</groupId>
-				<artifactId>mishk-framework-jquery-ui-taglib</artifactId>
-				<version>${mishk.framework.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mishk.framework.core</groupId>
+				<groupId>org.mishk.framework</groupId>
 				<artifactId>mishk-framework-core-dao</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.core</groupId>
+				<groupId>org.mishk.framework</groupId>
 				<artifactId>mishk-framework-core-dao-tests</artifactId>
 				<version>${mishk.framework.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.core</groupId>
-				<artifactId>mishk-framework-core-web</artifactId>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-core-3rdparty</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.business</groupId>
-				<artifactId>mishk-framework-business-events</artifactId>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-core-template</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.mishk.framework.business</groupId>
-				<artifactId>mishk-framework-business-shop</artifactId>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-modules-map</artifactId>
+				<version>${mishk.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-modules-shop</artifactId>
+				<version>${mishk.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mishk.framework</groupId>
+				<artifactId>mishk-framework-modules-events</artifactId>
 				<version>${mishk.framework.version}</version>
 			</dependency>
 			<!-- Logging dependencies -->

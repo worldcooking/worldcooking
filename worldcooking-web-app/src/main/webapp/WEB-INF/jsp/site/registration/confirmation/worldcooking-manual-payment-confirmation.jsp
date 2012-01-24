@@ -15,7 +15,8 @@
 			There's a limit of place available, and if you're paying too late, we will not be able to reserve you a place<br/>
 			We will send an email to confirm your registration once we receive your payment.<br/>
 			<br/>
-			<template-form:button href="<c:url value='/'/>" title="Go back to ${event.name} main page" >
+			<c:url var="mainPage" value='/'/>
+			<template-form:button href="${mainPage}" title="Go back to ${event.name} main page" >
 				Go back to ${event.name} main page
 			</template-form:button>
 		<br/>
