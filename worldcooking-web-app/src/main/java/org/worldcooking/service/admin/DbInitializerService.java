@@ -13,7 +13,6 @@ import org.mishk.business.event.service.EventService;
 import org.mishk.business.event.service.PlaceService;
 import org.mishk.business.event.service.TaskService;
 import org.mishk.business.shop.service.CatalogService;
-import org.mishk.business.shop.service.ShoppingService;
 import org.mishk.core.dao.exception.EntityNotFoundException;
 import org.mishk.core.dao.exception.ServiceException;
 import org.slf4j.Logger;
@@ -43,23 +42,13 @@ public class DbInitializerService {
 	@Autowired
 	private CatalogService catalogService;
 
-	@Autowired
-	private ShoppingService shoppingService;
-
 	public void resetDb() {
 		logger.info("The database will be reset now.");
 
-		eventService.deleteAllEvents();
+		eventService.deleteAll();
 
-		placeService.deleteAllPlaces();
+		catalogService.deleteAll();
 
-		catalogService.deleteAllCatalogs();
-		catalogService.deleteAllStocks();
-		shoppingService.deleteAllShoppingBagProduct();
-		shoppingService.deleteAllShoppingBags();
-		catalogService.deleteAllProducts();
-
-		taskService.deleteAllRoles();
 	}
 
 	public void initData() throws EntityNotFoundException {
@@ -82,25 +71,35 @@ public class DbInitializerService {
 	private void initRolesAndTasks(Event e) throws EntityNotFoundException {
 		// create tasks
 		Task taskCook = taskService.createNewTask("Cook", "prepare the meal");
-		Task taskPrepareTheRoom = taskService.createNewTask("Prepare the room", "set the tables and chairs");
-		Task taskSettingTheTable = taskService.createNewTask("Setting the table", "setting the plates, glasses...");
-		Task taskDoingTheDishes = taskService.createNewTask("Doing the dishes", "washing all the dishes");
-		Task taskCleaningTheRoom = taskService.createNewTask("Cleaning the room", "cleaning the room");
+		Task taskPrepareTheRoom = taskService.createNewTask("Prepare the room",
+				"set the tables and chairs");
+		Task taskSettingTheTable = taskService.createNewTask(
+				"Setting the table", "setting the plates, glasses...");
+		Task taskDoingTheDishes = taskService.createNewTask("Doing the dishes",
+				"washing all the dishes");
+		Task taskCleaningTheRoom = taskService.createNewTask(
+				"Cleaning the room", "cleaning the room");
 
 		// create roles
-		worldcookingService.createNewRole(e, "Chef", "diner chef", 1l, 0d, taskCook);
-		worldcookingService.createNewRole(e, "Cook", "cooking with the chef from 4pm", 7l, 15d, taskCook);
-		worldcookingService.createNewRole(e, "Prepare the room", "prepare the room and settings the table from 6:30pm", 8l, 15d,
+		worldcookingService.createNewRole(e, "Chef", "diner chef", 1l, 0d,
+				taskCook);
+		worldcookingService.createNewRole(e, "Cook",
+				"cooking with the chef from 4pm", 7l, 15d, taskCook);
+		worldcookingService.createNewRole(e, "Prepare the room",
+				"prepare the room and settings the table from 6:30pm", 8l, 15d,
 				taskPrepareTheRoom, taskSettingTheTable);
-		worldcookingService.createNewRole(e, "Cleaning the room", "cleaning the room after the dinner", 8l,
-				15d, taskDoingTheDishes);
-		worldcookingService.createNewRole(e, "Doing the dishes", "doing the dishes after the dinner", 12l,
-				15d, taskCleaningTheRoom);
+		worldcookingService.createNewRole(e, "Cleaning the room",
+				"cleaning the room after the dinner", 8l, 15d,
+				taskDoingTheDishes);
+		worldcookingService.createNewRole(e, "Doing the dishes",
+				"doing the dishes after the dinner", 12l, 15d,
+				taskCleaningTheRoom);
 	}
 
 	private Place initPlace() {
 		// set place
-		Place place = placeService.createNewPlace("La soupe au Caillou", "31200", "Toulouse", "France");
+		Place place = placeService.createNewPlace("La soupe au Caillou",
+				"31200", "Toulouse", "France");
 
 		Direction direction = place.getDirection();
 		direction.addAddressline("15 Rue Charles Gounod");
