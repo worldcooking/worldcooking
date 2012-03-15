@@ -19,15 +19,11 @@
 	<resources:require-script resourceURI="site/admin/event/worldcooking-admin-event_validate.js" />
 </head>
 <body>
-
-<c:url var="eventAdminDescriptionUrl" value="/direct/admin/event/${event.reference}/description" />
-<c:url var="eventAdminTasksUrl" value="/direct/admin/event/${event.reference}/tasks" />
-<c:url var="eventAdminParticipantsUrl" value="/direct/admin/event/${event.reference}/participants" />
 							
 <tabs:menu>
-	<tabs:entry title="Event description" ajaxUrl="${eventAdminDescriptionUrl}" />
-	<tabs:entry title="Event tasks" ajaxUrl="${eventAdminTasksUrl}" />
-	<tabs:entry title="Participants" ajaxUrl="${eventAdminParticipantsUrl}" />
+	<tabs:entry title="Event description" ajaxUrl="/direct/admin/event/${event.reference}/description" />
+	<tabs:entry title="Event tasks" ajaxUrl="/direct/admin/event/${event.reference}/tasks" />
+	<tabs:entry title="Participants" ajaxUrl="/direct/admin/event/${event.reference}/participants" />
 </tabs:menu>
 
 </body>

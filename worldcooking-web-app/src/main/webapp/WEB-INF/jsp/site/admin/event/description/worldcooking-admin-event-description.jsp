@@ -8,7 +8,7 @@
 <%@ taglib prefix="template-form" uri="http://www.mishk.org/tags/template-form"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
-<c:url var="actionUrl" value="/direct/admin/event/${event.reference}/description" />
+<c:set var="actionUrl" value="/direct/admin/event/${event.reference}/description" />
 
 <template-form:form id="eventDescriptionForm" commandName="eventDescriptionForm" action="${actionUrl}" >
 	<%-- event id --%>
