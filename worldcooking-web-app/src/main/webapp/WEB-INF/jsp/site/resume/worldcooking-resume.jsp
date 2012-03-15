@@ -54,8 +54,8 @@
 		</template:chapter>
 	</c:if>
 	<template:chapter title="Informations">
-			<p>Up to 38 persons will share a portuguese meal in the restaurant La soupe au Caillou.<br>
-				Our chef will be Tiago Silva.<br>
+			<p>Up to 38 persons will share a libanese meal in the restaurant La soupe au Caillou.<br>
+				Our chefs will be Youssef el Rayess.<br>
 				<br>
 				To participate in this event you must book and pay in advance.<br>
 				The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.
@@ -63,7 +63,7 @@
 				<br>
 				When registering you have to choose a task from the following ones:
 				<ul>
-					<li><b>cooking with Tiago</b> from 4pm</li>
+					<li><b>cooking with Youssef el Rayess</b> from 4pm</li>
 					<li><b>prepare the room and settings the table</b> from 6:30pm</li>
 					<li><b>cleaning the room</b> after the dinner</li>
 					<li><b>doing the dishes</b> after the dinner</li>
@@ -72,15 +72,15 @@
 			<div class="information">
 				<h3>Menu :</h3>
 				<ul>
-					<li><b>Caldo Verde</b>: Soup with potatoes, carrots, cabbage and chorizo.</li>
-					<li><b>Bacalhau à Bráz</b>: Codfish (bacalhau), potatoes and eggs.</li>
-					<li><b>Arroz Doce</b>: Rice, Milk and sugar</li>
+					<li><b>Houmous & Fatouch </b></li>
+					<li><b>chicken and rice with yoghurt sauce</b></li>
+					<li><b>Namoura </b></li>
 				</ul>
 			</div>
 			<div class="information">
 				<h3>Date and Time :</h3>
-				Friday January 27th 2011, 7pm (4pm if you're cooking)<br /> <a
-					href="http://www.google.com/calendar/event?action=TEMPLATE&text=Worldcooking%20Portugal&dates=20120127T180000Z/20120128T000000Z&details=Portuguese%20meal%20shared%20%40%20La%20soupe%20au%20Caillou.%0A%0AWarning%20%3A%20be%20sure%20you%20registered!!!%0AWarning%202%20%3A%20if%20you're%20cooking%20be%20there%20at%204p.m.&location=La%20soupe%20au%20Caillou&trp=false&sprop=&sprop=name:"
+				Friday March 30th 2012, 7pm (4pm if you're cooking)<br /> <a
+					href="http://www.google.com/calendar/event?action=TEMPLATE&text=Worldcooking%20Liban&dates=20120330T180000Z/20120331T000000Z&details=Portuguese%20meal%20shared%20%40%20La%20soupe%20au%20Caillou.%0A%0AWarning%20%3A%20be%20sure%20you%20registered!!!%0AWarning%202%20%3A%20if%20you're%20cooking%20be%20there%20at%204p.m.&location=La%20soupe%20au%20Caillou&trp=false&sprop=&sprop=name:"
 					target="_blank"> Add to google Agenda</a>
 			</div>
 			<div class="information">
