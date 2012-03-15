@@ -54,8 +54,8 @@
 		</template:chapter>
 	</c:if>
 	<template:chapter title="Informations">
-			<p>Up to 38 persons will share a libanese meal in the restaurant La soupe au Caillou.<br>
-				Our chefs will be Youssef el Rayess.<br>
+			<p>Up to 36 persons will share a libanese meal in the restaurant La soupe au Caillou.<br>
+				Our chef will be Youssef El Rayess.<br>
 				<br>
 				To participate in this event you must book and pay in advance.<br>
 				The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.
@@ -63,7 +63,7 @@
 				<br>
 				When registering you have to choose a task from the following ones:
 				<ul>
-					<li><b>cooking with Youssef el Rayess</b> from 4pm</li>
+					<li><b>cooking with Youssef</b> from 4pm</li>
 					<li><b>prepare the room and settings the table</b> from 6:30pm</li>
 					<li><b>cleaning the room</b> after the dinner</li>
 					<li><b>doing the dishes</b> after the dinner</li>
