@@ -53,9 +53,9 @@ public class DbInitializerService {
 
 	public void initData() throws EntityNotFoundException {
 		// init DB with worldcooking event
-		Event e = eventService.createNewEvent("Worldcooking Liban");
+		Event e = eventService.createNewEvent("Worldcooking Brasil");
 
-		e.setDateTime(parseDate("2012-03-30_19:00:00"));
+		e.setDateTime(parseDate("2012-09-28_19:00:00"));
 
 		Place place = initPlace();
 		eventService.saveOrUpdate(place);
