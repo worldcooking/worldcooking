@@ -86,12 +86,12 @@
 			<div class="information">
 				<h3>Place :</h3>
 				<c:url var="iconUrl" value="/img/restaurant-30px.png" />
-				<loc:map mapContainerId="locationMap" 
+				<%--<loc:map mapContainerId="locationMap" 
 					placeName="La soupe au Caillou" 
 					addressLine1="15 Rue Charles Gounod" 
 					addressLine2="31200 Toulouse"
 							latitude="43.61368640000001" longitude="1.4242076000000452" width="50%" height="30%"
-							flag="${iconUrl}" />
+							flag="${iconUrl}" />--%>
 			</div>
 	</template:chapter>
 	<template:chapter title="Participants confirmed">
