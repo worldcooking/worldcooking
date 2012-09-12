@@ -42,3 +42,8 @@
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 }
+
+/* all LEFT blocks */
+.mishk-template-layout_left{
+ 	width: 160px;
+}
