@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.galloires.web.controller.AbstractMainLevelController;
-
 /**
  * @author MatthieuG
  * 
  */
 @Controller
-public class ManageUsersController extends AbstractMainLevelController {
+public class ManageUsersController {
 
 	private static final String JSP = "site/admin/security/manage_users";
 
@@ -36,11 +34,5 @@ public class ManageUsersController extends AbstractMainLevelController {
 	@ModelAttribute("groups")
 	public Set<SecurityGroup> getGroups() {
 		return securityUserManagementService.findAllGroupsWithUsers();
-	}
-
-	@Override
-	@ModelAttribute("mainMenu")
-	public Menu getMainMenu() {
-		return galloiresMenuService.getMainMenu(0);
 	}
 }
