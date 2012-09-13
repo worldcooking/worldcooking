@@ -55,7 +55,7 @@
 	</c:if>
 	<template:chapter title="Informations">
 			<p>Up to 36 persons will share a brazilian meal in the restaurant La soupe au Caillou.<br>
-				Our chef will be .<br>
+				Our chef will be Mariana.<br>
 				<br>
 				To participate in this event you must book and pay in advance.<br>
 				The price for the meal is 15 € per person. This amount is used entirely to cover the cost of the evening.
@@ -72,9 +72,9 @@
 			<div class="information">
 				<h3>Menu :</h3>
 				<ul>
-					<li><b>Pastel</b></li>
-					<li><b>Moqueca de Peixe Bahiana</b></li>
-					<li><b>Musse de maracuja</b></li>
+					<li><b>Salada de grao-de-bico com bacalhau</b></li>
+					<li><b>Moquequa baiana</b></li>
+					<li><b>Mousse de maracuja</b></li>
 				</ul>
 			</div>
 			<div class="information">
@@ -86,6 +86,9 @@
 			<div class="information">
 				<h3>Place :</h3>
 				<c:url var="iconUrl" value="/img/restaurant-30px.png" />
+				La soupe au Caillou<br/>
+				15 Rue Charles Gounod<br/>
+				31200 Toulouse</br>
 				<%--<loc:map mapContainerId="locationMap" 
 					placeName="La soupe au Caillou" 
 					addressLine1="15 Rue Charles Gounod" 
